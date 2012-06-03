@@ -15,6 +15,7 @@ public abstract class Game
 {
 
 	private Board board;
+	
 
 	private int numberOfPlayers=2; // a good default
 
@@ -69,7 +70,7 @@ public abstract class Game
 	*	out of the tournament ?? (or deal with it another way?)
 	*/
 
-	private abstract Board process(Move move);
+	private abstract Board process(Move move, Board board);
 	
 	
 	/**
