@@ -1,4 +1,6 @@
-package Tourney;
+package tourney;
+
+import java.util.List;
 
 /**
 * 	A Game incorporates the rules of play for some particular board game. 
@@ -11,11 +13,36 @@ package Tourney;
 
 public abstract class Game
 {
-	void setPlayer(int who, Player p);
-	void play(); // play the game through until the end
-	void reset();
-	// a few methods for gathering statistics about the game. winner(),
-	// duration()
-	// etc.
+
+	/**
+	* We suggest that game developers provide a very basic "AI" for testing. The
+	* default AI must generate legal moves, but they need not be good ones.
+	* Random is fine. If no default AI player is provided, defaultAIPlayer should
+	* be set to null.
+	*/
+	private Player defaultAIPlayer;
+	
+	/**
+	*	We also suggest that game developers provide a human interface, also for
+	*	testing. If none is provided, humanPlayer should be null.
+	*/
+	private Player humanPlayer;
+
+
+	/**
+	*	Play some number of iterations of the game with the specified list of
+	*	Players, and report back (somehow) the results. Reporting TBD
+	*/
+	public abstract void play(List<Player> players, int interations); 
+
+
+	
+	/**
+	* Not sure what this is meant for. Sheph? 
+	*/
+	public  abstract void reset();
+
+
+	// need to determine statistics methods
 
 }
