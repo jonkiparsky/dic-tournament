@@ -14,6 +14,10 @@ import java.util.List;
 public abstract class Game
 {
 
+	private Board board;
+
+	private int numberOfPlayers=2; // a good default
+
 	/**
 	* We suggest that game developers provide a very basic "AI" for testing. The
 	* default AI must generate legal moves, but they need not be good ones.
@@ -33,9 +37,40 @@ public abstract class Game
 	*	Play some number of iterations of the game with the specified list of
 	*	Players, and report back (somehow) the results. Reporting TBD
 	*/
-	public abstract void play(List<Player> players, int interations); 
+	public void play(List<Player> players, int iterations)
+	{
+		
+
+		// should verify that number of players is acceptable
+		if (players.size() != numberOfPlayers)
+			return;
+			
+		for (int i = 0; i<iterations; i++)
+		{
+			play(players);
+		}
+	}
 
 
+	private void play(List<Player> players)
+	{
+		board.reset();	
+		while (!gameOver)
+		{
+			board = process(players.remove(0).getMove(board));
+			
+		}
+	}	
+
+
+	/**
+	*	Apply a Move to a Board to produce a new state of affairs. If the game is
+	*	over, set the flag. If an illegal move is submitted, ?? kick the violater
+	*	out of the tournament ?? (or deal with it another way?)
+	*/
+
+	private abstract Board process(Move move);
+	
 	
 	/**
 	* Not sure what this is meant for. Sheph? 
