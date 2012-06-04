@@ -52,7 +52,15 @@ public abstract class Game
 		}
 	}
 
-
+  /**
+  * Some thoughts from Sheph:
+  *
+  * I think it would be best to let this be the public method. Play through a 
+  * list of players, calling their moves in turn. What if a game would allow
+  * for a player to take 2 moves in a row? This method would need to be handled
+  * differently... ? Maybe we can refactor this down to a subclass? Or have
+  * this be in an interface method, and refactor this class to DefaultBoardGame?
+  */
 	private void play(List<Player> players)
 	{
 		board.reset();	
@@ -68,13 +76,23 @@ public abstract class Game
 	*	Apply a Move to a Board to produce a new state of affairs. If the game is
 	*	over, set the flag. If an illegal move is submitted, ?? kick the violater
 	*	out of the tournament ?? (or deal with it another way?)
+  * 
+  * How do we kick the violator out? We would have to disturb the tuples.
+  * Perhaps we can throw an IllegalMoveException with a reference to the player,
+  * which the tournament can then disqualify and recalculate the tuples? Or
+  * Just give a bypass to his competitor?
 	*/
 
-	private abstract Board process(Move move, Board board);
+	protected abstract Board process(Move move, Board board);
 	
 	
 	/**
-	* Not sure what this is meant for. Sheph? 
+	* Not sure what this is meant for. Sheph?
+  *
+  * Was thinking the tournament would call this from outside. Do you think the
+  * Game should be responsible for playing itself multiple times? I think the
+  * main argument for that is to keep which player plays first fair?
+  * We could always cycle the list we input.
 	*/
 	public  abstract void reset();
 
