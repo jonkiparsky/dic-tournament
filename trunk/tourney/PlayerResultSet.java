@@ -31,7 +31,6 @@ public class PlayerResultSet
 		me = thisPlayer;
 		this.opponents = opponents;
 		this.initialIndex=initialIndex;
-		freeStats = new HashMap<String, String>();
 	}
 
 
