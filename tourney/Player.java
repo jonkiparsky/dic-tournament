@@ -7,7 +7,9 @@ package tourney;
 *	vs CPU competition. 
 */
 
-public interface Player
+public abstract class Player
 {
-	public Move getMove(Board b);
+	private PlayerResultSet results;
+
+	public abstract Move getMove(Board b);
 }
