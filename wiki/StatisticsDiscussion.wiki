@@ -10,12 +10,12 @@ A tournament should be able to report interesting data about the particular game
   *Moves taken per player
   
 
-= Data to gather per Match = 
+=== Data to gather per Match === 
 (a match will be a set of games played by one tuple of Players)
   * Identities of players
   * Number of games won
 
-= Data to gather per tournament = 
+=== Data to gather per tournament ===
   * Overall winner
   * derived stats of various sorts
   
