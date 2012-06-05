@@ -18,4 +18,21 @@ public abstract class Statistics
   private int winner;
   
   private int whoWentFirst; // Which player went first?
+
+	
+
+	// stubs for callbacks from PlayerResultSet
+	// not abstract, because these should be one-time implementations
+	// I just don't know if they go here yet
+
+	public void putOutcome(Player player, Player opponent,
+		PlayerResultSet.Outcome outcome)
+	{}
+	
+	public void putScore(Player player, Player opponent, int score)
+	{}
+	
+	public void aggregateOutcomeByInitialIndex(PlayerResultSet.Outcome outcome, 
+		int initialIndex)
+	{}
 }
