@@ -14,6 +14,7 @@ public abstract class Game {
 	private Board board;
 
 	private int numberOfPlayers = 2; // a good default
+	private boolean gameOver = false;
 
 	/**
 	 * We suggest that game developers provide a very basic "AI" for testing.
@@ -29,22 +30,7 @@ public abstract class Game {
 	 */
 	private Player humanPlayer;
 
-	/**
-	 * Play some number of iterations of the game with the specified list of
-	 * Players, and report back (somehow) the results. Reporting TBD
-	 */
-	public void play(List<Player> players, int iterations)
-	{
 
-		// should verify that number of players is acceptable
-		if (players.size() != numberOfPlayers)
-			return;
-
-		for (int i = 0; i < iterations; i++)
-		{
-			play(players);
-		}
-	}
 
 	/**
 	 * Some thoughts from Sheph:
@@ -55,13 +41,17 @@ public abstract class Game {
 	 * handled differently... ? Maybe we can refactor this down to a subclass?
 	 * Or have this be in an interface method, and refactor this class to
 	 * DefaultBoardGame?
+
+	  + JPK: Game will have access to List, it can rearrange it as needed. 
 	 */
-	private void play(List<Player> players)
+	public void play(List<Player> players)
 	{
 		reset(); // or board.reset();
+		if (players.size() != numberOfPlayers)
+			return;
 		while (!gameOver)
 		{
-			board = process(players.remove(0).getMove(board));
+			board = process(players.remove(0).getMove(board), board);
 
 		}
 	}
@@ -70,11 +60,6 @@ public abstract class Game {
 	 * Apply a Move to a Board to produce a new state of affairs. If the game is
 	 * over, set the flag. If an illegal move is submitted, ?? kick the violater
 	 * out of the tournament ?? (or deal with it another way?)
-	 * 
-	 * How do we kick the violator out? We would have to disturb the tuples.
-	 * Perhaps we can throw an IllegalMoveException with a reference to the
-	 * player, which the tournament can then disqualify and recalculate the
-	 * tuples? Or Just give a bypass to his competitor?
 	 */
 
 	protected abstract Board process(Move move, Board board);
