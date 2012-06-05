@@ -9,14 +9,18 @@ package tourney;
 *	being represented and the whims of the implementers; therefore the Board
 *	interface specifies very little. 
 *	It may be wise to create sub-interfaces for more particular forms, for
-*	example grid-based games. 
-*
-*	TBD: is a Board responsible for determining legality of a move, or should
-*	that be up to the Game? These seem more or less equivalent at first glance. 
+*	example grid-based games.
 */
 
 
 public interface Board
 {
-	
+  /**
+  * Going along with the decision to boot the player if he makes an incorrect
+  * move, by putting the responsibility here for determining a legal move, the
+  * player should have no excuse to submit an illegal one, as they can verify
+  * themselves from the passed Board. As well as the fact that multiple games can
+  * share the same Game class, so the Game would not know what to do anyway.
+  */
+  boolean isLegal(Move m);
 }
