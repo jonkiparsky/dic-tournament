@@ -16,14 +16,27 @@ package tourney;
 public interface Board
 {
 	/**
-	 * Pre: The move is a legal move for this board. Changes the inner state of
-	 * the Board, based on the passed move.
-	 * 
-	 * Sheph: Should this method check for legality? Or should that be the
-	 * Game's responsibility before calling process? I'm going for Game's
-	 * responsbility for now
+	 *	accepts a move submitted, validates that the move is from the correct
+	 *	player and that that player has not yet moved		
 	 */
-	void process(Move move);
+
+
+	void submit(Move move, Player player);
+
+
+	/**
+	 *	Applies the selected move to the Board. Legality checks done here, as part
+	 *	of applying the move. If the move results in an illegal state or a
+	 *	won/drawn position, this will be detected by the Game (via a flag)
+	 */	
+	void apply(Move move, Player player);
+
+
+	/**
+	 * The current state of the game: ILLEGAL, GAME_OVER, or GAME_CONTINUE
+	 */
+	public int state();
+
 
 	/**
 	 * Resets the board to empty, so that a new game can be played on it from

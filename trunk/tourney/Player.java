@@ -10,6 +10,12 @@ package tourney;
 public abstract class Player
 {
 	private PlayerResultSet results;
+	
+	/**
+	 *	Asks the Player to make a move based on this Board. A Move is made by
+	 *	calling Board.submit(Move move, Player player), where player is a
+	 *	reference to this player.
+	*/
 
-	public abstract Move getMove(Board b);
+	public abstract void makeMove(Board b);
 }
