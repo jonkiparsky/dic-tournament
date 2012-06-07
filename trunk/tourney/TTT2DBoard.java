@@ -72,8 +72,10 @@ public class TTT2DBoard implements Board {
 		public boolean isLegal(Board b) {
 			if (!(b instanceof TTT2DBoard))
 				return false;
-
-			if (board[x][y] == UNSET)
+            
+      TTT2DBoard passedBoard = (TTT2DBoard)b;
+      
+			if (passedBoard[x][y] == UNSET)
 				return true;
 			else
 				return false;
