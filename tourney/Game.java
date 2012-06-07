@@ -11,11 +11,13 @@ import java.util.List;
 
 public abstract class Game {
 
-	private Board board;
+	private AbstractBoard board;
 
 	private int numberOfPlayers = 2; // a good default
 	private boolean gameOver = false;
+	private boolean moveReceived = false;
 
+	private boolean currentPlayerNotMovedYet = true;
 	/**
 	 * We suggest that game developers provide a very basic "AI" for testing.
 	 * The default AI must generate legal moves, but they need not be good ones.
@@ -30,6 +32,7 @@ public abstract class Game {
 	 */
 	private Player humanPlayer;
 
+	private Player currentPlayer;
 
 
 	/**
@@ -51,9 +54,58 @@ public abstract class Game {
 			return;
 		while (!gameOver)
 		{
-			board = process(players.remove(0).getMove(board), board);
+			currentPlayer = players.remove(0);
+			players.add(currentPlayer);	
+			currentPlayerNotMovedYet = true;
+			moveReceived = false;
 
+			doMove(currentPlayer, board);
 		}
+	}
+
+
+
+	void doMove(Player currentPlayer, Board board)
+	{
+		currentPlayer.makeMove(board);
+		while (!moveReceived) 
+		{
+			// wait for move
+			// let's not do it this way eventually, but
+			// let the busy wait be a placeholder for a better way
+		}
+
+
+		if (board.state() == AbstractBoard.ILLEGAL)
+		{
+			// react to illegal move
+		}
+		else if (board.state() == AbstractBoard.GAME_OVER)
+		{
+			// deal with a finished game
+			
+		}
+		else 
+		{	
+			// cleanup for next turn
+		}
+	}
+
+
+	public void confirmMoveMade()
+	{
+		moveReceived = true;
+	}
+
+	public boolean confirmPlayerToMove(Player player)
+	{
+		if	(player != currentPlayer) return false;
+		if (currentPlayerNotMovedYet)
+		{
+			currentPlayerNotMovedYet = false;
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -75,5 +127,6 @@ public abstract class Game {
 	public abstract void reset();
 
 	// need to determine statistics methods
+
 
 }
