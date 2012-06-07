@@ -15,12 +15,19 @@ package tourney;
 
 public interface Board
 {
-  /**
-  * Going along with the decision to boot the player if he makes an incorrect
-  * move, by putting the responsibility here for determining a legal move, the
-  * player should have no excuse to submit an illegal one, as they can verify
-  * themselves from the passed Board. As well as the fact that multiple games can
-  * share the same Game class, so the Game would not know what to do anyway.
-  */
-  boolean isLegal(Move m);
+	/**
+	 * Pre: The move is a legal move for this board. Changes the inner state of
+	 * the Board, based on the passed move.
+	 * 
+	 * Sheph: Should this method check for legality? Or should that be the
+	 * Game's responsibility before calling process? I'm going for Game's
+	 * responsbility for now
+	 */
+	void process(Move move);
+
+	/**
+	 * Resets the board to empty, so that a new game can be played on it from
+	 * the beginning.
+	 */
+	void reset();
 }
