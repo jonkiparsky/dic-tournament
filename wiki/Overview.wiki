@@ -1,0 +1,26 @@
+#summary Aerial view of Tournament
+
+= Introduction =
+
+The terms here will suggest classes, but this is not a literal summary of class responsibilities or a spec. 
+
+This is a provisional document and should be edited into shape. 
+
+
+== Overview ==
+  # A tournament is a set of matches between players, such that each combination of players plays a match. Players must play against themselves, order is not significant. 
+  # A match is a set of games between or among a particular set of players. 
+  # A game is a set of moves conforming to a set of rules such, beginning from an initial state and continuing to a termination according to the rules. 
+  # A state (or "board") is either the initial state of the game, or the consequence of some move. In pure games of strategy, the state is a derived object, since it is always predictable from the rules of the game and the list of moves leading to it. In games with an element of randomness, the state is not purely derived from the list of moves. 
+     * This is a decision point, which I do not mean to impose as final. 
+  # A move is a legal transformation of the state of the game. "Legal" means conforming all rules of the game. 
+  # A Player is an object which can serve as a source of moves. This can include alorithmic players, random move generators, or human players. 
+  # A game aggregates, minimally, a list of moves and states. This is sufficient to recreate any needed information. Games may, optionally, aggregate move-by-move statistics
+  # A match aggregates, at minimum, a list of games. This list of games is sufficient to produce any required derived statistics. Matches may, optionally, aggregate game-by-game statistics. Matches may also provide pass-through access to any statistics gathered by games. 
+  # Tournaments aggregate a list of Matches. Tournaments may optionally provide match-by-match statistics, and access to statistics gathered by matches.
+  #  ? A player aggregates a list of matches in which that player has participated. 
+
+
+== Discussion == 
+
+(edit at will above this line, discuss at will below it)
