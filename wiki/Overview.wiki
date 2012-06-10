@@ -1,6 +1,6 @@
 #summary Aerial view of Tournament
 
-= Introduction =
+== Introduction ==
 
 The terms here will suggest classes, but this is not a literal summary of class responsibilities or a spec. 
 
