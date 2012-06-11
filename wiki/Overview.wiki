@@ -24,3 +24,23 @@ This is a provisional document and should be edited into shape.
 == Discussion == 
 
 (edit at will above this line, discuss at will below it)
+
+Are you saying a Game itself is the object to hold on to the Moves played? Are we passing Game to Match?
+
+What if the system looked like this:
+
+  # Player interacts with the state to come up with a specified Move.
+  # The state then generates a Move based on the player's decision, then executes it.
+  # The state signs the Player's name to the Move and verifies that it's legal (which the interface the player uses can do BEFORE generating a Move so that we know all instantiated Moves are legal) all under the hood. Once a Move has all the data it needs filled in the Move can be passed to the Game, which will keep a record of it and proceed to the next turn. Moves include:
+    * turn the move was taken
+    * who made the Move
+    * whether the Move requires the player to take another turn after this
+    * whether the Move eliminates another player
+    * how long did the player take to make their move? (interesting one! for humans, it would show how long they needed to think, but for AI it would show their efficiency)
+  # The Game can then pass back a set of Moves and the Match will record a set of Games.
+
+We can then write a StatisticManager or something that has all the required methods to derive stats from the Moves. For now, if that doesn't take too long that can suffice, otherwise we can have the StatisticManager compile the stats into some form.
+
+This would also allow for some form of undo/redo mechanic for human implementations and for replays to be saved.
+
+How does that sound?
