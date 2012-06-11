@@ -31,6 +31,7 @@ What if the system looked like this:
 
   # Player interacts with the state to come up with a specified Move.
   # The state then generates a Move based on the player's decision, then executes it.
+    * Note: The Move should be generated such that if it were passed back into the state, it would produce the exact same results each time. That means based on your idea about randomness, the Move may also need to contain the seed, or the pre-obtained random result.
   # The state signs the Player's name to the Move and verifies that it's legal (which the interface the player uses can do BEFORE generating a Move so that we know all instantiated Moves are legal) all under the hood. Once a Move has all the data it needs filled in the Move can be passed to the Game, which will keep a record of it and proceed to the next turn. Moves include:
     * turn the move was taken
     * who made the Move
@@ -44,3 +45,5 @@ We can then write a StatisticManager or something that has all the required meth
 This would also allow for some form of undo/redo mechanic for human implementations and for replays to be saved.
 
 How does that sound?
+
+----
