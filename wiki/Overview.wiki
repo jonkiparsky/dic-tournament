@@ -25,7 +25,10 @@ This is a provisional document and should be edited into shape.
 
 (edit at will above this line, discuss at will below it)
 
-Are you saying a Game itself is the object to hold on to the Moves played? Are we passing Game to Match?
+rs: Are you saying a Game itself is the object to hold on to the Moves played? Are we passing Game to Match?
+
+jpk: yes, that's my thought. A game is a playing through of a set of rules by a set of players. Game, in the sense of "Are you going to the game?", not "Baseball is my favorite game". 
+
 
 What if the system looked like this:
 
