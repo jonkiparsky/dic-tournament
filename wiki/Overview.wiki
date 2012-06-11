@@ -30,6 +30,11 @@ rs: Are you saying a Game itself is the object to hold on to the Moves played? A
 jpk: yes, that's my thought. A game is a playing through of a set of rules by a set of players. Game, in the sense of "Are you going to the game?", not "Baseball is my favorite game". 
 
 
+
+
+----
+begin rs:
+
 What if the system looked like this:
 
   # Player interacts with the state to come up with a specified Move.
@@ -49,4 +54,17 @@ This would also allow for some form of undo/redo mechanic for human implementati
 
 How does that sound?
 
-----
+(end rs)
+----  
+
+jpk:
+
+Some good ideas there, but I worry a bit about over-complicating it. For now can we say that a minimal move is the move itself and the identity of the Player making it, and allow as how the Game might tack on some other information later?
+
+Also with the statistics - since I know that storing the lists of Moves, Games, and Matches will in principle allow total recreation of the games - everything that the games know and the players know will be stored and organized - I want to stay agnostic on when we'll calculate particular details.
+It may become obvious that certain details should be collected at certain points, but if we try to lock that stuff in now, we'll maybe lock out other good ideas that will become more obvious as we build it. 
+
+
+As for your model of the move, I'm not sure, I'll have to internalize it. My immediate impression is: a Player should be able to generate a legal move without verifying it. If they can't, they should lose the game. An AI that can generate a wrong move is either so stupid it should be drummed out of the game, or so smart that we should worry about whether it's legal to turn it off. 
+
+I have to wonder what the interaction is between player and state. *Maybe we should just give the player the previous player's move and let them maintain their own state?* That would model more the chess-by-mail scenario. That would also insulate the board from jiggery-pokery of the sort we got tangled up in over the last few days.  
