@@ -16,6 +16,24 @@ public class TTT2DBoard implements Board {
 		reset();
 	}
 
+
+	public int state()
+	{
+		return 10000;  // this is wrong of course
+	}
+
+
+	public void submit (Move m, Player p)
+	{
+		// implementation required
+	}
+
+	public void apply(Move m, Player p)
+	{
+		// implementation required
+	}
+
+
 	public void reset() {
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
@@ -75,7 +93,7 @@ public class TTT2DBoard implements Board {
             
       TTT2DBoard passedBoard = (TTT2DBoard)b;
       
-			if (passedBoard[x][y] == UNSET)
+			if ( true)  // passedBoard[x][y] == UNSET)
 				return true;
 			else
 				return false;
