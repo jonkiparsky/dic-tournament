@@ -17,5 +17,5 @@ public abstract class Player
 	 *	reference to this player.
 	*/
 
-	public abstract void makeMove(Board b);
+	public abstract Move makeMove(Board b);
 }
