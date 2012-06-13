@@ -67,4 +67,9 @@ It may become obvious that certain details should be collected at certain points
 
 As for your model of the move, I'm not sure, I'll have to internalize it. My immediate impression is: a Player should be able to generate a legal move without verifying it. If they can't, they should lose the game. An AI that can generate a wrong move is either so stupid it should be drummed out of the game, or so smart that we should worry about whether it's legal to turn it off. 
 
-I have to wonder what the interaction is between player and state. *Maybe we should just give the player the previous player's move and let them maintain their own state?* That would model more the chess-by-mail scenario. That would also insulate the board from jiggery-pokery of the sort we got tangled up in over the last few days.  
+I have to wonder what the interaction is between player and state. *Maybe we should just give the player the previous player's move and let them maintain their own state?* That would model more the chess-by-mail scenario. That would also insulate the board from jiggery-pokery of the sort we got tangled up in over the last few days. 
+----
+rs:
+The chess-by-mail idea brings up a good point. On one hand, we want the player to be able to know what the board looks like, but passing an entire state could be bulky if say, we expanded to sending moves over a network. Much better to just send a Move. But the player shouldn't have to worry about updating his own Board, he should just be able to call getState() for an up-to-date version of the game board, where we take the liberty of updating it for him (based on whatever Move) before his makeMove() method is called.
+
+So I'm thinking a Player class should maintain a Board, but the one thing that I'm concerned about is if we have public methods to interact with that board, the player could override them or attempt to use them to submit his Move (thinking that might be what he has to do), and then we might try to submit the player's Move, and all of a sudden the Board is out of sync.
