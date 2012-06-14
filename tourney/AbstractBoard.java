@@ -25,10 +25,13 @@ public abstract class AbstractBoard implements Board
 	private Game game;
 	private boolean okayGo;		
 
+	private Player winner;
+
 	public AbstractBoard(Game game)
 	{
 		this.game = game;
 		state= GAME_CONTINUE;
+		winner = null;
 	}
 
 
@@ -48,33 +51,33 @@ public abstract class AbstractBoard implements Board
 	 */
 	public void submit(Move move, Player player)
 	{
-		if (game.confirmPlayerToMove(player))
-		{
-			okayGo=true;    // to prevent Players from calling apply directly
-			apply(move, player);  
-			okayGo = false;
-			game.confirmMoveMade();
-		}
-	
 	}
 
-	public void apply (Move move, Player player)
-	{
-		if (okayGo)
-		{
-			// do the move
-		}
-	}
+	public abstract void apply (Move move, Player player);
 
 	public int state()
 	{
 		return state;
 	}
 
+	private void setState(int state)
+	{
+		this.state = state;
+		
+	}
+	public boolean gameOver()
+	{
+		return state == GAME_OVER || state == ILLEGAL;
+	}
 
 	/**
 	 * Resets the board to empty, so that a new game can be played on it from
 	 * the beginning.
 	 */
 	public abstract void reset();
+
+	public Player winner()
+	{
+		return winner;
+	}
 }

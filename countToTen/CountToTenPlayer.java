@@ -12,8 +12,10 @@ public class CountToTenPlayer extends Player
 		this.name = name;
 	}
 
-	public void makeMove(Board b)
+	public Move makeMove(Board b)
 	{
-		// do nothing yet
+		CountToTenBoard cb = (CountToTenBoard)b;
+		return new CountToTenMove(cb.getMove(), this);
 	}
+	
 }
