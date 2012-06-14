@@ -12,15 +12,25 @@ public class Tournament {
 	public static void main(String[] args) {
 		Game g = new CountToN();
 
+
 		ArrayList<Player> players = new ArrayList<Player>();
 		players.add(g.getHumanPlayer());
 		players.add(g.getDefaultAIPlayer());
 
-		List<Move> moves = g.play(players);
+		Match match = new Match(g, players, 2);
+		//match.playMatch();
+
+
+		ArrayList<ArrayList<Move>> gameRecords = match.playMatch();
 		
-		Move move = moves.get(moves.size() - 1);
-		
-		System.out.println("The winner is "+move.getPlayer().getID());
+		//match.getGameRecords();
+			
+		for (ArrayList<Move> gameRecord:gameRecords)
+		{
+			
+			Move move = gameRecord.get(gameRecord.size() - 1);
+			System.out.println("The winner is "+move.getPlayer().getID());			
+		}	
 	}
 
 
