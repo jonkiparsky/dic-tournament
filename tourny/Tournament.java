@@ -30,8 +30,8 @@ public class Tournament {
 	*	order is not significant. For a 3-player game, with players a, b, c, d, e
 	*	the set <a,a,a> and <a,a,b> must be generated, but <a,a,b> and <b,a,a>
 	*	must not both be generated. 
-	*/ We will need this presently. It will also need improved. 
-
+	* We will need this presently. It will also need improved. 
+	*/
 	// This only works for two-player games now. 
    // We should worry about combinations here - consider what happens if we try
    // to play Chinese Checkers, and 20 people submit Players!
