@@ -9,6 +9,8 @@ import tourny.Player;
  */
 public class CountToNPlayer implements Player {
 
+	private final String id = "C2N_Default_1";
+
 	@Override
 	public Move getMove(GameState state) {
 		// This player assumes the state is a CountState
@@ -17,6 +19,11 @@ public class CountToNPlayer implements Player {
 		CountMove move = CountState.getMoveForNumber(cState.getCount() + 1);
 
 		return move;
+	}
+
+	public String getID()
+	{
+		return id;
 	}
 
 }

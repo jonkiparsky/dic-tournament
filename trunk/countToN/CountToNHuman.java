@@ -12,6 +12,8 @@ import tourny.Player;
 public class CountToNHuman implements Player {
 	static Scanner input = new Scanner(System.in);
 
+	private String id = "C2N_Human_Player";
+
 	@Override
 	public Move getMove(GameState state) {
 		// This player assumes the state is a CountState
@@ -25,4 +27,8 @@ public class CountToNHuman implements Player {
 		return move;
 	}
 
+	public String getID()
+	{
+		return id;
+	}
 }

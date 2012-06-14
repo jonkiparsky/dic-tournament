@@ -10,10 +10,8 @@ public class Tournament {
 		Game g = new CountToN();
 
 		ArrayList<Player> players = new ArrayList<Player>();
-		Player jon = g.getDefaultAIPlayer();
-		Player sheph = g.getDefaultAIPlayer();
-		players.add(jon);
-		players.add(sheph);
+		players.add(g.getHumanPlayer());
+		players.add(g.getDefaultAIPlayer());
 
 		List<Move> moves = g.play(players);
 		
@@ -21,8 +19,6 @@ public class Tournament {
 		Move move = moves.get(moves.size() - 1);
 		
 		// did I win?
-		if (move.getPlayer() == sheph) {
-			System.out.println("Sheph wins!");
-		}
+		System.out.println("The winner is "+move.getPlayer().getID());
 	}
 }

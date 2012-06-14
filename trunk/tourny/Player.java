@@ -12,4 +12,13 @@ public interface Player {
 	 * implementations can be made higher up the ladder, in my opinion)
 	 */
 	Move getMove(GameState state);
+
+
+	/**
+	*	A Player must have a unique identifier. This will allow stats to make
+	*	coherent reports. 
+	*	Tentative suggestion: ID should be composed of a game code, player's DIC
+	*	member name, and a serial number (to allow for multiple entries)
+	*/
+	String getID();
 }
