@@ -8,6 +8,7 @@ A rough list of things that need to be done. This should become an ordered list 
 = To do =
   * redefine the contract for the player interface
   * annotateMove() method
+  * updateEachPlayer() method
   * Game communication to Player
   * statistics  (rough framework)
   * presentable statistics report
