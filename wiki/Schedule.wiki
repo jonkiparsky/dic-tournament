@@ -8,10 +8,10 @@ A rough list of things that need to be done. This should become an ordered list 
 = To do =
   * Game communication to Player
   * statistics
-  *presentable statistics report
-  *statistics: architecture
-  *administrivia: loading Players
-  *administrivia: user interface for Tournament
-  *generating/naming player IDs
-  *game mechanics need work
-  *security of moves
+  * presentable statistics report
+  * statistics: architecture
+  * administrivia: loading Players
+  * administrivia: user interface for Tournament
+  * generating/naming player IDs
+  * game mechanics need work
+  * security of moves
