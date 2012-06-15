@@ -6,6 +6,8 @@
 A rough list of things that need to be done. This should become an ordered list of tasks. It would be nice to have two views on this: one showing dependencies, one showing a sort of "release timetable" (by features, not by calendar)
 
 = To do =
+  * redefine the contract for the player interface
+  * annotateMove() method
   * Game communication to Player
   * statistics  (rough framework)
   * presentable statistics report
