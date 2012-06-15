@@ -7,7 +7,7 @@ A rough list of things that need to be done. This should become an ordered list 
 
 = To do =
   * Game communication to Player
-  * statistics
+  * statistics  (rough framework)
   * presentable statistics report
   * statistics: architecture
   * administrivia: loading Players
@@ -15,3 +15,4 @@ A rough list of things that need to be done. This should become an ordered list 
   * generating/naming player IDs
   * game mechanics need work
   * security of moves
+
