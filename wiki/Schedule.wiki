@@ -13,8 +13,8 @@ A rough list of things that need to be done. This should become an ordered list 
   * statistics  (rough framework)
   * presentable statistics report
   * statistics: architecture
-  * administrivia: loading Players - *rough copy (JPK)*
-  * administrivia: user interface for Tournament *roughly in place (JPK)
+  * administrivia: loading Players - needs revision
+  * administrivia: user interface for Tournament - needs revision
   * generating/naming player IDs - *in progress (RS)*
   * game mechanics need work
   * security of moves
