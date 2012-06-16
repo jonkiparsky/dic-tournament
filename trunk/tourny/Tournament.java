@@ -13,6 +13,9 @@ public class Tournament {
 		Game g = new CountToN();
 
 
+		TestReflect tr = new TestReflect();
+		tr.listGames();		
+
 		ArrayList<Player> players = new ArrayList<Player>();
 		players.add(g.getHumanPlayer());
 		players.add(g.getDefaultAIPlayer());
@@ -32,6 +35,9 @@ public class Tournament {
 			System.out.println("The winner is "+move.getPlayer().getID());			
 		}	
 	}
+
+
+	
 
 
 	/** 
