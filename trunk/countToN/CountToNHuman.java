@@ -16,7 +16,7 @@ public class CountToNHuman implements Player {
 	private String id = "C2N_Human_Player";
 
 	@Override
-	public Move getMove(GameState state) {
+	public Move getMove() {
 		// This player assumes the state is a CountState
 		CountState cState = (CountState) state;
 
@@ -34,7 +34,7 @@ public class CountToNHuman implements Player {
 	}
 
 	@Override
-	public void apply(Update update) {
+	public void apply(Move move) {
 		// TODO Auto-generated method stub
 	}
 }
