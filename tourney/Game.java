@@ -35,4 +35,8 @@ public interface Game {
 	 * is the size of this return value.
 	 */
 	int playersPerGame();
+
+	String getName();
+
+	String getAuthor();
 }

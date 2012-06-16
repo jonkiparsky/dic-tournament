@@ -1,5 +1,6 @@
 package tourney;
 
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,15 +8,36 @@ import countToN.CountToN;
 
 public class Tournament {
 
+	private static HashMap<Class, ArrayList<Class>> gamesToPlayersMap;
+
 	private static int playersPerGame = 2;
 
 	public static void main(String[] args) {
 		Game g = new CountToN();
 
+		gamesToPlayersMap = null;
 
-		TestReflect tr = new TestReflect();
-		tr.listGames();		
+		Loader loader= new Loader();
+		try{
+		gamesToPlayersMap = loader.listGames();		
+		}
+		catch (TourneyException te)
+		{	
+			te.printStackTrace();
+		}
+		
+		for (Class c :gamesToPlayersMap.keySet())
+		{
+			System.out.print ("Game: ");
+			System.out.println(c.getName());
+			System.out.println("Players: ");
+			for (Class player: gamesToPlayersMap.get(c))
+			{
+				System.out.println("\t" + player.getName());
+			}
+		}
 
+		
 		ArrayList<Player> players = new ArrayList<Player>();
 		players.add(g.getHumanPlayer());
 		players.add(g.getDefaultAIPlayer());
@@ -34,6 +56,16 @@ public class Tournament {
 			Move move = gameRecord.get(gameRecord.size() - 1);
 			System.out.println("The winner is "+move.getPlayer().getID());			
 		}	
+		
+		try {
+			throw new TourneyException("Got to end of game");
+
+		}
+
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 
