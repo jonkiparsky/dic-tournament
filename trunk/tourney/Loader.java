@@ -69,4 +69,25 @@ public class Loader
 		
 		}
 	}
+
+	public Game loadGame(Class c) throws TourneyException
+	{
+
+		Object o = null;
+		try{
+			o = c.newInstance();
+		}
+		catch(Exception e)
+		{	
+			e.printStackTrace();
+			System.exit(1);
+		}
+		if (o instanceof Game)
+		{
+			return (Game) o;
+		}
+		else throw new TourneyException("loadGame failed: "+c.getName()+
+			" does not extend Game");
+
+	}
 }
