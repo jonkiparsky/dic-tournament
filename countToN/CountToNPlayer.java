@@ -28,7 +28,7 @@ public class CountToNPlayer implements Player {
 	}
 
 	@Override
-	public void apply(Update update) {
+	public void apply(Move move) {
 		// TODO Auto-generated method stub
 		
 	}

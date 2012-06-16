@@ -12,7 +12,7 @@ public interface Player {
 	 * Each player keeps track of their own state of affairs and are responsible
 	 * for keeping it up to date.
 	 */
-	Move getMove(GameState s);
+	Move getMove();
 
 	/**
 	 * A Player must have a unique identifier. This will allow stats to make
@@ -32,8 +32,8 @@ public interface Player {
 	String getID();
 
 	/**
-	 * Sends an update structure to the player so they may appropriately change
+	 * Sends an update to the player so they may appropriately change
 	 * their game's state.
 	 */
-	void apply(Update update);
+	void apply(Move move);
 }
