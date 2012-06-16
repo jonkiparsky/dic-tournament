@@ -13,6 +13,10 @@ import tourney.Player;
  */
 public class CountToN implements Game {
 	// the recommended implementations for testing.
+
+	private static String name = "Count To Ten";
+	private static String author = "R. Shepherd";
+
 	private static Player defaultAI = new CountToNPlayer();
 	private static Player human = new CountToNHuman();
 
@@ -74,5 +78,15 @@ public class CountToN implements Game {
 
 	public int playersPerGame() {
 		return numberOfPlayers;
+	}
+	
+	public String getName()
+	{
+		return name;
+	}
+	
+	public String getAuthor()
+	{
+		return author;
 	}
 }

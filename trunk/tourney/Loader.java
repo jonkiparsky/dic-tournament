@@ -1,6 +1,5 @@
 package tourney;
 
-import countToTen.*;
 import countToN.*;
 
 import java.util.HashMap;
@@ -8,26 +7,25 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.FileFilter;
 
-public class TestReflect
+public class Loader
 {
 
-	public void listGames()
+	public HashMap<Class, ArrayList<Class>> listGames() throws TourneyException
 	{
-		File root = new File ("./src");
-		
-		System.out.println(File.class.getName());
-	
-
+			HashMap<Class, ArrayList<Class>> gamesToPlayersMap =
+				new HashMap<Class, ArrayList<Class>>();
+		File root = new File("./src");
 		for (File f: root.listFiles(new FFilter()))
 		{
 			ArrayList<Class> games = new ArrayList<Class>();
 			ArrayList<Class> players = new ArrayList<Class>();
 			for (File classFile : f.listFiles(new FFilter()))
 			{	
-				
+				String packagedName;
 				String className = classFile.getName().replace(".java", "");
+				packagedName =f.getName() + "."+className; 
 				try {
-					Class c = Class.forName(f.getName() + "."+className);
+					Class c = Class.forName(packagedName);
 					if (Game.class.isAssignableFrom(c)){
 						games.add(c);
 					}
@@ -42,16 +40,22 @@ public class TestReflect
 					e.printStackTrace();
 				}
 			}	
-			for (Class c:games)
+			if (games.size()!= 1)
 			{
-				System.out.println("Game: "+c.getName());
-			}
-			for (Class c:players)
+				for (Class c: games) System.out.println(c);
+				throw new TourneyException("Too many games in directory " +
+					f.getName());
+			}			
+			else
 			{
-				System.out.println("Player: "+c.getName());
+				Class game = games.get(0);
+				
+				gamesToPlayersMap.put(game, players);
 			}
-		
+
+				
 		}	
+		return gamesToPlayersMap;
 	}
 	
 
