@@ -90,4 +90,33 @@ public class Loader
 			" does not extend Game");
 
 	}
+
+	public ArrayList<Player> loadPlayers (ArrayList<Class> classList)
+		throws TourneyException
+	{
+		ArrayList<Player> players = new ArrayList<Player>();
+		for (Class c: classList)
+		{
+	
+			Object o = null;
+			try {
+	
+				o = c.newInstance();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				System.exit(1);
+			}
+
+			if (o instanceof Player)
+				players.add ((Player) o);
+			else
+				throw new TourneyException("loadPlayers found non-Player object: "+
+					c.getName());
+			
+		}
+		return players;
+
+	}
 }
