@@ -5,6 +5,7 @@ import java.util.Scanner;
 import tourney.GameState;
 import tourney.Move;
 import tourney.Player;
+import tourney.Update;
 
 /**
  * Recommended human implementation for the Count to N game.
@@ -30,5 +31,10 @@ public class CountToNHuman implements Player {
 	public String getID()
 	{
 		return id;
+	}
+
+	@Override
+	public void apply(Update update) {
+		// TODO Auto-generated method stub
 	}
 }

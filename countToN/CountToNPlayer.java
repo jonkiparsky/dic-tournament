@@ -3,6 +3,7 @@ package countToN;
 import tourney.GameState;
 import tourney.Move;
 import tourney.Player;
+import tourney.Update;
 
 /**
  * Default AI player for CountToN. He plays the game flawlessly.
@@ -26,4 +27,9 @@ public class CountToNPlayer implements Player {
 		return id;
 	}
 
+	@Override
+	public void apply(Update update) {
+		// TODO Auto-generated method stub
+		
+	}
 }

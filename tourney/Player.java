@@ -8,17 +8,32 @@ package tourney;
  */
 public interface Player {
 	/**
-	 * Demand a move from the player based on the given state. (Chess-by-mail
-	 * implementations can be made higher up the ladder, in my opinion)
+	 * Demand a move from the player. No longer requires a state to be passed!
+	 * Each player keeps track of their own state of affairs and are responsible
+	 * for keeping it up to date.
 	 */
-	Move getMove(GameState state);
-
+	Move getMove(GameState s);
 
 	/**
-	*	A Player must have a unique identifier. This will allow stats to make
-	*	coherent reports. 
-	*	Tentative suggestion: ID should be composed of a game code, player's DIC
-	*	member name, and a serial number (to allow for multiple entries)
-	*/
+	 * A Player must have a unique identifier. This will allow stats to make
+	 * coherent reports. Tentative suggestion: ID should be composed of a game
+	 * code, player's DIC member name, and a serial number (to allow for
+	 * multiple entries)
+	 * 
+	 * R.S: Suggested Form: GameName_DICName_Submission#_Instance#
+	 * 
+	 * GameName and DICName should be obvious.
+	 * 
+	 * Submission# is the number of their entry. (ie, TTT_Sheph_1 and
+	 * TTT_Sheph_2 are my two implementations.)
+	 * 
+	 * Instance# will be reserved for when we put TTT_Sheph_1 vs TTT_Sheph_1.
+	 */
 	String getID();
+
+	/**
+	 * Sends an update structure to the player so they may appropriately change
+	 * their game's state.
+	 */
+	void apply(Update update);
 }
