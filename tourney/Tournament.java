@@ -2,6 +2,7 @@ package tourney;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.List;
 
 import countToN.CountToN;
@@ -25,19 +26,24 @@ public class Tournament {
 		{	
 			te.printStackTrace();
 		}
-		
-		for (Class c :gamesToPlayersMap.keySet())
-		{
-			System.out.print ("Game: ");
-			System.out.println(c.getName());
-			System.out.println("Players: ");
-			for (Class player: gamesToPlayersMap.get(c))
-			{
-				System.out.println("\t" + player.getName());
-			}
-		}
+		System.out.println ("Games available: ");
 
+		Class[] gamesArray = gamesToPlayersMap.keySet().toArray(new Class[1]);
+		for (int i = 1; i <= gamesArray.length; i ++)
+		{
+			System.out.println(i+ ") "+gamesArray[i-1].getName());
+		}
 		
+		System.out.print("Enter the number of your preferred game: ");
+		Scanner scan = new Scanner(System.in);
+		try{	
+		g = loader.loadGame(gamesArray[scan.nextInt()-1]);
+		}
+		catch (TourneyException te)
+		{
+			te.printStackTrace();
+			System.exit(1);
+		}
 		ArrayList<Player> players = new ArrayList<Player>();
 		players.add(g.getHumanPlayer());
 		players.add(g.getDefaultAIPlayer());
@@ -57,15 +63,8 @@ public class Tournament {
 			System.out.println("The winner is "+move.getPlayer().getID());			
 		}	
 		
-		try {
-			throw new TourneyException("Got to end of game");
-
-		}
-
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+		System.out.println("Tournament reached end of main.");
+		
 	}
 
 
