@@ -6,7 +6,7 @@
 A rough list of things that need to be done. This should become an ordered list of tasks. It would be nice to have two views on this: one showing dependencies, one showing a sort of "release timetable" (by features, not by calendar)
 
 = To do list =
-  * redefine the contract for the player interface - *in progress (RS)*
+  * redefine the contract for the player interface - *done for now*
   * annotateMove() method
   * updateEachPlayer() method
   * Game communication to Player - *in progress (RS)*
@@ -15,7 +15,7 @@ A rough list of things that need to be done. This should become an ordered list 
   * statistics: architecture
   * administrivia: loading Players - needs revision
   * administrivia: user interface for Tournament - needs revision
-  * generating/naming player IDs - *in progress (RS)*
+  * generating/naming player IDs
   * game mechanics need work
   * security of moves
 
