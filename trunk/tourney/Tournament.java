@@ -36,15 +36,18 @@ public class Tournament {
 		
 		System.out.print("Enter the number of your preferred game: ");
 		Scanner scan = new Scanner(System.in);
+		Class chosenClass =gamesArray[scan.nextInt()-1];
+		ArrayList<Player> players = null;
 		try{	
-		g = loader.loadGame(gamesArray[scan.nextInt()-1]);
+		g = loader.loadGame(chosenClass);
+		players =loader.loadPlayers(gamesToPlayersMap.get(chosenClass));
 		}
 		catch (TourneyException te)
 		{
 			te.printStackTrace();
 			System.exit(1);
 		}
-		ArrayList<Player> players = new ArrayList<Player>();
+		
 		players.add(g.getHumanPlayer());
 		players.add(g.getDefaultAIPlayer());
 
