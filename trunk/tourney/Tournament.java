@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
 
-import countToN.CountToN;
 
 public class Tournament {
 
@@ -14,7 +13,7 @@ public class Tournament {
 	private static int playersPerGame = 2;
 
 	public static void main(String[] args) {
-		Game g = new CountToN();
+		Game g =null; 
 
 		gamesToPlayersMap = null;
 
