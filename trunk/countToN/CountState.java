@@ -1,7 +1,7 @@
 package countToN;
 
-import tourny.GameState;
-import tourny.Move;
+import tourney.GameState;
+import tourney.Move;
 
 /** A simple GameState for maintaining a count. */
 public class CountState extends GameState {

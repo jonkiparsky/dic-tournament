@@ -1,4 +1,4 @@
-package tourny;
+package tourney;
 
 /**
  * A Player could be used to implement a human player for interactive contexts.

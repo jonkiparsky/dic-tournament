@@ -3,9 +3,9 @@ package countToN;
 import java.util.ArrayList;
 import java.util.List;
 
-import tourny.Game;
-import tourny.Move;
-import tourny.Player;
+import tourney.Game;
+import tourney.Move;
+import tourney.Player;
 
 /**
  * Simple Game that plays through a list of players, asking them to count to a

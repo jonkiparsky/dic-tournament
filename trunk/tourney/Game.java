@@ -1,4 +1,4 @@
-package tourny;
+package tourney;
 
 import java.util.List;
 
