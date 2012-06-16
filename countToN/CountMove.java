@@ -1,6 +1,6 @@
 package countToN;
 
-import tourny.Move;
+import tourney.Move;
 
 /**
  * Simple move for count to N. I purposely allowed for their to be an illegal

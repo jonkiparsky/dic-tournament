@@ -1,4 +1,4 @@
-package tourny;
+package tourney;
 
 /*
  * Previously named 'Board', I think GameState more accurately reflects the

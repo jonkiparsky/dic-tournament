@@ -2,9 +2,9 @@ package countToN;
 
 import java.util.Scanner;
 
-import tourny.GameState;
-import tourny.Move;
-import tourny.Player;
+import tourney.GameState;
+import tourney.Move;
+import tourney.Player;
 
 /**
  * Recommended human implementation for the Count to N game.

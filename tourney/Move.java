@@ -1,4 +1,4 @@
-package tourny;
+package tourney;
 
 /**
  * A Move encapsulates a Player's turn. It is a set of directions for altering
