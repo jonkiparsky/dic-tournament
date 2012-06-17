@@ -1,9 +1,7 @@
 package countToN;
 
-import tourney.GameState;
 import tourney.Move;
 import tourney.Player;
-import tourney.Update;
 
 /**
  * Default AI player for CountToN. He plays the game flawlessly.
