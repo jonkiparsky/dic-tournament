@@ -13,6 +13,7 @@ public abstract class Game {
 
 	protected Move move;
 	protected ArrayList<Player> players;
+	protected ArrayList<Player> activePlayers;
 	protected ArrayList<Move> moveList = new ArrayList<Move>();
 	protected Player currentPlayer = null;
 
@@ -21,8 +22,10 @@ public abstract class Game {
 	 * that depicts a record of the game.
 	 */
 	public List<Move> play(List<Player> players) {
+		System.out.println("players length = " +players.size());
 		// Define what we'll need for a Game
 		this.players = new ArrayList<Player>(players);	
+		this.activePlayers = new ArrayList<Player>(players);
 				// alternative is to simply pass around ArrayLists, which I'm okay
 				// with -jpk
 		moveList = new ArrayList<Move>();
@@ -110,6 +113,7 @@ public abstract class Game {
 	 * Move. Implementations can annotate them accordingly.
 	 */
 	protected void updateEachPlayer(List<Player> players) {
+		System.out.println("length of players = "+ players.size());
 		for (Player player : players) {
 			player.update(moveForPlayer(player));
 		}

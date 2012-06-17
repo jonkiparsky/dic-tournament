@@ -32,8 +32,8 @@ public class Loader
 					if (Player.class.isAssignableFrom(c)){
 						players.add(c);
 					}
-					System.out.println("Okay with: " + c.getName()+
-							games.contains(c)+" "+players.contains(c));	
+//					System.out.println("Okay with: " + c.getName()+
+//							games.contains(c)+" "+players.contains(c));	
 				}
 			
 				catch(Exception e) {  // evil, clean this up
