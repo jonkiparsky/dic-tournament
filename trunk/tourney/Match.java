@@ -33,7 +33,7 @@ public  class Match
 	{
 		for (int i = 0; i<numberOfGames; i++)
 		{
-			gameRecords.add((ArrayList)game.play(players));
+			gameRecords.add((ArrayList<Move>)game.play(players));
 			players.add(players.remove(0));  	// rotate players;
 		}	
 		return gameRecords;

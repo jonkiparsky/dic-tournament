@@ -41,9 +41,8 @@ public class CountToN extends Game {
 
 	protected void processMove()
 	{
-		move.setPlayer(currentPlayer);
+		super.processMove();
 		count = ((CountMove)move).getCount(); 	// we could just increment 
-															//count, I suppose...
 	}
 
 
