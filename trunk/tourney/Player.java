@@ -35,5 +35,5 @@ public interface Player {
 	 * Sends an update to the player so they may appropriately change
 	 * their game's state.
 	 */
-	void apply(Move move);
+	void update(Move move);
 }

@@ -10,16 +10,23 @@ import tourney.Update;
  */
 public class CountToNPlayer implements Player {
 
-	private final String id = "C2N_Default_1";
+	private String id = "C2N_Default";
+	private static int instanceCounter = 0;
+
+
+	private int currentCount = 0;
+	public CountToNPlayer()
+	{
+		instanceCounter++;
+		id += instanceCounter;
+	}
 
 	@Override
-	public Move getMove(GameState state) {
-		// This player assumes the state is a CountState
-		CountState cState = (CountState) state;
+	public Move getMove() {
+		// This player assumes the submitted Move is a CountMove
+		CountMove myMove = new CountMove(currentCount + 1);
 
-		CountMove move = CountState.getMoveForNumber(cState.getCount() + 1);
-
-		return move;
+		return myMove;
 	}
 
 	public String getID()
@@ -28,8 +35,8 @@ public class CountToNPlayer implements Player {
 	}
 
 	@Override
-	public void apply(Move move) {
-		// TODO Auto-generated method stub
-		
+	public void update(Move move) {
+		CountMove cMove = (CountMove) move;
+		currentCount = cMove.getCount();
 	}
 }

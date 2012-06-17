@@ -11,7 +11,7 @@ import tourney.Player;
  * Simple Game that plays through a list of players, asking them to count to a
  * number by rotating each player and asking them for the next number in turn.
  */
-public class CountToN implements Game {
+public class CountToN extends Game {
 	// the recommended implementations for testing.
 
 	private static String name = "Count To Ten";
@@ -24,7 +24,7 @@ public class CountToN implements Game {
 	private List<Move> moveList;
 
 	/** The current state of the game. */
-	private CountState state;
+	private int count;
 
 	private int numberOfPlayers;
 	private int howHigh; // how high you count until game over.
@@ -35,37 +35,37 @@ public class CountToN implements Game {
 	}
 
 	public CountToN(int numberOfPlayers, int howHigh) {
-		state = new CountState();
 		moveList = new ArrayList<Move>(); // chose simple ArrayList for now
 		this.numberOfPlayers = numberOfPlayers;
 		this.howHigh = howHigh;
+		this.count = 0;
 	}
 
-	public List<Move> play(List<Player> players) {
-		int count = 0;
 
-		while (count < howHigh) {
-			int indexOfPlayer = count % numberOfPlayers;
+	protected boolean isLegal(Move move)
+	{
+		CountMove cMove = (CountMove) move;
+		return cMove.getCount() == count +1;
+	}
 
-			Player currentPlayer = players.get(indexOfPlayer);
+	protected void processMove()
+	{
+		move.setPlayer(currentPlayer);
+		count = ((CountMove)move).getCount(); 	// we could just increment 
+															//count, I suppose...
+	}
 
-			Move move = currentPlayer.getMove((CountState)state.clone());
-			move.setPlayer(currentPlayer); // set the player who made the move.
-			state.updateState(move);
 
-			// if it was legal then...
-			moveList.add(move);
+	protected void init()
+	{
+		move = new CountMove(0);
+		updateEachPlayer(players);
+		
+	}	
 
-			/*
-			 * else illegal moves force the count to stay the same and therefore
-			 * the player to stay the same, because I based who plays on the
-			 * count.
-			 */
-
-			count = state.getCount();
-		}
-
-		return moveList;
+	protected boolean keepGoing()
+	{
+		return count < howHigh;
 	}
 
 	public Player getDefaultAIPlayer() {
