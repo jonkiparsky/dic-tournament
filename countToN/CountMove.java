@@ -13,7 +13,7 @@ public class CountMove extends Move {
 		nextNumber = number;
 	}
 
-	public int getNextNumber() {
+	public int getCount() {
 		return nextNumber;
 	}
 }
