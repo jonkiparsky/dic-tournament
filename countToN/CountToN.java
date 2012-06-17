@@ -1,8 +1,5 @@
 package countToN;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import tourney.Game;
 import tourney.Move;
 import tourney.Player;
@@ -13,15 +10,11 @@ import tourney.Player;
  */
 public class CountToN extends Game {
 	// the recommended implementations for testing.
-
 	private static String name = "Count To Ten";
 	private static String author = "R. Shepherd";
 
 	private static Player defaultAI = new CountToNPlayer();
 	private static Player human = new CountToNHuman();
-
-	/** The list of moves that went down */
-	private List<Move> moveList;
 
 	/** The current state of the game. */
 	private int count;
@@ -35,12 +28,10 @@ public class CountToN extends Game {
 	}
 
 	public CountToN(int numberOfPlayers, int howHigh) {
-		moveList = new ArrayList<Move>(); // chose simple ArrayList for now
 		this.numberOfPlayers = numberOfPlayers;
 		this.howHigh = howHigh;
 		this.count = 0;
 	}
-
 
 	protected boolean isLegal(Move move)
 	{
