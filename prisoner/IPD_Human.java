@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class IPD_Human implements Player
 {
-	private String id = "IPD_Random";
+	private String id = "IPD_Human";
 	private static int instanceCounter = 0;
 	private boolean prevMove = false;
 	private boolean haveMoved=false;

@@ -59,7 +59,6 @@ public class Tournament {
 			
 		for (ArrayList<Move> gameRecord:gameRecords)
 		{
-			
 			Move move = gameRecord.get(gameRecord.size() - 1);
 			System.out.println("The winner is "+move.getPlayer().getID());			
 		}	

@@ -70,6 +70,8 @@ public abstract class Game {
 	*/
 	protected void processMove()
 	{
+		// implementations should call super.processMove();
+		move.setPlayer(currentPlayer);
 	}
 
 	/**

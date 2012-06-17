@@ -27,17 +27,6 @@ public class IteratedPrisonersDilemma extends Game
 	}
 
 
-	protected void processMove()
-	{
-		
-	}
-
-	protected void init()
-	{
-
-	}
-
-
 	protected boolean keepGoing()
 	{
 		return turns-- > 0;
