@@ -13,6 +13,10 @@ public  class Match
 	public Match(Game game, List <Player> players, int numberOfGames)
 	{
 		this.players = players;
+
+
+		System.out.println("Match - # of players = "+players.size());
+
 		this.numberOfGames= numberOfGames;
 		this.game = game;
 		gameRecords = new ArrayList<ArrayList<Move>>();

@@ -40,6 +40,7 @@ public class Tournament {
 		try{	
 		g = loader.loadGame(chosenClass);
 		players =loader.loadPlayers(gamesToPlayersMap.get(chosenClass));
+			
 		}
 		catch (TourneyException te)
 		{
@@ -47,8 +48,6 @@ public class Tournament {
 			System.exit(1);
 		}
 		
-		players.add(g.getHumanPlayer());
-		players.add(g.getDefaultAIPlayer());
 
 		Match match = new Match(g, players, 2);
 		//match.playMatch();
