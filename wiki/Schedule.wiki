@@ -33,3 +33,14 @@ Every N revisions:
       * updateEachPlayer() and Game control flow
     * Ensure Move security
   * Load players with proper IDs
+  * administrivia: user interface for Tournament:
+    * allow choice of games
+    * allow choice of 
+      * "test" - human vs choice of player
+      * "all" - play all players against each other, SKIPPING human
+      * play selected players (free choice)
+    * self-play, or no
+    * total permutation or elimination tournament
+    *  (not all options need to be implemented immediately)
+    *  (in fact, very little of this needs to be implemented immediately)
+  
