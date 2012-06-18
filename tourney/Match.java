@@ -36,6 +36,8 @@ public  class Match
 			gameRecords.add((ArrayList<Move>)game.play(players));
 			players.add(players.remove(0));  	// rotate players;
 		}	
+
+		System.out.println("In match, gameRecords length: "+gameRecords.size());
 		return gameRecords;
 	}
 
