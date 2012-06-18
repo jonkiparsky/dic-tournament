@@ -37,7 +37,6 @@ public  class Match
 			players.add(players.remove(0));  	// rotate players;
 		}	
 
-		System.out.println("In match, gameRecords length: "+gameRecords.size());
 		return gameRecords;
 	}
 
