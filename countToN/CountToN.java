@@ -33,29 +33,31 @@ public class CountToN extends Game {
 		this.count = 0;
 	}
 
-	protected boolean isLegal(Move move)
-	{
+	protected boolean isLegal(Move move) {
 		CountMove cMove = (CountMove) move;
-		return cMove.getCount() == count +1;
+		return cMove.getCount() == count + 1;
 	}
 
-	protected void processMove()
-	{
-		super.processMove();
-		count = ((CountMove)move).getCount(); 	// we could just increment 
+	protected void processMove() {
+		super.processMove(); // Needed to set the player appropriately
+		count = ((CountMove) move).getCount(); // we could just increment
+
+		move.annotate(Move.TURN, Integer.toString(count));
+		move.annotate(Move.PLAYER, currentPlayer.getID());
+		
+		if (count == howHigh) {
+			move.annotate(Move.WINNER, currentPlayer.getID());
+		}
 	}
 
-
-	protected void init()
-	{
+	protected void init() {
 		count = 0;
 		move = new CountMove(0);
 		updateEachPlayer(players);
-		
-	}	
 
-	protected boolean keepGoing()
-	{
+	}
+
+	protected boolean keepGoing() {
 		return count < howHigh;
 	}
 
@@ -70,14 +72,12 @@ public class CountToN extends Game {
 	public int playersPerGame() {
 		return numberOfPlayers;
 	}
-	
-	public String getName()
-	{
+
+	public String getName() {
 		return name;
 	}
-	
-	public String getAuthor()
-	{
+
+	public String getAuthor() {
 		return author;
 	}
 }

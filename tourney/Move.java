@@ -8,10 +8,21 @@ import java.util.HashMap;
  * and most of the time that forces them to be made in tandem.
  */
 public abstract class Move {
+	
+	/** ID of player who made this the move */
+	public static final String PLAYER = "Player";
+
+	/** ID of player who won with this move. */
+	public static final String WINNER = "Winner";
+
+	/** The turn number this move was made. */
+	public static final String TURN = "Turn";
+	
+
 	/** The player who made this Move. */
 	private Player player;
-   
-  private HashMap<String, String> annotations;
+
+	private HashMap<String, String> annotations = new HashMap<String, String>();
 
 	/** Signs this player's identity to this move. */
 	public void setPlayer(Player player) {
@@ -25,14 +36,16 @@ public abstract class Move {
 	public Player getPlayer() {
 		return player;
 	}
-   
-  public annotate(String key, String value)
-  {
-    annotations.put(key, value);
-  }
-  
-  public String getAnnotation(String key)
-  {
-    return annotations.get(key);
-  }
+
+	public void annotate(String key, String value) {
+		annotations.put(key, value);
+	}
+
+	public String getAnnotation(String key) {
+		return annotations.get(key);
+	}
+
+	public boolean isSet(String key) {
+		return annotations.containsKey(key);
+	}
 }
