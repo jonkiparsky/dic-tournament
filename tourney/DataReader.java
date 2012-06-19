@@ -21,7 +21,7 @@ public interface DataReader
 	*	This may be a longish String, but should probably be restricted to one
 	*	reasonable screen length. 
 	*/
-	public String read();
+	public String report();
 
 	/**
 	*	Starts up an interactive data explorer, allowing the tournament runner to
@@ -37,6 +37,6 @@ public interface DataReader
 	/**
 	*	Dumps data to an output file, format as yet unspecified. 
 	*/
-	public void report();
+	public void write();
 
 }
