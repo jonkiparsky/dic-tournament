@@ -1,5 +1,7 @@
 package tourney;
 
+import java.util.HashMap;
+
 /**
  * A Move encapsulates a Player's turn. It is a set of directions for altering
  * the state of a game. The relation between GameState and Move is very close
@@ -8,6 +10,8 @@ package tourney;
 public abstract class Move {
 	/** The player who made this Move. */
 	private Player player;
+   
+  private HashMap<String, String> annotations;
 
 	/** Signs this player's identity to this move. */
 	public void setPlayer(Player player) {
@@ -21,4 +25,14 @@ public abstract class Move {
 	public Player getPlayer() {
 		return player;
 	}
+   
+  public annotate(String key, String value)
+  {
+    annotations.put(key, value);
+  }
+  
+  public String getAnnotation(String key)
+  {
+    return annotations.get(key);
+  }
 }
