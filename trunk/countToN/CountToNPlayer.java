@@ -16,7 +16,7 @@ public class CountToNPlayer implements Player {
 	public CountToNPlayer()
 	{
 		instanceCounter++;
-		id += instanceCounter;
+		id += ("_" + instanceCounter);
 	}
 
 	@Override
