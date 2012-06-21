@@ -5,27 +5,36 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
 
-public class Tournament {
+import countToN.CountToNDataReader;
 
+public class Tournament
+{
+
+	static Scanner scanner = new Scanner(System.in); // For end of tourney input
+	
 	private static HashMap<Class, ArrayList<Class>> gamesToPlayersMap;
 
 	private static int playersPerGame = 2;
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		Game g = null;
 
 		gamesToPlayersMap = null;
 
 		Loader loader = new Loader();
-		try {
+		try
+		{
 			gamesToPlayersMap = loader.listGames();
-		} catch (TourneyException te) {
+		} catch (TourneyException te)
+		{
 			te.printStackTrace();
 		}
 		System.out.println("Games available: ");
 
 		Class[] gamesArray = gamesToPlayersMap.keySet().toArray(new Class[1]);
-		for (int i = 1; i <= gamesArray.length; i++) {
+		for (int i = 1; i <= gamesArray.length; i++)
+		{
 			System.out.println(i + ") " + gamesArray[i - 1].getName());
 		}
 
@@ -33,44 +42,63 @@ public class Tournament {
 		Scanner scan = new Scanner(System.in);
 		Class chosenClass = gamesArray[scan.nextInt() - 1];
 		ArrayList<Player> players = null;
-		try {
+		try
+		{
 			g = loader.loadGame(chosenClass);
 			players = loader.loadPlayers(gamesToPlayersMap.get(chosenClass));
 
-		} catch (TourneyException te) {
+		} catch (TourneyException te)
+		{
 			te.printStackTrace();
 			System.exit(1);
 		}
 
 		Match match = new Match(g, players, 2);
-		// match.playMatch();
 
-		ArrayList<ArrayList<Move>> gameRecords = match.playMatch();
-
-		// match.getGameRecords();
-
-		for (ArrayList<Move> gameRecord : gameRecords) {
-			Move move = gameRecord.get(gameRecord.size() - 1);
-			if (move.isSet(Move.WINNER)) {
-				System.out.println("The winner is "
-						+ move.getAnnotation(Move.WINNER));
-			} else if (move.isSet(Move.PLAYER)) {
-				System.out.println("We found no winner in game: " + g.getName()
-						+ ", game index #: " + gameRecords.indexOf(gameRecord));
-				System.out.println("However, the last player to play was: "
-						+ move.getAnnotation(Move.PLAYER));
-			} else {
-				System.out
-						.println("Error! We found no annotation data for Game: "
-								+ g.getName()
-								+ ", game index #: "
-								+ gameRecords.indexOf(gameRecord));
-				System.out.println("Did the game forget to record statistics?");
-			}
+		match.playMatch(); // Currently I wouldn't need its return value directly. Would you?
+		
+		// Evil guard to avoid mismatched data readers. Let's get rid of this soon.
+		if(!(g instanceof countToN.CountToN)) {
+			System.out.println("Tournament reached end of main.");
+			return;
 		}
-
+		
+		DataReader dr = new CountToNDataReader(match); // sorry about using game package again
+		// I need a match to be passed to me. Would all implementations?
+		// We need to think about that.
+		
+		System.out.println(dr.report());
+		
+		do {
+			System.out.print("\nWould you like to save this data to a file (y/n)? ");
+			String input = scanner.next();
+			if(input.equalsIgnoreCase("y")) {
+				System.out.println("Saving Data...");
+				dr.write(); // Could this return a file name? How do we handle that?
+				System.out.println("Data saved!");
+				break;
+			} else if (input.equalsIgnoreCase("n")){
+				break;
+			} else {
+				System.out.println("Invalid input! y or n only");
+			}
+		} while(true);
+		
+		do {
+			System.out.println("Would you like to view the data in an interactive data explorer (y/n)? ");
+			String input = scanner.next();
+			if(input.equalsIgnoreCase("y")) {
+				System.out.println("Running the interactive data explorer for " + g.getName() + "...");
+				dr.run();
+				break;
+			} else if (input.equalsIgnoreCase("n")){
+				break;
+			} else {
+				System.out.println("Invalid input! y or n only");
+			}
+		} while(true);
+		
 		System.out.println("Tournament reached end of main.");
-
 	}
 
 	/**
@@ -85,13 +113,16 @@ public class Tournament {
 	// We should worry about combinations here - consider what happens if we try
 	// to play Chinese Checkers, and 20 people submit Players!
 
-	public ArrayList<ArrayList<Player>> permute(List<Player> players) {
+	public ArrayList<ArrayList<Player>> permute(List<Player> players)
+	{
 		ArrayList<ArrayList<Player>> permutations = new ArrayList<ArrayList<Player>>();
 
 		ArrayList<Player> copy = new ArrayList<Player>(players);
 
-		for (Player p : players) {
-			for (Player q : copy) {
+		for (Player p : players)
+		{
+			for (Player q : copy)
+			{
 				ArrayList<Player> perm = new ArrayList<Player>(playersPerGame);
 				perm.add(p);
 				perm.add(q);
