@@ -5,19 +5,44 @@ import tourney.Game;
 import tourney.Move;
 import tourney.Player;
 
+
+/**
+*	Represents a series of encounters at Prisoner's Dilemma
+*	Each "turn" is one "game": each player decides to default or to cooperate,
+*	based on the results of the previous round, or on their whim.
+*/
+
+
 public class IteratedPrisonersDilemma extends Game
 {
+	/**
+	"	iterations" is the number of encounters played in one 'Game'
+	*/
+	private int iterations;
 
-	private int turns;
+	/**
+	*	The default game plays some number, currently 10, of iterations, and a
+	*	standard reward matrix.
+	*/
 
 	public IteratedPrisonersDilemma()
 	{
-		this.turns = 10;
+		this.iterations = 10;
 	}
 
-	public IteratedPrisonersDilemma(int turns)
+
+	/**
+	* Accepts an int, number of iterations to play	
+	*/
+	public IteratedPrisonersDilemma(int iterations)
 	{
-		this.turns = turns;
+		this.iterations = iterations;
+	}
+
+
+	protected void processMove()
+	{
+		
 	}
 
 
@@ -29,7 +54,7 @@ public class IteratedPrisonersDilemma extends Game
 
 	protected boolean keepGoing()
 	{
-		return turns-- > 0;
+		return iterations-- > 0;
 	}
 
 	public String getName()

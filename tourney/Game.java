@@ -22,7 +22,6 @@ public abstract class Game {
 	 * that depicts a record of the game.
 	 */
 	public List<Move> play(List<Player> players) {
-		System.out.println("players length = " +players.size());
 		// Define what we'll need for a Game
 		this.players = new ArrayList<Player>(players);	
 		this.activePlayers = new ArrayList<Player>(players);
@@ -35,10 +34,10 @@ public abstract class Game {
 			currentPlayer = nextPlayer();
 			preMove();
 			move = currentPlayer.getMove();
-
+			
 			if (!isLegal(move)) {
-				// forfeit
 				// maybe better to just spike the game on forfeit
+				registerForfeit();
 				return moveList;
 			}
 			processMove();
@@ -115,7 +114,6 @@ public abstract class Game {
 	 * Move. Implementations can annotate them accordingly.
 	 */
 	protected void updateEachPlayer(List<Player> players) {
-		System.out.println("length of players = "+ players.size());
 		for (Player player : players) {
 			player.update(moveForPlayer(player));
 		}
@@ -130,6 +128,14 @@ public abstract class Game {
 	protected Move moveForPlayer(Player player)
 	{
 		return move;
+	}
+
+	/**
+	* Hook for handling a case of a forfeit due to illegal move
+	*/
+
+	protected void registerForfeit()
+	{
 	}
 
 	/**
