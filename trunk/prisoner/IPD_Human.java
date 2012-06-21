@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 
-public class IPD_Human implements Player
+public class IPD_Human extends IPD_Player
 {
 	private String id = "IPD_Human";
 	private static int instanceCounter = 0;

@@ -5,7 +5,7 @@ import tourney.Move;
 import java.util.Random;
 
 
-public class IPD_Random implements Player
+public class IPD_Random extends IPD_Player
 {
 	private String id = "IPD_Random";
 	private static int instanceCounter = 0;
