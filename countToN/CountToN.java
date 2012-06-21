@@ -41,12 +41,11 @@ public class CountToN extends Game {
 	protected void processMove() {
 		super.processMove(); // Needed to set the player appropriately
 		count = ((CountMove) move).getCount(); // we could just increment
-
-		move.annotate(Move.TURN, Integer.toString(count));
-		move.annotate(Move.PLAYER, currentPlayer.getID());
+		
+		move.setPlayer(currentPlayer);
 		
 		if (count == howHigh) {
-			move.annotate(Move.WINNER, currentPlayer.getID());
+			move.setWinner(currentPlayer);
 		}
 	}
 
@@ -54,7 +53,6 @@ public class CountToN extends Game {
 		count = 0;
 		move = new CountMove(0);
 		updateEachPlayer(players);
-
 	}
 
 	protected boolean keepGoing() {
