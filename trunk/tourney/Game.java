@@ -16,17 +16,18 @@ public abstract class Game {
 	protected ArrayList<Player> activePlayers;
 	protected ArrayList<Move> moveList = new ArrayList<Move>();
 	protected Player currentPlayer = null;
+	protected GameResult gameResult;
 
 	/**
 	 * Based on these players, play through the game, and return a List of Moves
 	 * that depicts a record of the game.
 	 */
-	public List<Move> play(List<Player> players) {
-		// Define what we'll need for a Game
-		this.players = new ArrayList<Player>(players);	
-		this.activePlayers = new ArrayList<Player>(players);
-				// alternative is to simply pass around ArrayLists, which I'm okay
-				// with -jpk
+	public GameResult play(List<Player> players) {
+		this.players = new ArrayList<Player>(players);
+		
+		gameResult = new GameResult();
+		gameResult.setPlayers(players);
+		
 		moveList = new ArrayList<Move>();
 		init();
 			
@@ -38,15 +39,17 @@ public abstract class Game {
 			if (!isLegal(move)) {
 				// maybe better to just spike the game on forfeit
 				registerForfeit();
-				return moveList;
+				gameResult.setMoveList(moveList);
+				return gameResult;
 			}
 			processMove();
 			updateEachPlayer(players);
 			postUpdate();
 			recordMove();
 		} while (keepGoing());
-
-		return moveList;
+		
+		gameResult.setMoveList(moveList);
+		return gameResult;
 	}
 
 	// Back to needing this

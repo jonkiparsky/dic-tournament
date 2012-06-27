@@ -8,28 +8,18 @@ import java.util.List;
 
 import tourney.DataReader;
 import tourney.Match;
+import tourney.MatchResult;
 import tourney.Move;
 import tourney.Player;
 
 /** Handles getting the appropriate Data from a Match of CountToN */
 public class CountToNDataReader implements DataReader
 {
-	private Match match;
-	private ArrayList<Player> winners;
-	
-	private int instanceCounter = 0;
+	private MatchResult result;
 
-	public CountToNDataReader(Match match)
+	public CountToNDataReader(MatchResult result)
 	{
-		instanceCounter++;
-		this.match = match;
-		calculateWinners(); // Let's only calculate this once instead of every
-							// time we call report.
-		
-		/* 
-		 * Though, one concern of mine would be doing heavier calculations in the
-		 * constructor. We don't want to suspend the user without informing them.
-		 */
+		this.result = result;
 	}
 
 	/**
@@ -38,13 +28,11 @@ public class CountToNDataReader implements DataReader
 	 */
 	private void calculateWinners()
 	{
-		winners = new ArrayList<Player>();
-		ArrayList<ArrayList<Move>> gameRecords = match.getGameRecords();
 		List<Player> players = match.getPlayers();
 
 		int[] winnerTally = new int[players.size()];
 
-		for (ArrayList<Move> gameRecord : gameRecords)
+		for (ArrayList<Move> gameRecord : result)
 		{
 			Move move = gameRecord.get(gameRecord.size() - 1);
 			ArrayList<Player> gameWinners = move.getWinners(); // *** not yet
@@ -80,7 +68,7 @@ public class CountToNDataReader implements DataReader
 	{
 		StringBuilder sb = new StringBuilder();
 
-		ArrayList<ArrayList<Move>> gameRecords = match.getGameRecords();
+		ArrayList<ArrayList<Move>> gameRecords = match.getMatchResult();
 		List<Player> players = match.getPlayers();
 
 		sb.append(String.format("%d games of CountToN were played between ",

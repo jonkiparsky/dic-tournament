@@ -42,10 +42,8 @@ public class CountToN extends Game {
 		super.processMove(); // Needed to set the player appropriately
 		count = ((CountMove) move).getCount(); // we could just increment
 		
-		move.setPlayer(currentPlayer);
-		
 		if (count == howHigh) {
-			move.setWinner(currentPlayer);
+			gameResult.setWinner(currentPlayer);
 		}
 	}
 
