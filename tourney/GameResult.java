@@ -13,67 +13,37 @@ import java.util.List;
  * implementation itself, such as the Winner of the game. That will prevent the
  * need to replay the Game to find the winner and other statistics.
  */
-public class GameResult {
+public class GameResult extends ArrayList<Move> {
 	/** The players who participated in the game. */
 	private List<Player> players;
-
-	private List<Move> moves;
 
 	/** The player(s) who won the game. */
 	private List<Player> winners;
 
 	public GameResult() {
-		// more of a builder pattern, constructor not needed.
+		super();
+		players = new ArrayList<Player>();
 	}
 
 	/**
-	 * Saves a reference to each Player that participated in the game within
-	 * this GameResult. In order to maintain accurate and complete results, it
-	 * would be desirable for the list of players to be in the order they were
-	 * when the game started. Therefore, a Game should call this method before
-	 * it alters the order of its players. Likewise, this method adds the
-	 * players to a separate List so the order will not be altered.
+	 * Override add method so we can intercept moves and build data as it is
+	 * accumulated.
 	 */
-	public void setPlayers(List<Player> players) {
-		players = new ArrayList<Player>();
-		for (Player player : players) {
-			this.players.add(player);
+	public boolean add(Move move) {
+		if (!players.contains(move.getPlayer())) {
+			players.add(move.getPlayer());
 		}
-	}
 
-	public List<Player> getPlayerList() {
+		if (move.getWinners() != null)
+			winners = move.getWinners();
+
+		return super.add(move);
+	}
+	
+	public List<Player> getPlayers() {
 		return players;
 	}
-
-	/**
-	 * Saves a reference to the record of moves for this game. A Game can call
-	 * this method at the end, or in the beginning. It shouldn't matter, because
-	 * only a reference is being saved.
-	 */
-	public void setMoveList(List<Move> moves) {
-		this.moves = moves;
-	}
-
-	public List<Move> getMoveList() {
-		return moves;
-	}
-
-	/**
-	 * Utility method for declaring only one winner, which should most often be
-	 * the case.
-	 */
-	public void setWinner(Player winner) {
-		ArrayList<Player> singleWinner = new ArrayList<Player>();
-		singleWinner.add(winner);
-		
-		setWinners(singleWinner);
-	}
-
-	/** Set all the players who tied for first place. */
-	public void setWinners(List<Player> winners) {
-		this.winners = winners;
-	}
-
+	
 	/**
 	 * Returns a list of all the players who were in first place. A list of size
 	 * 1, means that only one player won the game. This should be the most often
