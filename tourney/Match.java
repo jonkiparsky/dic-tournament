@@ -1,11 +1,10 @@
 package tourney;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public  class Match
 {
-	ArrayList<ArrayList<Move>> gameRecords;	
+	MatchResult results;	
 	List<Player> players;
 	Game game;
 	int numberOfGames;
@@ -19,7 +18,7 @@ public  class Match
 
 		this.numberOfGames= numberOfGames;
 		this.game = game;
-		gameRecords = new ArrayList<ArrayList<Move>>();
+		results = new MatchResult();
 	}
 
 	public Match(Game game, List <Player> players)
@@ -29,15 +28,15 @@ public  class Match
 	}
 
 
-	public ArrayList<ArrayList<Move>> playMatch()
+	public MatchResult playMatch()
 	{
 		for (int i = 0; i<numberOfGames; i++)
 		{
-			gameRecords.add((ArrayList<Move>)game.play(players));
+			results.getGameResults().add(game.play(players));
 			players.add(players.remove(0));  	// rotate players;
 		}	
 
-		return gameRecords;
+		return results;
 	}
 
 
@@ -47,9 +46,9 @@ public  class Match
 			" were played. I don't know who won.";	
 	}
 
-	public ArrayList<ArrayList<Move>> getGameRecords()
+	public MatchResult getMatchResult()
 	{
-		return gameRecords;
+		return results;
 	}
 
 	public List<Player> getPlayers()

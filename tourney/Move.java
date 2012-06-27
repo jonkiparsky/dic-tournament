@@ -11,15 +11,6 @@ import java.util.HashMap;
 public abstract class Move
 {
 
-	/** ID of player who made this the move */
-	public static final String PLAYER = "Player";
-
-	/** ID of player who won with this move. */
-	public static final String WINNER = "Winner";
-
-	/** The turn number this move was made. */
-	public static final String TURN = "Turn";
-
 	/** The player who made this Move. */
 	private Player player;
 	
@@ -37,31 +28,10 @@ public abstract class Move
 		 */
 		this.player = player;
 	}
-	
-	/** Utility method for adding only one player */
-	public void setWinner(Player player) {
-		this.winners = new ArrayList<Player>();
-		this.winners.add(player);
-	}
-
-	/** Set all the players who tied for first. */
-	public void setWinners(ArrayList<Player> players)
-	{
-		this.winners = players;
-	}
 
 	public Player getPlayer()
 	{
 		return player;
-	}
-
-	/**
-	 * returns all winners for a game. most of the time this can be
-	 * just size 1, but for draws we'll allow for flexibility
-	 */
-	public ArrayList<Player> getWinners()
-	{
-		return winners;
 	}
 
 	public void annotate(String key, String value)

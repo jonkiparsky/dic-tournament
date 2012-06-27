@@ -55,7 +55,7 @@ public class Tournament
 
 		Match match = new Match(g, players, 2);
 
-		match.playMatch(); // Currently I wouldn't need its return value directly. Would you?
+		MatchResult result = match.playMatch(); // Currently I wouldn't need its return value directly. Would you?
 		
 		// Evil guard to avoid mismatched data readers. Let's get rid of this soon.
 		if(!(g instanceof countToN.CountToN)) {
@@ -63,7 +63,7 @@ public class Tournament
 			return;
 		}
 		
-		DataReader dr = new CountToNDataReader(match); // sorry about using game package again
+		DataReader dr = new CountToNDataReader(result); // sorry about using game package again
 		// I need a match to be passed to me. Would all implementations?
 		// We need to think about that.
 		
