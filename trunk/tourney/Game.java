@@ -13,8 +13,6 @@ public abstract class Game {
 
 	protected Move move;
 	protected ArrayList<Player> players;
-	protected ArrayList<Player> activePlayers;
-	protected ArrayList<Move> moveList = new ArrayList<Move>();
 	protected Player currentPlayer = null;
 	protected GameResult gameResult;
 
@@ -26,9 +24,7 @@ public abstract class Game {
 		this.players = new ArrayList<Player>(players);
 		
 		gameResult = new GameResult();
-		gameResult.setPlayers(players);
 		
-		moveList = new ArrayList<Move>();
 		init();
 			
 		do {
@@ -39,7 +35,6 @@ public abstract class Game {
 			if (!isLegal(move)) {
 				// maybe better to just spike the game on forfeit
 				registerForfeit();
-				gameResult.setMoveList(moveList);
 				return gameResult;
 			}
 			processMove();
@@ -48,7 +43,6 @@ public abstract class Game {
 			recordMove();
 		} while (keepGoing());
 		
-		gameResult.setMoveList(moveList);
 		return gameResult;
 	}
 
@@ -84,7 +78,7 @@ public abstract class Game {
 	*/
 	protected void recordMove()
 	{
-			moveList.add(move);
+			gameResult.add(move);
 	}
 	
 	/**

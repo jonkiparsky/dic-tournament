@@ -32,7 +32,7 @@ public  class Match
 	{
 		for (int i = 0; i<numberOfGames; i++)
 		{
-			results.getGameResults().add(game.play(players));
+			results.add(game.play(players));
 			players.add(players.remove(0));  	// rotate players;
 		}	
 

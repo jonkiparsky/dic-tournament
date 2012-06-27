@@ -43,7 +43,7 @@ public class CountToN extends Game {
 		count = ((CountMove) move).getCount(); // we could just increment
 		
 		if (count == howHigh) {
-			gameResult.setWinner(currentPlayer);
+			move.setWinner(currentPlayer);
 		}
 	}
 
