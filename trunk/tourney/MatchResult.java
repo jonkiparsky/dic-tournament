@@ -17,6 +17,8 @@ public class MatchResult extends ArrayList<GameResult> {
 
 	public MatchResult() {
 		super();
+		players = new ArrayList<Player>();
+		numberOfWins = new HashMap<Player, Integer>();
 	}
 
 	public boolean add(GameResult result) {
