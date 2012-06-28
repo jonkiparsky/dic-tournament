@@ -2,19 +2,19 @@ package prisoner;
 
 import tourney.Player;
 import tourney.Move;
-import java.util.Random;
 
-
-public class IPD_Random extends IPD_Player
+/**
+*	Sucker always cooperates. He tends to get nailed by Bastard pretty hard, but
+*	he works out good when he plays against himself.
+*/
+public class IPD_Sucker extends IPD_Player
 {
 	private String id = "IPD_Random";
 	private static int instanceCounter = 0;
 
-	private Random random = null;
 	
-	public IPD_Random()
+	public IPD_Sucker()
 	{
-		random = new Random();
 		instanceCounter++;
 		id +=instanceCounter;
 	}
@@ -22,7 +22,7 @@ public class IPD_Random extends IPD_Player
 
 	public Move getMove()
 	{
-		return new IPD_Move(random.nextBoolean());
+		return new IPD_Move(previousMove, true);
 	}
 	
 	public String getID()
@@ -32,9 +32,9 @@ public class IPD_Random extends IPD_Player
 
 	public void update(Move move)
 	{
-
+		previousMove = (IPD_Move)move;
 		// we don't really care what the move was, since
-		// we're a random move generator
+		// we're always returning true. 
 	}
 	
 }

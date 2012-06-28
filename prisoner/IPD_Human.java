@@ -10,8 +10,6 @@ public class IPD_Human extends IPD_Player
 {
 	private String id = "IPD_Human";
 	private static int instanceCounter = 0;
-	private boolean prevMove = false;
-	private boolean haveMoved=false;
 	private Random random = null;
 	private Scanner scan = null;
 	public IPD_Human()
@@ -26,9 +24,9 @@ public class IPD_Human extends IPD_Player
 
 	public Move getMove()
 	{
-		if (haveMoved)
+		if (previousMove != null)
 			System.out.println("Your opponent's previous move was to "+
-				(prevMove? "cooperate" : "defect"));
+				(previousMove.getPlay()? "cooperate" : "defect"));
 		System.out.println ("Do you defect or cooperate? (d/c)");
 		boolean choice;
 		boolean acceptInput = false;
@@ -48,7 +46,7 @@ public class IPD_Human extends IPD_Player
 		}
 			
 			
-		return new IPDMove(choice);
+		return new IPD_Move(choice);
 	}
 	
 	public String getID()
@@ -58,13 +56,7 @@ public class IPD_Human extends IPD_Player
 
 	public void update(Move move)
 	{
-		IPDMove ipdMove = (IPDMove)move;
-		if (ipdMove.getPlayer()==this)
-		{
-			return;
-		} // skip
-		haveMoved = true;
-		prevMove = ipdMove.getMove();
+		previousMove = (IPD_Move)move;
 
 		
 	}
