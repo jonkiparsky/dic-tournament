@@ -37,10 +37,10 @@ public class GameResult {
 
 
 	/**
-	 * Override add method so we can intercept moves and build data as it is
+	 * Add method so we can intercept moves and build data as it is
 	 * accumulated.
 	 */
-	public boolean add(Move move) {
+	public void  add(Move move) {
 		if (!players.contains(move.getPlayer())) {
 			players.add(move.getPlayer());
 		}
@@ -48,10 +48,10 @@ public class GameResult {
 		if (move.getWinners() != null)
 			winners = move.getWinners();
 
-		return game.add(move);
+		 game.add(move);
 	}
 
-	public ArrayList<Move> getMoves()
+	public ArrayList<Move> getGame()
 	{
 		return game;
 	}
