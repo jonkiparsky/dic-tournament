@@ -21,17 +21,18 @@ public abstract class SimultaneousGame extends Game {
 		this.players = new ArrayList<Player>(players);
 
 		gameResult = new GameResult();
-		
+		int currentRound  = 0;	
 		init();
 			
 		do {
 			preMove();
-			round = getMoves();
+			round = getMoves(currentRound);
 	
-			processRound();
+			processRound(round);
 			updateEachPlayer(players);
 			postUpdate();
 			recordRound(round);
+		
 		} while (keepGoing());
 		
 		return gameResult;
@@ -40,22 +41,22 @@ public abstract class SimultaneousGame extends Game {
 	// Back to needing this
 	protected abstract boolean isLegal(Move move);
 
-	protected ArrayList<Move> getMoves()
+	protected ArrayList<Move> getMoves(int currentRound)
 	{	
-		ArrayList<Move> moves
+		ArrayList<Move> moves = new ArrayList<Move>();
 		for (Player p: players)
 		{
 			Move thisMove = p.getMove();
 			thisMove.setPlayer(p);
-			thisMove.annotate(round, Integer.toString(currentRound));
-			if (!isLegal(thisMove)
+			thisMove.annotate("Round", Integer.toString(currentRound));
+			if (!isLegal(thisMove))
 			{
 				registerForfeit(thisMove);
 				return gameResult;
 			}				
-			
+			moves.add(thisMove);				
 		}
-		
+		return moves;
 	}
 
 	/**
@@ -63,7 +64,7 @@ public abstract class SimultaneousGame extends Game {
 	*	perfectly reasonable to loop over the ArrayList of Moves using
 	*	processMove() to handle each. 	
 	*/
-	processRound(ArrayList<Move> round)
+	protected void processRound(ArrayList<Move> round)
 	{
 				
 	}
@@ -73,18 +74,11 @@ public abstract class SimultaneousGame extends Game {
 	*	it would be perfectly reasonable to use this method to loop over
 	*	processMove(). 
 	*/	
-	recordRound(ArrayList<Move> round)
+	protected void recordRound(ArrayList<Move> round)
 	{	
 			
 	}
 
-	/**
-	*	This method is executed after the current player is selected, and before
-	*	their move is solicited. 
-	*/
-	protected void preMove()
-	{
-	}
 
 	/**
 	*	This method is called after the currentPlayer's move has been received.
@@ -109,26 +103,6 @@ public abstract class SimultaneousGame extends Game {
 			gameResult.add(move);
 	}
 	
-	/**
-	*	This method is executed after players are updated. Included on the off
-	*	chance that we want to allow something to happen here. Can't think of a
-	*	use case just now. Will remove if we can't think of a reason to keep it. 
-	*/
-	protected void postUpdate()
-	{	
-	}
-
-	/**
-	* Returns the next player to move. Base implementation simply rotates first
-	* player in list to end of list.
-	*/
-	protected Player nextPlayer()
-	{
-			Player currentPlayer = players.remove(0);
-			players.add(currentPlayer);
-			return currentPlayer;
-			
-	}
 
 	/** game subclass tells us whether or not we keep going */
 	protected abstract boolean keepGoing();
@@ -136,65 +110,21 @@ public abstract class SimultaneousGame extends Game {
 
 	/**
 	 * Tell all players what happened. Default is to just pass them all the
-	 * Move. Implementations can annotate them accordingly.
+	 * Moves from the last Round. Implementations can annotate them accordingly.
 	 */
 	protected void updateEachPlayer(List<Player> players) {
-		for (Player player : players) {
-			player.update(moveForPlayer(player));
+		
+		for (Player p: players)
+		{
+			for (Move m : round) {
+				if (p != m.getPlayer())		// reference equality is intentional
+													// since we know that no instance will
+													// play against itself. This can change
+													// if we want to implement equals for
+													// Player (based on ID, I suppose)		 
+					p.update(m);
+			}
 		}
 	}
 
-	/**
-	*	Get the correct Move object for a particular player. Default is to return
-	*	the same move for each Player. If private information is to be returned
-	*	for particular Players, use a Map of Players to Moves. 
-	*/
-
-	protected Move moveForPlayer(Player player)
-	{
-		return move;
-	}
-
-	/**
-	* Hook for handling a case of a forfeit due to illegal move
-	*/
-
-	protected void registerForfeit()
-	{
-	}
-
-	/**
-	 * Any setup code can go here. One good trick would be to use
-	 * updateEachPlayer() to set up the initial state if that in not
-	 * predetermined. 
-	 */
-	protected void init() {
-
-	}
-
-	/**
-	 * We suggest that game developers provide a very basic "AI" for testing.
-	 * The default AI must generate legal moves, but they need not be good ones.
-	 * Random is fine. If no default AI player is provided, defaultAIPlayer
-	 * should be set to null.
-	 */
-	public abstract Player getDefaultAIPlayer();
-
-	/**
-	 * We also suggest that game developers provide a human interface, also for
-	 * testing. If none is provided, humanPlayer should be null.
-	 */
-	public abstract Player getHumanPlayer();
-
-	/**
-	 * Each game should define how many players it needs as a parameter. Users
-	 * of this interface should ensure that the list of players passed to play()
-	 * is the size of this return value.
-	 */
-	public abstract int playersPerGame();
-
-
-	public abstract String getName();
-
-	public abstract String getAuthor();
 }

@@ -34,7 +34,7 @@ public abstract class Game {
 			
 			if (!isLegal(move)) {
 				// maybe better to just spike the game on forfeit
-				registerForfeit();
+				registerForfeit(move);
 				return gameResult;
 			}
 			processMove();
@@ -131,7 +131,7 @@ public abstract class Game {
 	* Hook for handling a case of a forfeit due to illegal move
 	*/
 
-	protected void registerForfeit()
+	protected void registerForfeit(Move m)
 	{
 	}
 
