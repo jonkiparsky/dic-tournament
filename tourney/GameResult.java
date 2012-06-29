@@ -21,9 +21,15 @@ public class GameResult extends ArrayList<Move> {
 	private List<Player> winners;
 
 	public GameResult() {
-		super();
-		players = new ArrayList<Player>();
+		this( new ArrayList<Player>());
 	}
+
+	public GameResult(List<Player> players)
+	{
+		super();
+		this.players = players;
+	}
+
 
 	/**
 	 * Override add method so we can intercept moves and build data as it is
