@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class SimultaneousGame extends Game {
 
 	protected ArrayList<Move> round;
-
+	protected boolean forfeit = false;
 
 	/**
 	 * Based on these players, play through the game, and return a List of Moves
@@ -33,7 +33,7 @@ public abstract class SimultaneousGame extends Game {
 			postUpdate();
 			recordRound(round);
 		
-		} while (keepGoing());
+		} while (keepGoing() && !forfeit);
 		
 		return gameResult;
 	}
@@ -52,7 +52,7 @@ public abstract class SimultaneousGame extends Game {
 			if (!isLegal(thisMove))
 			{
 				registerForfeit(thisMove);
-				return gameResult;
+				return moves;
 			}				
 			moves.add(thisMove);				
 		}
