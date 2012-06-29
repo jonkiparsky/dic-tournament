@@ -13,20 +13,25 @@ import java.util.List;
  * implementation itself, such as the Winner of the game. That will prevent the
  * need to replay the Game to find the winner and other statistics.
  */
-public class GameResult extends ArrayList<Move> {
+public class GameResult {
 	/** The players who participated in the game. */
 	private List<Player> players;
 
 	/** The player(s) who won the game. */
 	private List<Player> winners;
 
+	/**
+	* 	The sequence of moves played in the game
+	*/
+	private ArrayList<Move> game;
 	public GameResult() {
 		this( new ArrayList<Player>());
+
 	}
 
 	public GameResult(List<Player> players)
 	{
-		super();
+		this.game = new ArrayList<Move>();
 		this.players = players;
 	}
 
@@ -43,7 +48,12 @@ public class GameResult extends ArrayList<Move> {
 		if (move.getWinners() != null)
 			winners = move.getWinners();
 
-		return super.add(move);
+		return game.add(move);
+	}
+
+	public ArrayList<Move> getMoves()
+	{
+		return game;
 	}
 	
 	public List<Player> getPlayers() {
