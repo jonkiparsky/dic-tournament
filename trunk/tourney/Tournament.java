@@ -9,9 +9,7 @@ import countToN.CountToNDataReader;
 
 public class Tournament
 {
-
 	static Scanner scanner = new Scanner(System.in); // For end of tourney input
-	
 	private static HashMap<Class, ArrayList<Class>> gamesToPlayersMap;
 
 	private static int playersPerGame = 2;
@@ -102,7 +100,7 @@ public class Tournament
 	}
 
 	/**
-	 * Purpose: Generate all n-player permutations of the Player list, where n
+	 * Purpose: Generate all n-player combinations of the Player list, where n
 	 * is the number of players required per game. Players are to play
 	 * themselves, order is not significant. For a 3-player game, with players
 	 * a, b, c, d, e the set <a,a,a> and <a,a,b> must be generated, but <a,a,b>
@@ -113,24 +111,60 @@ public class Tournament
 	// We should worry about combinations here - consider what happens if we try
 	// to play Chinese Checkers, and 20 people submit Players!
 
-	public ArrayList<ArrayList<Player>> permute(List<Player> players)
+	public static ArrayList<ArrayList<Object>> generateCombinations(
+			ArrayList<Object> array, int combinationSize)
 	{
-		ArrayList<ArrayList<Player>> permutations = new ArrayList<ArrayList<Player>>();
+		ArrayList<ArrayList<Object>> combinations = new ArrayList<ArrayList<Object>>();
 
-		ArrayList<Player> copy = new ArrayList<Player>(players);
+		final int arrayLength = array.size();
 
-		for (Player p : players)
-		{
-			for (Player q : copy)
-			{
-				ArrayList<Player> perm = new ArrayList<Player>(playersPerGame);
-				perm.add(p);
-				perm.add(q);
-				permutations.add(perm);
-			}
-			copy.remove(p);
+		// if combination size is too small
+		if (combinationSize < 1) {
+			return null;
 		}
-		return permutations;
+
+		// If combination size is too big
+		if (combinationSize >= arrayLength) {
+			combinations.add(array);
+			return combinations;
+		}
+
+		// base case
+		if (combinationSize == 1) {
+			for (Object o : array) {
+				ArrayList<Object> singleElement = new ArrayList<Object>();
+				singleElement.add(o);
+				combinations.add(singleElement);
+			}
+			return combinations;
+		}
+		
+		// recurse
+		for (int i = 0; i < arrayLength; i++) {
+			ArrayList<Object> subset = new ArrayList<Object>();
+			for (int j = i+1; j < arrayLength; j++) {
+				subset.add(array.get(j));
+			}
+			
+			int newComboSize = combinationSize - 1;
+			
+			// If the subset is too small, skip adding this combination and continue.
+			if(subset.size() < newComboSize) {
+				continue;
+			}
+
+			ArrayList<ArrayList<Object>> subsetCombinations = generateCombinations(
+					subset, newComboSize);
+			
+			for (ArrayList<Object> subsetCombo : subsetCombinations) {
+				ArrayList<Object> combo = new ArrayList<Object>();
+				combo.add(array.get(i));
+				combo.addAll(subsetCombo);
+				combinations.add(combo);
+			}
+		}
+
+		return combinations;
 	}
 
 }
