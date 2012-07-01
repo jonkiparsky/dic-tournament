@@ -47,4 +47,4 @@ Every N revisions:
 
 = Milestones =
   # (1.0 ?) Be able to run Tournament and receive a screen report() from the Game's DataReader. (This implies we have a working Tournament where are parts are functional and doing their job, though at a very basic level.)
-  
+  # Games able to inform tournament class if they need decisions made by the tournament runner. (ie, score weightings in an IPD tournament, or ?? rankings and handicaps in chess ??
