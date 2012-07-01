@@ -18,6 +18,7 @@ A rough list of things that need to be done. This should become an ordered list 
   * generating/naming player IDs
   * game mechanics need work
   * security of moves
+  * logging - should we plan on wiring in some logging?
 
 Every N revisions: 
   * review and re-finalize interfaces and bottom-level abstract classes
