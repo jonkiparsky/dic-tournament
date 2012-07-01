@@ -18,7 +18,7 @@ public  class Match
 
 		this.numberOfGames= numberOfGames;
 		this.game = game;
-		results = new MatchResult();
+		results = new MatchResult(players);
 	}
 
 	public Match(Game game, List <Player> players)
@@ -28,7 +28,7 @@ public  class Match
 	}
 
 
-	public MatchResult playMatch()
+	public MatchResult playMatch() throws IllegalMoveException, GameExecutionException
 	{
 		for (int i = 0; i<numberOfGames; i++)
 		{

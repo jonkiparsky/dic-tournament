@@ -35,7 +35,15 @@ public class Tournament {
 		
 		for(ArrayList<Player> combination : combinations) {
 			Match match = new Match(game, combination, gameIterations);
-			MatchResult matchResult = match.playMatch();
+			try {
+				MatchResult matchResult = match.playMatch();
+			} catch (IllegalMoveException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (GameExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			// Handle sending MatchResult somewhere...
 		}
