@@ -9,7 +9,7 @@ import java.util.List;
  * list of the results for an individual Game. It interacts with many
  * GameResults to determine match-wide data for the user.
  */
-public class MatchResult extends AbstractResult<GameResult<Move>> {
+public class MatchResult extends AbstractResult<GameResult> {
 
 	/** A map of players to the number of games they won in the match. */
 	private HashMap<Player, Integer> numberOfWins;
@@ -19,7 +19,7 @@ public class MatchResult extends AbstractResult<GameResult<Move>> {
 		numberOfWins = new HashMap<Player, Integer>();
 	}
 
-	public void add(GameResult<Move> result) {
+	public void add(GameResult result) {
 		super.add(result);
 		
 		List<Player> gamePlayers = result.getPlayers();
