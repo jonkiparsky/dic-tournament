@@ -1,11 +1,16 @@
-package tourney;
+package tourney.loader;
 
-import countToN.*;
+import tourney.TourneyException;
+import tourney.Game;
+import tourney.Player;
+import tourney.HumanPlayer;
+import tourney.MachinePlayer;
 
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileFilter;
+
 
 public class Loader
 {
@@ -32,10 +37,7 @@ public class Loader
 					if (Player.class.isAssignableFrom(c)){
 						players.add(c);
 					}
-//					System.out.println("Okay with: " + c.getName()+
-//							games.contains(c)+" "+players.contains(c));	
-				}
-			
+				}	
 				catch(Exception e) {  // evil, clean this up
 					e.printStackTrace();
 				}
@@ -72,7 +74,13 @@ public class Loader
 
 	public Game loadGame(Class c) throws TourneyException
 	{
-
+		IsGameFilter isGame = new IsGameFilter();
+		if (! isGame.filter(c))
+		{
+			throw new TourneyException("LoadGame failed: class" +
+					c.getName() + "failed to pass the Game filter");
+			
+		}
 		Object o = null;
 		try{
 			o = c.newInstance();
@@ -93,30 +101,54 @@ public class Loader
 
 	public ArrayList<Player> loadPlayers (ArrayList<Class> classList)
 		throws TourneyException
+
+	{
+		return loadPlayers(classList, new IsPlayerFilter());
+	}
+
+	
+	
+
+	public ArrayList<Player> loadPlayers (ArrayList<Class> classList, 
+				ClassFilter filter)
+				throws TourneyException
 	{
 		ArrayList<Player> players = new ArrayList<Player>();
 		for (Class c: classList)
 		{
-	
-			Object o = null;
-			try {
-	
-				o = c.newInstance();
-			}
-			catch(Exception e)
+			if ( filter.filter(c))
 			{
-				e.printStackTrace();
-				System.exit(1);
-			}
+				Object o = null;
+				try {
+		
+					o = c.newInstance();
+				}
+				catch(IllegalAccessException iae) {
+				
+					iae.printStackTrace(); // should go to logging
 
-			if (o instanceof Player)
-				players.add ((Player) o);
-			else
-				throw new TourneyException("loadPlayers found non-Player object: "+
-					c.getName());
-			
+					System.exit(1);	// break the game for now, 
+											// but this should be demoted to continue
+											// after debugging
+				}
+				catch (InstantiationException ie)
+				{	
+					ie.printStackTrace(); // see above
+					System.exit(1);
+				}
+				catch (SecurityException ie)
+				{	
+					ie.printStackTrace(); // see above
+					System.exit(1);
+				}
+					players.add ((Player) o);
+			}
 		}
 		return players;
 
 	}
+
+
+	
+
 }
