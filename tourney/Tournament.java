@@ -60,6 +60,7 @@ public class Tournament {
 		System.out.print("Enter the number of your preferred game: ");
 		Scanner scan = new Scanner(System.in);
 		Class chosenClass = gamesArray[scan.nextInt() - 1];
+
 		ArrayList<Player> players = null;
 		try {
 			g = loader.loadGame(chosenClass);
@@ -84,9 +85,13 @@ public class Tournament {
 	 * and <b,a,a> must not both be generated. We will need this presently. It
 	 * will also need improved.
 	 */
-	public static ArrayList<ArrayList<Player>> generateCombinationsWithRepetition(
-			ArrayList<Player> array, int combinationSize) {
-		ArrayList<ArrayList<Player>> combinations = new ArrayList<ArrayList<Player>>();
+	public static ArrayList<ArrayList<Player>> 
+				generateCombinationsWithRepetition(
+					ArrayList<Player> array, int combinationSize) {
+
+
+		ArrayList<ArrayList<Player>> combinations = 
+					new ArrayList<ArrayList<Player>>();
 
 		final int arrayLength = array.size();
 
@@ -114,8 +119,9 @@ public class Tournament {
 
 			int newComboSize = combinationSize - 1;
 
-			ArrayList<ArrayList<Player>> subsetCombinations = generateCombinationsWithRepetition(
-					subset, newComboSize);
+			ArrayList<ArrayList<Player>> subsetCombinations = 
+					generateCombinationsWithRepetition(
+						subset, newComboSize);
 
 			// Haven't had any NPEs from above, so I assume
 			// this loop never enters if the subsetCombinations is null
@@ -129,4 +135,7 @@ public class Tournament {
 
 		return combinations;
 	}
+
+	
+	
 }
