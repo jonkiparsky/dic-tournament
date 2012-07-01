@@ -9,27 +9,23 @@ import java.util.List;
  * list of the results for an individual Game. It interacts with many
  * GameResults to determine match-wide data for the user.
  */
-public class MatchResult extends ArrayList<GameResult> {
-	private List<Player> players;
+public class MatchResult extends AbstractResult<GameResult_NewVersion<?>> {
 
 	/** A map of players to the number of games they won in the match. */
 	private HashMap<Player, Integer> numberOfWins;
 
-	public MatchResult() {
-		super();
-		players = new ArrayList<Player>();
+	public MatchResult(List<Player> players) {
+		super(players);
 		numberOfWins = new HashMap<Player, Integer>();
 	}
 
-	public boolean add(GameResult result) {
+	public void add(GameResult_NewVersion<?> result) {
+		super.add(result);
+		
 		List<Player> gamePlayers = result.getPlayers();
 
 		// Add any new players to the list of match-wide players
 		for (Player player : gamePlayers) {
-			if (!players.contains(player)) {
-				players.add(player);
-			}
-
 			if (!numberOfWins.containsKey(player)) {
 				numberOfWins.put(player, 0);
 			}
@@ -46,18 +42,13 @@ public class MatchResult extends ArrayList<GameResult> {
 				// we don't know who this winner is...
 			}
 		}
-
-		return super.add(result);
-	}
-
-	public List<Player> getPlayers() {
-		return players;
 	}
 
 	public List<Player> getMatchWinners() {
+		List<Player> matchPlayers = getPlayers();
 		// Find the highest number in numberOfWins
 		int max = 0;
-		for (Player player : players) {
+		for (Player player : matchPlayers) {
 			int wins = numberOfWins.get(player);
 			if (wins > max) {
 				max = wins;
@@ -67,7 +58,7 @@ public class MatchResult extends ArrayList<GameResult> {
 		// add all players whose value is max to the winner list
 		ArrayList<Player> winners = new ArrayList<Player>();
 
-		for (Player player : players) {
+		for (Player player : matchPlayers) {
 			int wins = numberOfWins.get(player);
 			if (wins == max) {
 				winners.add(player);
