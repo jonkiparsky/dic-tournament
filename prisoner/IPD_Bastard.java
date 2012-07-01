@@ -2,12 +2,14 @@ package prisoner;
 
 import tourney.Player;
 import tourney.Move;
-
+import tourney.MachinePlayer;
 
 /**
 *	Bastard always defects. His life tends to suck.
 */
-public class IPD_Bastard extends IPD_Player
+public class IPD_Bastard 
+		extends IPD_Player
+		implements MachinePlayer
 {
 	private String id = "IPD_Random";
 	private static int instanceCounter = 0;

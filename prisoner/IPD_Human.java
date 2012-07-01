@@ -1,12 +1,15 @@
 package prisoner;
 
 import tourney.Player;
+import tourney.HumanPlayer;
 import tourney.Move;
 import java.util.Random;
 import java.util.Scanner;
 
 
-public class IPD_Human extends IPD_Player
+public class IPD_Human 
+		extends IPD_Player 
+		implements HumanPlayer
 {
 	private String id = "IPD_Human";
 	private static int instanceCounter = 0;

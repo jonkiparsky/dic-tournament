@@ -37,9 +37,14 @@ public class IteratedPrisonersDilemma extends SimultaneousGame
 		gameResult = new IPD_GameResult();
 	}
 
+
+	
 	protected boolean isLegal(Move move)
 	{
-		return true;
+		if (move instanceof IPD_Move)
+			return true;
+		else return false;
+	
 	}
 
 
@@ -71,6 +76,11 @@ public class IteratedPrisonersDilemma extends SimultaneousGame
 	public Player getDefaultAIPlayer()
 	{
 		return new IPD_Random();
-
 	}
+
+
 }
+
+
+
+

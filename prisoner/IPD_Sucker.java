@@ -2,12 +2,14 @@ package prisoner;
 
 import tourney.Player;
 import tourney.Move;
-
+import tourney.MachinePlayer;
 /**
 *	Sucker always cooperates. He tends to get nailed by Bastard pretty hard, but
 *	he works out good when he plays against himself.
 */
-public class IPD_Sucker extends IPD_Player
+public class IPD_Sucker
+		extends IPD_Player
+		implements MachinePlayer
 {
 	private String id = "IPD_Random";
 	private static int instanceCounter = 0;
