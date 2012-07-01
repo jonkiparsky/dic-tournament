@@ -20,6 +20,7 @@ A rough list of things that need to be done. This should become an ordered list 
   * security of moves
   * logging - should we plan on wiring in some logging?
   * unit testing for submitted Game and Player classes/packages
+  * Allow for the game to limit the amount of time an implementation has to give a Move. (For example, in Chess maybe you have 30 seconds to determine your next Move)
 
 Every N revisions: 
   * review and re-finalize interfaces and bottom-level abstract classes
