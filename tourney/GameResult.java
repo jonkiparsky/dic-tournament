@@ -13,63 +13,41 @@ import java.util.List;
  * implementation itself, such as the Winner of the game. That will prevent the
  * need to replay the Game to find the winner and other statistics.
  */
-public class GameResult {
-	/** The players who participated in the game. */
-	private List<Player> players;
-
-	/** The player(s) who won the game. */
+public class GameResult extends AbstractResult<Move> {
+	/** The winners of this game. */
 	private List<Player> winners;
-
-	/**
-	* 	The sequence of moves played in the game
-	*/
-	private ArrayList<Move> game;
-	public GameResult() {
-		this( new ArrayList<Player>());
-
-	}
-
-	public GameResult(List<Player> players)
-	{
-		this.game = new ArrayList<Move>();
-		this.players = players;
-	}
-
-
-	/**
-	 * Add method so we can intercept moves and build data as it is
-	 * accumulated.
-	 */
-	public void  add(Move move) {
-		if (!players.contains(move.getPlayer())) {
-			players.add(move.getPlayer());
-		}
-
-		if (move.getWinners() != null)
-			winners = move.getWinners();
-
-		 game.add(move);
-	}
-
-	public ArrayList<Move> getGame()
-	{
-		return game;
-	}
 	
-	public List<Player> getPlayers() {
-		return players;
+	public GameResult(List<Player> players) {
+		super(players);
+		winners = new ArrayList<Player>();
 	}
 	
 	/**
-	 * Returns a list of all the players who were in first place. A list of size
-	 * 1, means that only one player won the game. This should be the most often
-	 * result, however to allow for the case of a tie, we must pass a List. If
-	 * the list has more than one entry, it can be assumed that all of the
-	 * players were tied for first. It must not be assumed that any of the
-	 * players in this list did better than the others, unless agreed upon by
-	 * the Game and the other classes using this data.
+	 * Utility method for declaring only one winner, which should most often be
+	 * the case.
 	 */
-	public List<Player> getWinners() {
-		return winners;
+	public void setWinner(Player winner) {
+		ArrayList<Player> singleWinner = new ArrayList<Player>();
+		singleWinner.add(winner);
+
+		setWinners(singleWinner);
 	}
+
+	/** Set all the players who tied for first place. */
+	public void setWinners(List<Player> winners) {
+		this.winners = winners;
+	}
+	
+	/**
+     * Returns a list of all the players who were in first place. A list of size
+     * 1, means that only one player won the game. This should be the most often
+     * result, however to allow for the case of a tie, we must pass a List. If
+     * the list has more than one entry, it can be assumed that all of the
+     * players were tied for first. It must not be assumed that any of the
+     * players in this list did better than the others, unless agreed upon by
+     * the Game and the other classes using this data.
+     */
+    public List<Player> getWinners() {
+            return winners;
+    }
 }

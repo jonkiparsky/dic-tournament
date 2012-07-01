@@ -13,56 +13,63 @@ import java.util.List;
  * implementation itself, such as the Winner of the game. That will prevent the
  * need to replay the Game to find the winner and other statistics.
  */
-public class SimultaneousGameResult{
-	/** The players who participated in the game. */
-	private List<Player> players;
-
+public class SimultaneousGameResult extends GameResult {
 
 	/**
-	* 	The sequence of rounds played in the game
-	*/
-	private ArrayList<Round> game;
-	public SimultaneousGameResult() {
-		this( new ArrayList<Player>());
+	 * The set of indices that each round begins on. offsets.get(0) will be the
+	 * starting index of the first round and so on...
+	 */
+	private ArrayList<Integer> offsets;
 
+	public SimultaneousGameResult(List<Player> players) {
+		super(players);
+		offsets.add(0); // first round starts at 0 always
 	}
 
-	public SimultaneousGameResult(List<Player> players)
-	{
-		this.game = new ArrayList<Round>();
-		this.players = players;
-	}
-
-
-	public void add(ArrayList<Move> round)
-	{
-		game.add (new Round(round));	
-	}
-
-
-	public ArrayList<Round> getGame()
-	{
-		return game;
-	}
-	
-	public List<Player> getPlayers() {
-		return players;
-	}
-
-	private class Round
-	{
-
-		private ArrayList<Move> moves;
-
-		public Round(ArrayList<Move> moves)
-		{
-			this.moves = moves;
+	/** Adds a round to the list of moves and records its place. */
+	public void addRound(ArrayList<Move> round) {
+		for (Move move : round) {
+			add(move);
 		}
 
-		public ArrayList<Move> getMoves()
-		{
-			return moves;
-		}	
+		int lastIndex = offsets.size() - 1;
+		offsets.add(round.size() + offsets.get(lastIndex)); // accumulate the
+															// index
+	}
 
+	/** Returns the number of rounds in this GameResult. */
+	public int numberOfRounds() {
+		return offsets.size() - 1;
+	}
+
+	/**
+	 * Gets the list of moves that represent round number X. Rounds start at 0
+	 * like arrays.
+	 */
+	public ArrayList<Move> getRound(int round) {
+		int startIndex;
+		int endIndex;
+		
+		ArrayList<Move> moves = new ArrayList<Move>();
+		
+		// Guard against negatives
+		if (round < 0) {
+			round = 0;
+		}
+		
+		if (round >= offsets.size()) {
+			round = offsets.size() - 1;
+			endIndex = offsets.size();
+		} else {
+			endIndex = offsets.get(round+1);
+		}
+		
+		startIndex = offsets.get(round);
+		
+		for(int i = startIndex; i < endIndex; i++) {
+			moves.add(this.getResults().get(i));
+		}
+		
+		return moves;
 	}
 }

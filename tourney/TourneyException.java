@@ -1,9 +1,17 @@
 package tourney;
 
 public class TourneyException extends Exception {
-
-	public TourneyException(String msg) {
-		super(msg);
+	protected String message;
+	
+	public TourneyException() {
+		message = "";
 	}
-
+	
+	public TourneyException(String msg) {
+		this.message = msg;
+	}
+	
+	public String getMessage() {
+		return message;
+	}
 }
