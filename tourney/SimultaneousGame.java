@@ -19,8 +19,7 @@ public abstract class SimultaneousGame extends Game {
 	 */
 	public GameResult play(List<Player> players) {
 		this.players = new ArrayList<Player>(players);
-
-		gameResult = new GameResult();
+		
 		int currentRound  = 0;	
 		init();
 			
@@ -126,5 +125,12 @@ public abstract class SimultaneousGame extends Game {
 			}
 		}
 	}
-
+	
+	protected void init() {
+		// User super as a placeholder for now
+		super.init();
+		
+		// How would we handle this, if Simultaneous does not subclass?
+		// gameResult = new SimultaneousGameResult();
+	}
 }

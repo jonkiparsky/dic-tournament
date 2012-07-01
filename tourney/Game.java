@@ -23,8 +23,6 @@ public abstract class Game {
 	public GameResult play(List<Player> players) {
 		this.players = new ArrayList<Player>(players);
 		
-		gameResult = new GameResult();
-		
 		init();
 			
 		do {
@@ -141,7 +139,8 @@ public abstract class Game {
 	 * predetermined. 
 	 */
 	protected void init() {
-
+		// Subclasses can change this to the desired type of GameResult
+		gameResult = new GameResult();
 	}
 
 	/**

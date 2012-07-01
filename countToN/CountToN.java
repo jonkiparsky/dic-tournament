@@ -48,6 +48,7 @@ public class CountToN extends Game {
 	}
 
 	protected void init() {
+		super.init(); // use default GameResult
 		count = 0;
 		move = new CountMove(0);
 		updateEachPlayer(players);
