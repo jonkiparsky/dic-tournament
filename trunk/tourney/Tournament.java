@@ -12,6 +12,30 @@ public class Tournament {
 	private static HashMap<Class, ArrayList<Class>> gamesToPlayersMap;
 
 	private static int playersPerGame = 2;
+	
+	private Game game;
+	private ArrayList<Player> competitors;
+	private int gameIterations;
+	
+	public Tournament(Game game, ArrayList<Player> competitors, int gameIterations) {
+		this.game = game;
+		this.competitors = competitors;
+		this.gameIterations = gameIterations;
+	}
+	
+	public void runTournament() {
+		ArrayList<ArrayList<Player>> combinations = generateCombinationsWithRepetition(
+				competitors, game.playersPerGame());
+		
+		for(ArrayList<Player> combination : combinations) {
+			Match match = new Match(game, combination, gameIterations);
+			MatchResult matchResult = match.playMatch();
+			
+			// Handle sending MatchResult somewhere...
+		}
+		
+		// Do we return a tournament result of some sort or handle that here?
+	}
 
 	public static void main(String[] args) {
 		Game g = null;
@@ -43,60 +67,10 @@ public class Tournament {
 			te.printStackTrace();
 			System.exit(1);
 		}
-
-		Match match = new Match(g, players, 2);
-
-		MatchResult result = match.playMatch(); // Currently I wouldn't need its
-												// return value directly. Would
-												// you?
-
-		// Evil guard to avoid mismatched data readers. Let's get rid of this
-		// soon.
-		if (!(g instanceof countToN.CountToN)) {
-			System.out.println("Tournament reached end of main.");
-			return;
-		}
-
-		DataReader dr = new CountToNDataReader(result); // sorry about using
-														// game package again
-		// I need a match to be passed to me. Would all implementations?
-		// We need to think about that.
-
-		System.out.println(dr.report());
-
-		do {
-			System.out
-					.print("\nWould you like to save this data to a file (y/n)? ");
-			String input = scanner.next();
-			if (input.equalsIgnoreCase("y")) {
-				System.out.println("Saving Data...");
-				dr.write(); // Could this return a file name? How do we handle
-							// that?
-				System.out.println("Data saved!");
-				break;
-			} else if (input.equalsIgnoreCase("n")) {
-				break;
-			} else {
-				System.out.println("Invalid input! y or n only");
-			}
-		} while (true);
-
-		do {
-			System.out
-					.println("Would you like to view the data in an interactive data explorer (y/n)? ");
-			String input = scanner.next();
-			if (input.equalsIgnoreCase("y")) {
-				System.out.println("Running the interactive data explorer for "
-						+ g.getName() + "...");
-				dr.run();
-				break;
-			} else if (input.equalsIgnoreCase("n")) {
-				break;
-			} else {
-				System.out.println("Invalid input! y or n only");
-			}
-		} while (true);
-
+		
+		Tournament tourney = new Tournament(g, players, 10);
+		tourney.runTournament();
+		
 		System.out.println("Tournament reached end of main.");
 	}
 
@@ -108,9 +82,9 @@ public class Tournament {
 	 * and <b,a,a> must not both be generated. We will need this presently. It
 	 * will also need improved.
 	 */
-	public static ArrayList<ArrayList<Object>> generateCombinationsWithRepetition(
-			ArrayList<Object> array, int combinationSize) {
-		ArrayList<ArrayList<Object>> combinations = new ArrayList<ArrayList<Object>>();
+	public static ArrayList<ArrayList<Player>> generateCombinationsWithRepetition(
+			ArrayList<Player> array, int combinationSize) {
+		ArrayList<ArrayList<Player>> combinations = new ArrayList<ArrayList<Player>>();
 
 		final int arrayLength = array.size();
 
@@ -121,9 +95,9 @@ public class Tournament {
 
 		// base case
 		if (combinationSize == 1) {
-			for (Object o : array) {
-				ArrayList<Object> singleElement = new ArrayList<Object>();
-				singleElement.add(o);
+			for (Player p : array) {
+				ArrayList<Player> singleElement = new ArrayList<Player>();
+				singleElement.add(p);
 				combinations.add(singleElement);
 			}
 			return combinations;
@@ -131,20 +105,20 @@ public class Tournament {
 
 		// recurse
 		for (int i = 0; i < arrayLength; i++) {
-			ArrayList<Object> subset = new ArrayList<Object>();
+			ArrayList<Player> subset = new ArrayList<Player>();
 			for (int j = i; j < arrayLength; j++) {
 				subset.add(array.get(j));
 			}
 
 			int newComboSize = combinationSize - 1;
 
-			ArrayList<ArrayList<Object>> subsetCombinations = generateCombinationsWithRepetition(
+			ArrayList<ArrayList<Player>> subsetCombinations = generateCombinationsWithRepetition(
 					subset, newComboSize);
 
 			// Haven't had any NPEs from above, so I assume
 			// this loop never enters if the subsetCombinations is null
-			for (ArrayList<Object> subsetCombo : subsetCombinations) {
-				ArrayList<Object> combo = new ArrayList<Object>();
+			for (ArrayList<Player> subsetCombo : subsetCombinations) {
+				ArrayList<Player> combo = new ArrayList<Player>();
 				combo.add(array.get(i));
 				combo.addAll(subsetCombo);
 				combinations.add(combo);
