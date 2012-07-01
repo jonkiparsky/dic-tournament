@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
 import tourney.loader.Loader;
-
-
+import tourney.loader.ClassFilter;
+import tourney.loader.IsHumanPlayerFilter;
+import tourney.loader.IsPlayerFilter;
+import tourney.loader.IsMachinePlayerFilter;
 import countToN.CountToNDataReader;
 
 public class Tournament {
@@ -19,15 +21,17 @@ public class Tournament {
 	private ArrayList<Player> competitors;
 	private int gameIterations;
 	
-	public Tournament(Game game, ArrayList<Player> competitors, int gameIterations) {
+	public Tournament(Game game, ArrayList<Player> competitors, 
+			int gameIterations) {
 		this.game = game;
 		this.competitors = competitors;
 		this.gameIterations = gameIterations;
 	}
 	
 	public void runTournament() {
-		ArrayList<ArrayList<Player>> combinations = generateCombinationsWithRepetition(
-				competitors, game.playersPerGame());
+		ArrayList<ArrayList<Player>> combinations = 
+				generateCombinationsWithRepetition(
+					competitors, game.playersPerGame());
 		
 		for(ArrayList<Player> combination : combinations) {
 			Match match = new Match(game, combination, gameIterations);
@@ -41,36 +45,27 @@ public class Tournament {
 
 	public static void main(String[] args) {
 		Game g = null;
-
-		gamesToPlayersMap = null;
-
+		Class[] gamesArray = null;
 		Loader loader = new Loader();
 		try {
-			gamesToPlayersMap = loader.listGames();
+			gamesArray = loader.listGames();
 		} catch (TourneyException te) {
 			te.printStackTrace();
 		}
 		System.out.println("Games available: ");
 
-		Class[] gamesArray = gamesToPlayersMap.keySet().toArray(new Class[1]);
 		for (int i = 1; i <= gamesArray.length; i++) {
 			System.out.println(i + ") " + gamesArray[i - 1].getName());
 		}
 
 		System.out.print("Enter the number of your preferred game: ");
-		Scanner scan = new Scanner(System.in);
-		Class chosenClass = gamesArray[scan.nextInt() - 1];
+		Class chosenGame = gamesArray[scanner.nextInt() - 1];
 
-		ArrayList<Player> players = null;
-		try {
-			g = loader.loadGame(chosenClass);
-			players = loader.loadPlayers(gamesToPlayersMap.get(chosenClass));
+		int gameType = choosePlayerSet();	
+		ArrayList<Player> players = loadChosenPlayerSet(gameType, chosenGame, 
+				loader);
+		g = loadChosenGame(chosenGame, loader);
 
-		} catch (TourneyException te) {
-			te.printStackTrace();
-			System.exit(1);
-		}
-		
 		Tournament tourney = new Tournament(g, players, 10);
 		tourney.runTournament();
 		
@@ -136,6 +131,57 @@ public class Tournament {
 		return combinations;
 	}
 
-	
-	
+
+	private static int choosePlayerSet()
+   {
+      System.out.println("Do you want to: ");
+      System.out.println(" 1) load and run a tournament of machine players?");
+      System.out.println(" 2) load Human Player only (to play both sides " +
+            "interactively?");
+      System.out.println(" 3) load Human Player and play against a selected " +
+            "machine player?");
+      System.out.println(" 4) observe one game played by machines? ");
+		int choice = scanner.nextInt();
+		return choice;
+
+	}
+	private static ArrayList<Player> loadChosenPlayerSet(int choice,
+			Class chosenGame, Loader loader)
+	{
+		ClassFilter playerFilter = null;
+		if (choice == 1)
+			playerFilter = new IsMachinePlayerFilter();
+		if (choice == 2)
+			playerFilter = new IsHumanPlayerFilter();
+		if	(choice == 3)
+			playerFilter = new IsPlayerFilter();
+		if (choice == 4)
+			playerFilter = new IsMachinePlayerFilter();
+					
+		ArrayList<Player> players = null;
+		try {
+			players = loader.loadPlayers(chosenGame, playerFilter);
+
+		} catch (TourneyException te) {
+			te.printStackTrace();
+			System.exit(1);
+		}
+
+		return players;
+	}
+
+	private static Game loadChosenGame(Class chosenGame, Loader loader)
+	{
+
+		Game g = null;
+		try {
+			g = loader.loadGame(chosenGame);
+
+		} catch (TourneyException te) {
+			te.printStackTrace();
+			System.exit(1);
+		}
+
+		return g;
+	}
 }

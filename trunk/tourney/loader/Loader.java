@@ -14,11 +14,11 @@ import java.io.FileFilter;
 
 public class Loader
 {
+	HashMap<Class, ArrayList<Class>> gamesToPlayersMap;
 
-	public HashMap<Class, ArrayList<Class>> listGames() throws TourneyException
+	public Class[] listGames() throws TourneyException
 	{
-			HashMap<Class, ArrayList<Class>> gamesToPlayersMap =
-				new HashMap<Class, ArrayList<Class>>();
+			gamesToPlayersMap = new HashMap<Class, ArrayList<Class>>();
 		File root = new File("./src");
 		for (File f: root.listFiles(new FFilter()))
 		{
@@ -57,7 +57,7 @@ public class Loader
 
 				
 		}	
-		return gamesToPlayersMap;
+		return gamesToPlayersMap.keySet().toArray(new Class[1]);
 	}
 	
 
@@ -99,20 +99,22 @@ public class Loader
 
 	}
 
-	public ArrayList<Player> loadPlayers (ArrayList<Class> classList)
+
+	public ArrayList<Player> loadPlayers (Class chosenGame)
 		throws TourneyException
 
 	{
-		return loadPlayers(classList, new IsPlayerFilter());
+		
+		return loadPlayers(chosenGame, new IsPlayerFilter());
 	}
 
 	
 	
 
-	public ArrayList<Player> loadPlayers (ArrayList<Class> classList, 
-				ClassFilter filter)
+	public ArrayList<Player> loadPlayers (Class chosenGame, ClassFilter filter)
 				throws TourneyException
 	{
+		ArrayList<Class> classList = gamesToPlayersMap.get(chosenGame);
 		ArrayList<Player> players = new ArrayList<Player>();
 		for (Class c: classList)
 		{
