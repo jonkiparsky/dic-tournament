@@ -2,10 +2,13 @@ package prisoner;
 
 import tourney.Player;
 import tourney.Move;
+import tourney.MachinePlayer;
 import java.util.Random;
 
 
-public class IPD_Random extends IPD_Player
+public class IPD_Random 
+		extends IPD_Player
+		implements MachinePlayer
 {
 	private String id = "IPD_Random";
 	private static int instanceCounter = 0;
