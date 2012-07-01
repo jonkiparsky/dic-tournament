@@ -34,6 +34,7 @@ public class IteratedPrisonersDilemma extends SimultaneousGame
 	protected void init() 
 	{
 		iterations = 10;
+		gameResult = new IPD_GameResult();
 	}
 
 	protected boolean isLegal(Move move)
