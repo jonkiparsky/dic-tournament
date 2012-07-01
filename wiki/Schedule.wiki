@@ -19,6 +19,7 @@ A rough list of things that need to be done. This should become an ordered list 
   * game mechanics need work
   * security of moves
   * logging - should we plan on wiring in some logging?
+  * unit testing for submitted Game and Player classes/packages
 
 Every N revisions: 
   * review and re-finalize interfaces and bottom-level abstract classes
