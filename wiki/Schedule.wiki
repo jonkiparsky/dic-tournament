@@ -46,5 +46,5 @@ Every N revisions:
     *  (in fact, very little of this needs to be implemented immediately)
 
 = Milestones =
-  # Be able to run Tournament and receive a screen report() from the Game's DataReader. (This implies we have a working Tournament where are parts are functional and doing their job, though at a very basic level.)
+  # (1.0 ?) Be able to run Tournament and receive a screen report() from the Game's DataReader. (This implies we have a working Tournament where are parts are functional and doing their job, though at a very basic level.)
   
