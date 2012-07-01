@@ -16,7 +16,7 @@ public abstract class SimultaneousGame extends Game
 	
 	protected void init()
 	{
-		gameResult = new GameResult(activePlayers); // Default, should be overridden
+		gameResult = new SimultaneousGameResult(activePlayers); // Default, should be overridden
 	}
 
 	protected void poll() throws IllegalMoveException
@@ -52,9 +52,7 @@ public abstract class SimultaneousGame extends Game
 	}
 	
 	protected void record() {
-		for (Move m : round)
-		{
-			gameResult.add(m);
-		}
+		SimultaneousGameResult gr = (SimultaneousGameResult) gameResult;
+		gr.addRound(round);
 	}
 }
