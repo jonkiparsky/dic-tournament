@@ -3,12 +3,15 @@ package countToN;
 import java.util.Scanner;
 
 import tourney.Move;
+import tourney.HumanPlayer;
 import tourney.Player;
 
 /**
  * Recommended human implementation for the Count to N game.
  */
-public class CountToNHuman implements Player {
+public class CountToNHuman 
+			implements Player, HumanPlayer 
+{		
 	static Scanner input = new Scanner(System.in);
 
 	private String id = "C2N_Human_Player";
