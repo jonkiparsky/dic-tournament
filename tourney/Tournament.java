@@ -16,7 +16,7 @@ public class Tournament {
 	private static HashMap<Class, ArrayList<Class>> gamesToPlayersMap;
 
 	private static int playersPerGame = 2;
-	
+	private static Loader loader;	
 	private Game game;
 	private ArrayList<Player> competitors;
 	private int gameIterations;
@@ -54,7 +54,7 @@ public class Tournament {
 	public static void main(String[] args) {
 		Game game= null;
 		Class[] gamesArray = null;
-		Loader loader = new Loader();
+		loader = new Loader();
 		try {
 			gamesArray = loader.listGames();
 		} catch (TourneyException te) {
@@ -70,9 +70,8 @@ public class Tournament {
 		Class chosenGame = gamesArray[scanner.nextInt() - 1];
 
 		int matchType = choosePlayerSet();	
-		ArrayList<Player> players = loadChosenPlayerSet(matchType, chosenGame, 
-				loader);
-		game = loadChosenGame(chosenGame, loader);
+		ArrayList<Player> players = loadChosenPlayerSet(matchType, chosenGame);
+		game = loadChosenGame(chosenGame);
 
 		
 	// dispatch code should be in a method, but we don't refactor until we have
@@ -105,8 +104,24 @@ public class Tournament {
 		{
 			System.out.println("There is just exactly one interactive player " +
 				"for that game. I'll load up a game for you.");
-
-			return null;
+			players.add(loader.getNewInstance(players.get(0)));
+			Match match = new Match(game, players);
+			MatchResult result = null;
+			try{
+			result = match.playMatch();
+			}
+			catch (IllegalMoveException ime)
+			{
+				System.out.println("Sorry, that was a bad move.");
+				ime.printStackTrace();
+					// fortunately, this is not meant for playing interactively!
+			}
+			catch (GameExecutionException gee)
+			{
+				System.out.println("I'm sorry, the game has screwed up.");
+				gee.printStackTrace();
+			}
+			return result;
 		}
 		else
 		{
@@ -190,7 +205,7 @@ public class Tournament {
 
 	}
 	private static ArrayList<Player> loadChosenPlayerSet(int matchType,
-			Class chosenGame, Loader loader)
+			Class chosenGame)
 	{
 		ClassFilter playerFilter = null;
 		if (matchType == 1)
@@ -214,7 +229,7 @@ public class Tournament {
 		return players;
 	}
 
-	private static Game loadChosenGame(Class chosenGame, Loader loader)
+	private static Game loadChosenGame(Class chosenGame)
 	{
 
 		Game game = null;

@@ -42,7 +42,8 @@ public abstract class TurnBasedGame extends Game
 	
 	protected void init()
 	{
-		gameResult = new GameResult(activePlayers); // Default, should be overridden
+		gameResult = new GameResult(activePlayers); 
+				// Default, should be overridden
 	}
 	
 	protected void prePoll()
@@ -63,7 +64,8 @@ public abstract class TurnBasedGame extends Game
 	protected void updateEachPlayer(List<Player> players)
 	{
 		for(Player player : activePlayers) {
-			player.update(moveForPlayer(player)); // Default, can be overridden if need be.
+			player.update(moveForPlayer(player)); 
+					// Default, can be overridden if need be.
 		}
 	}
 

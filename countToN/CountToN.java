@@ -1,6 +1,9 @@
 package countToN;
 
-import tourney.Game;
+
+import tourney.MatchResult;
+import tourney.TurnBasedGame;
+import tourney.DataReader;
 import tourney.Move;
 import tourney.Player;
 
@@ -8,7 +11,7 @@ import tourney.Player;
  * Simple Game that plays through a list of players, asking them to count to a
  * number by rotating each player and asking them for the next number in turn.
  */
-public class CountToN extends Game {
+public class CountToN extends TurnBasedGame {
 	// the recommended implementations for testing.
 	private static String name = "Count To Ten";
 	private static String author = "R. Shepherd";
@@ -38,8 +41,8 @@ public class CountToN extends Game {
 		return cMove.getCount() == count + 1;
 	}
 
-	protected void processMove() {
-		super.processMove(); // Needed to set the player appropriately
+	protected void process() {
+		super.process(); // Needed to set the player appropriately
 		count = ((CountMove) move).getCount(); // we could just increment
 		
 		if (count == howHigh) {
@@ -51,7 +54,7 @@ public class CountToN extends Game {
 		super.init(); // use default GameResult
 		count = 0;
 		move = new CountMove(0);
-		updateEachPlayer(players);
+		updateEachPlayer(activePlayers);
 	}
 
 	protected boolean keepGoing() {
@@ -76,5 +79,9 @@ public class CountToN extends Game {
 
 	public String getAuthor() {
 		return author;
+	}
+	public DataReader getDataReader(MatchResult result)
+	{
+		return new CountToNDataReader(result);
 	}
 }

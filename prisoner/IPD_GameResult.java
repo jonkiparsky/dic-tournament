@@ -8,10 +8,6 @@ import java.util.List;
 
 public class  IPD_GameResult extends GameResult
 {
-	public IPD_GameResult()
-	{
-		super();
-	}
 	
 	public IPD_GameResult(List<Player> players)
 	{
