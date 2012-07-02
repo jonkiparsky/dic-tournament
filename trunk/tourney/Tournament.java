@@ -52,7 +52,7 @@ public class Tournament {
 	}
 
 	public static void main(String[] args) {
-		Game g = null;
+		Game game= null;
 		Class[] gamesArray = null;
 		Loader loader = new Loader();
 		try {
@@ -69,15 +69,51 @@ public class Tournament {
 		System.out.print("Enter the number of your preferred game: ");
 		Class chosenGame = gamesArray[scanner.nextInt() - 1];
 
-		int gameType = choosePlayerSet();	
-		ArrayList<Player> players = loadChosenPlayerSet(gameType, chosenGame, 
+		int matchType = choosePlayerSet();	
+		ArrayList<Player> players = loadChosenPlayerSet(matchType, chosenGame, 
 				loader);
-		g = loadChosenGame(chosenGame, loader);
+		game = loadChosenGame(chosenGame, loader);
 
-		Tournament tourney = new Tournament(g, players, 10);
-		tourney.runTournament();
 		
+	// dispatch code should be in a method, but we don't refactor until we have
+	// working code
+
+		if (matchType == 1) {
+		
+			Tournament tourney = new Tournament(game, players, 10);
+			tourney.runTournament();
+		}
+		
+		if (matchType == 2) {
+			MatchResult m = playHumanPlayers(game, players);
+		}	
+
 		System.out.println("Tournament reached end of main.");
+	}
+
+	private static MatchResult playHumanPlayers(Game game, 
+				ArrayList <Player> players)
+	{
+		if (players.size() == 0)
+		{
+			System.out.println("I'm sorry, I can't find any interactive players "	
+				+"for that game.");
+			return null;
+		}
+
+		if (players.size() == 1)
+		{
+			System.out.println("There is just exactly one interactive player " +
+				"for that game. I'll load up a game for you.");
+
+			return null;
+		}
+		else
+		{
+			System.out.println("There are multiple interactive Players for that " +
+				"game. I'll have to make you pick one.");
+			return null;
+		}
 	}
 
 	/**
@@ -149,21 +185,21 @@ public class Tournament {
       System.out.println(" 3) load Human Player and play against a selected " +
             "machine player?");
       System.out.println(" 4) observe one game played by machines? ");
-		int choice = scanner.nextInt();
-		return choice;
+		int matchType = scanner.nextInt();
+		return matchType;
 
 	}
-	private static ArrayList<Player> loadChosenPlayerSet(int choice,
+	private static ArrayList<Player> loadChosenPlayerSet(int matchType,
 			Class chosenGame, Loader loader)
 	{
 		ClassFilter playerFilter = null;
-		if (choice == 1)
+		if (matchType == 1)
 			playerFilter = new IsMachinePlayerFilter();
-		if (choice == 2)
+		if (matchType == 2)
 			playerFilter = new IsHumanPlayerFilter();
-		if	(choice == 3)
+		if	(matchType == 3)
 			playerFilter = new IsPlayerFilter();
-		if (choice == 4)
+		if (matchType == 4)
 			playerFilter = new IsMachinePlayerFilter();
 					
 		ArrayList<Player> players = null;
@@ -181,15 +217,15 @@ public class Tournament {
 	private static Game loadChosenGame(Class chosenGame, Loader loader)
 	{
 
-		Game g = null;
+		Game game = null;
 		try {
-			g = loader.loadGame(chosenGame);
+			game = loader.loadGame(chosenGame);
 
 		} catch (TourneyException te) {
 			te.printStackTrace();
 			System.exit(1);
 		}
 
-		return g;
+		return game;
 	}
 }
