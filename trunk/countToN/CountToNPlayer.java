@@ -2,11 +2,14 @@ package countToN;
 
 import tourney.Move;
 import tourney.Player;
+import tourney.MachinePlayer;
 
 /**
  * Default AI player for CountToN. He plays the game flawlessly.
  */
-public class CountToNPlayer implements Player {
+public class CountToNPlayer 
+			implements Player, MachinePlayer 
+{
 
 	private String id = "C2N_Default";
 	private static int instanceCounter = 0;
