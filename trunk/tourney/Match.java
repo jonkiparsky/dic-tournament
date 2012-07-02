@@ -28,7 +28,8 @@ public  class Match
 	}
 
 
-	public MatchResult playMatch() throws IllegalMoveException, GameExecutionException
+	public MatchResult playMatch() 
+				throws IllegalMoveException, GameExecutionException
 	{
 		for (int i = 0; i<numberOfGames; i++)
 		{

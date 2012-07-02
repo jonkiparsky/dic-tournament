@@ -150,6 +150,19 @@ public class Loader
 
 	}
 
+	public Player getNewInstance(Player p)
+	{
+		Player newPlayer = null;
+		try{	
+			 newPlayer =  p.getClass().newInstance();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return newPlayer;
+	}
+
 
 	
 

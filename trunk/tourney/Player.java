@@ -36,4 +36,5 @@ public interface Player {
 	 * their game's state.
 	 */
 	void update(Move move);
+	
 }

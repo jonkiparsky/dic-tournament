@@ -13,6 +13,8 @@ import tourney.Player;
 public class CountToNDataReader implements DataReader {
 	private MatchResult result;
 
+	
+
 	public CountToNDataReader(MatchResult result) {
 		this.result = result;
 	}
@@ -24,7 +26,7 @@ public class CountToNDataReader implements DataReader {
 		List<Player> players = result.getPlayers();
 		List<Player> winners = result.getMatchWinners();
 
-		sb.append(String.format("%d games of CountToN were played between ", result.size()));
+	//	sb.append(String.format("%d games of CountToN were played between ", result.size()));
 
 		int playerLength = players.size();
 		for (int i = 0; i < playerLength; i++) {

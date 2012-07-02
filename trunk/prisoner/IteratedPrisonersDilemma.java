@@ -4,6 +4,8 @@ package prisoner;
 import tourney.SimultaneousGame;
 import tourney.Move;
 import tourney.Player;
+import tourney.MatchResult;
+import tourney.DataReader;
 import java.util.HashMap;
 
 /**
@@ -23,10 +25,8 @@ public class IteratedPrisonersDilemma extends SimultaneousGame
 
 
 
-	protected void processMove()
+	protected void process()
 	{
-		((IPD_Move)move).setPrevious((IPD_Move)previousMove);
-		previousMove=move;
 		
 	}
 
@@ -34,7 +34,7 @@ public class IteratedPrisonersDilemma extends SimultaneousGame
 	protected void init() 
 	{
 		iterations = 10;
-		gameResult = new IPD_GameResult();
+		gameResult = new IPD_GameResult(activePlayers);
 	}
 
 
@@ -79,8 +79,8 @@ public class IteratedPrisonersDilemma extends SimultaneousGame
 	}
 
 
+	public DataReader getDataReader(MatchResult result)
+	{
+		return new IPD_DataReader(result);
+	}
 }
-
-
-
-
