@@ -17,19 +17,16 @@ public class MatchResult extends AbstractResult<GameResult> {
 	public MatchResult(List<Player> players) {
 		super(players);
 		numberOfWins = new HashMap<Player, Integer>();
-	}
-
-	public void add(GameResult result) {
-		super.add(result);
-		
-		List<Player> gamePlayers = result.getPlayers();
-
 		// Add any new players to the list of match-wide players
-		for (Player player : gamePlayers) {
+		for (Player player : players) {
 			if (!numberOfWins.containsKey(player)) {
 				numberOfWins.put(player, 0);
 			}
 		}
+	}
+
+	public void add(GameResult result) {
+		super.add(result);
 
 		List<Player> gameWinners = result.getWinners();
 

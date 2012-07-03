@@ -23,6 +23,7 @@ public class SimultaneousGameResult extends GameResult {
 
 	public SimultaneousGameResult(List<Player> players) {
 		super(players);
+		offsets = new ArrayList<Integer>();
 		offsets.add(0); // first round starts at 0 always
 	}
 

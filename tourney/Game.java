@@ -166,7 +166,7 @@ public abstract class Game
 	 * Return the necessary DataReader capable of interpreting statistics
 	 * generated from playing this Game.
 	 */
-	public abstract DataReader getDataReader(MatchResult result);
+	public abstract DataReader getDataReader(TournamentResult result);
 
 	/**
 	 * The name of the Game.
