@@ -6,16 +6,14 @@ import java.io.IOException;
 import java.util.List;
 
 import tourney.DataReader;
-import tourney.MatchResult;
 import tourney.Player;
+import tourney.TournamentResult;
 
 /** Handles getting the appropriate Data from a Match of CountToN */
 public class CountToNDataReader implements DataReader {
-	private MatchResult result;
-
+	private TournamentResult result;
 	
-
-	public CountToNDataReader(MatchResult result) {
+	public CountToNDataReader(TournamentResult result) {
 		this.result = result;
 	}
 
@@ -24,7 +22,7 @@ public class CountToNDataReader implements DataReader {
 		StringBuilder sb = new StringBuilder();
 
 		List<Player> players = result.getPlayers();
-		List<Player> winners = result.getMatchWinners();
+		List<Player> winners = result.getTournamentWinners();
 
 	//	sb.append(String.format("%d games of CountToN were played between ", result.size()));
 

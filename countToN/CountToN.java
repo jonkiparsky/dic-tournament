@@ -1,6 +1,5 @@
 package countToN;
 
-import tourney.NullDataReader;
 import tourney.TournamentResult;
 import tourney.TurnBasedGame;
 import tourney.DataReader;
@@ -52,6 +51,9 @@ public class CountToN extends TurnBasedGame {
 
 	protected void init() {
 		super.init(); // use default GameResult
+		if(activePlayers.size() != numberOfPlayers) {
+			abort("An invalid number of players was given to play Count to Ten.");
+		}
 		count = 0;
 		move = new CountMove(0);
 		updateEachPlayer(activePlayers);
@@ -80,8 +82,9 @@ public class CountToN extends TurnBasedGame {
 	public String getAuthor() {
 		return author;
 	}
+	
 	public DataReader getDataReader(TournamentResult result)
 	{
-		return new NullDataReader();
+		return new CountToNDataReader(result);
 	}
 }

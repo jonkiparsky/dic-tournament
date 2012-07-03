@@ -14,7 +14,6 @@ public class CountToNPlayer
 	private String id = "C2N_Default";
 	private static int instanceCounter = 0;
 
-
 	private int count = 0;
 	public CountToNPlayer()
 	{
@@ -32,6 +31,10 @@ public class CountToNPlayer
 	public String getID()
 	{
 		return id;
+	}
+	
+	public String toString() {
+		return getID();
 	}
 
 	@Override
