@@ -1,21 +1,16 @@
 package tourney;
 
-import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.List;
 import tourney.loader.Loader;
 import tourney.loader.ClassFilter;
 import tourney.loader.IsHumanPlayerFilter;
 import tourney.loader.IsPlayerFilter;
 import tourney.loader.IsMachinePlayerFilter;
-import countToN.CountToNDataReader;
 
 public class Tournament {
 	static Scanner scanner = new Scanner(System.in); // For end of tourney input
-	private static HashMap<Class, ArrayList<Class>> gamesToPlayersMap;
-
-	private static int playersPerGame = 2;
+	
 	private static Loader loader;	
 	private Game game;
 	private ArrayList<Player> competitors;
@@ -28,15 +23,17 @@ public class Tournament {
 		this.gameIterations = gameIterations;
 	}
 	
-	public void runTournament() {
+	public TournamentResult runTournament() {
 		ArrayList<ArrayList<Player>> combinations = 
 				generateCombinationsWithRepetition(
 					competitors, game.playersPerGame());
+		TournamentResult tourneyResult = new TournamentResult(competitors);
 		
 		for(ArrayList<Player> combination : combinations) {
 			Match match = new Match(game, combination, gameIterations);
+			MatchResult matchResult = null;
 			try {
-				MatchResult matchResult = match.playMatch();
+				matchResult = match.playMatch();
 			} catch (IllegalMoveException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -45,10 +42,10 @@ public class Tournament {
 				e.printStackTrace();
 			}
 			
-			// Handle sending MatchResult somewhere...
+			tourneyResult.add(matchResult);
 		}
 		
-		// Do we return a tournament result of some sort or handle that here?
+		return tourneyResult;
 	}
 
 	public static void main(String[] args) {
@@ -80,7 +77,10 @@ public class Tournament {
 		if (matchType == 1) {
 		
 			Tournament tourney = new Tournament(game, players, 10);
-			tourney.runTournament();
+			TournamentResult result = tourney.runTournament();
+			DataReader data = game.getDataReader(result);
+			System.out.println( data.report() );
+			// Do more or whatever you want to here.
 		}
 		
 		if (matchType == 2) {

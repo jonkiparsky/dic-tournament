@@ -1,7 +1,7 @@
 package countToN;
 
-
-import tourney.MatchResult;
+import tourney.NullDataReader;
+import tourney.TournamentResult;
 import tourney.TurnBasedGame;
 import tourney.DataReader;
 import tourney.Move;
@@ -80,8 +80,8 @@ public class CountToN extends TurnBasedGame {
 	public String getAuthor() {
 		return author;
 	}
-	public DataReader getDataReader(MatchResult result)
+	public DataReader getDataReader(TournamentResult result)
 	{
-		return new CountToNDataReader(result);
+		return new NullDataReader();
 	}
 }

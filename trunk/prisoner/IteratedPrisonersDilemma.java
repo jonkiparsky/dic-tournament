@@ -1,10 +1,11 @@
 package prisoner;
 
 
+import tourney.NullDataReader;
 import tourney.SimultaneousGame;
 import tourney.Move;
 import tourney.Player;
-import tourney.MatchResult;
+import tourney.TournamentResult;
 import tourney.DataReader;
 import java.util.HashMap;
 
@@ -79,8 +80,8 @@ public class IteratedPrisonersDilemma extends SimultaneousGame
 	}
 
 
-	public DataReader getDataReader(MatchResult result)
+	public DataReader getDataReader(TournamentResult result)
 	{
-		return new IPD_DataReader(result);
+		return new NullDataReader();
 	}
 }
