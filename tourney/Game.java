@@ -40,19 +40,19 @@ public abstract class Game
 
 		if (gameResult == null)
 		{
-			throw new GameExecutionException(getName()
-					+ " does not instantiate gameResult"
+			abort(getName() + " does not instantiate gameResult"
 					+ " in init() like it's supposed to.");
 		}
 
-		do {
+		while(keepGoing() && !abort)
+		{
 			prePoll();
 			poll();
 			process();
 			updateEachPlayer(players);
 			postUpdate();
 			record();
-		} while (keepGoing() && !abort);
+		}
 		
 		if(abort)
 			throw new GameExecutionException(abortReason);
