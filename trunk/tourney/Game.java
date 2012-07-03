@@ -20,6 +20,9 @@ public abstract class Game
 	 * type by the implementation in init() or the Game won't play.
 	 */
 	protected GameResult gameResult;
+	
+	private String abortReason = "";
+	private boolean abort = false;
 
 	/**
 	 * Based on these players, play through the game, and return a Result (In
@@ -49,7 +52,10 @@ public abstract class Game
 			updateEachPlayer(players);
 			postUpdate();
 			record();
-		} while (keepGoing());
+		} while (keepGoing() && !abort);
+		
+		if(abort)
+			throw new GameExecutionException(abortReason);
 
 		return gameResult;
 	}
@@ -125,6 +131,18 @@ public abstract class Game
 	 */
 	protected void record()
 	{
+	}
+	
+	/**
+	 * A method games can call if it is necessary to abort their game. This flag
+	 * will not be checked until the end of an iteration in play(). Games should
+	 * ensure that Methods between when this is called and the next iteration do
+	 * not hang up execution. A GameExecutionException will be thrown with the
+	 * specified reason.
+	 */
+	protected final void abort(String reason) {
+		abort = true;
+		abortReason = reason;
 	}
 
 	/* Unimplemented Methods */
