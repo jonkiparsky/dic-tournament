@@ -23,8 +23,6 @@ public abstract class Game
 	 */
 	protected GameResult gameResult;
 	
-	private String abortReason = "";
-	private boolean abort = false;
 
 	/**
 	 * Based on these players, play through the game, and return a Result (In
@@ -140,7 +138,7 @@ public abstract class Game
 	 * specified reason.
 	 */
 	protected final void abort(String reason) throws GameExecutionException {
-		throw new GameExecutionException(abortReason);
+		throw new GameExecutionException(reason);
 	}
 
 	/* Unimplemented Methods */
@@ -158,13 +156,9 @@ public abstract class Game
 
 	/**
 	 * It is up to the implementation to tell us whether the Game should
-	 * continue to execute or not. If the abort method is used, this method must
-	 * check the abort flag. 
+	 * continue to execute or not.
 	 */
-	protected  boolean keepGoing()
-	{
-		return abort;
-	}
+	protected abstract  boolean keepGoing();
 
 	/* Public Interface Methods */
 
