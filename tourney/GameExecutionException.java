@@ -1,7 +1,7 @@
 package tourney;
 
-public class GameExecutionException extends TourneyException {
+public class GameExecutionException extends RuntimeException {
 	public GameExecutionException(String msg) {
-		message = msg;
+		super(msg);
 	}
 }
