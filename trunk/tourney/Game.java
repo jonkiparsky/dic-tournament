@@ -12,8 +12,10 @@ import java.util.List;
 public abstract class Game
 {
 	
-	/** A list of all the players in the game, available for implementations. */
-	protected List<Player> activePlayers; // Changed name to avoid conflict
+	/** 
+	*	A list of all the players in the game, available for implementations. 
+	*/
+	protected List<Player> activePlayers;
 	
 	/**
 	 * The current record of the Game. This must be instantiated to the proper
@@ -42,9 +44,10 @@ public abstract class Game
 		{
 			abort(getName() + " does not instantiate gameResult"
 					+ " in init() like it's supposed to.");
-		}
+		}   // JPK: This should be handled by unit testing of submitted Games
+			//instead. A Game that doesn't pass this shouldn't even play
 
-		while(keepGoing() && !abort)
+		while(keepGoing())
 		{
 			prePoll();
 			poll();
@@ -53,10 +56,6 @@ public abstract class Game
 			postUpdate();
 			record();
 		}
-		
-		if(abort)
-			throw new GameExecutionException(abortReason);
-
 		return gameResult;
 	}
 
@@ -140,9 +139,8 @@ public abstract class Game
 	 * not hang up execution. A GameExecutionException will be thrown with the
 	 * specified reason.
 	 */
-	protected final void abort(String reason) {
-		abort = true;
-		abortReason = reason;
+	protected final void abort(String reason) throws GameExecutionException {
+		throw new GameExecutionException(abortReason);
 	}
 
 	/* Unimplemented Methods */
@@ -160,9 +158,13 @@ public abstract class Game
 
 	/**
 	 * It is up to the implementation to tell us whether the Game should
-	 * continue to execute or not
+	 * continue to execute or not. If the abort method is used, this method must
+	 * check the abort flag. 
 	 */
-	protected abstract boolean keepGoing();
+	protected  boolean keepGoing()
+	{
+		return abort;
+	}
 
 	/* Public Interface Methods */
 
