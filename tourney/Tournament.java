@@ -1,6 +1,7 @@
 package tourney;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import tourney.loader.Loader;
 import tourney.loader.ClassFilter;
@@ -15,6 +16,7 @@ public class Tournament {
 	private Game game;
 	private ArrayList<Player> competitors;
 	private int gameIterations;
+	private TournamentResult tourneyResult;
 	
 	public Tournament(Game game, ArrayList<Player> competitors, 
 			int gameIterations) {
@@ -24,28 +26,55 @@ public class Tournament {
 	}
 	
 	public TournamentResult runTournament() {
-		ArrayList<ArrayList<Player>> combinations = 
-				generateCombinationsWithRepetition(
-					competitors, game.playersPerGame());
-		TournamentResult tourneyResult = new TournamentResult(competitors);
+		List<List<Player>> combinations = Combinations.generateCombinations(
+				competitors, game.playersPerGame(), true);
+		tourneyResult = new TournamentResult(competitors);
 		
-		for(ArrayList<Player> combination : combinations) {
+		for(List<Player> combination : combinations) {
+			// check for disqualified players
+			boolean disqualifiedPlayer = false;
+			for(Player player : combination) {
+				if(!competitors.contains(player)) {
+					disqualifiedPlayer = true;
+				}
+			}
+			if(disqualifiedPlayer) {
+				continue;
+			}
+			
 			Match match = new Match(game, combination, gameIterations);
 			MatchResult matchResult = null;
 			try {
 				matchResult = match.playMatch();
-			} catch (IllegalMoveException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (GameExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (IllegalMoveException ime) {
+				// disqualify the player and move on
+				disqualify(ime.getCulprit());
+			} catch (GameExecutionException gee) {
+				gee.printStackTrace();
 			}
 			
 			tourneyResult.add(matchResult);
 		}
 		
 		return tourneyResult;
+	}
+	
+	/**
+	 * Disqualify a player from the tournament. For now we just kick him out and
+	 * no future matches with him involved are played. I also added
+	 * retroactively removing him from the tournament here.
+	 */
+	private void disqualify(Player player)
+	{
+		competitors.remove(player);
+		
+		// Can remove if necessary.
+		List<MatchResult> badMatches = tourneyResult.getAllMatchesWithPlayer(player);
+		List<MatchResult> allMatches = tourneyResult.getResults();
+		
+		for(MatchResult result : badMatches) {
+			allMatches.remove(result);
+		}
 	}
 
 	public static void main(String[] args) {
@@ -130,66 +159,6 @@ public class Tournament {
 			return null;
 		}
 	}
-
-	/**
-	 * Purpose: Generate all n-player combinations of the Player list, where n
-	 * is the number of players required per game. Players are to play
-	 * themselves, order is not significant. For a 3-player game, with players
-	 * a, b, c, d, e the set <a,a,a> and <a,a,b> must be generated, but <a,a,b>
-	 * and <b,a,a> must not both be generated. We will need this presently. It
-	 * will also need improved.
-	 */
-	public static ArrayList<ArrayList<Player>> 
-				generateCombinationsWithRepetition(
-					ArrayList<Player> array, int combinationSize) {
-
-
-		ArrayList<ArrayList<Player>> combinations = 
-					new ArrayList<ArrayList<Player>>();
-
-		final int arrayLength = array.size();
-
-		// if combination size is too small
-		if (combinationSize < 1) {
-			return null;
-		}
-
-		// base case
-		if (combinationSize == 1) {
-			for (Player p : array) {
-				ArrayList<Player> singleElement = new ArrayList<Player>();
-				singleElement.add(p);
-				combinations.add(singleElement);
-			}
-			return combinations;
-		}
-
-		// recurse
-		for (int i = 0; i < arrayLength; i++) {
-			ArrayList<Player> subset = new ArrayList<Player>();
-			for (int j = i; j < arrayLength; j++) {
-				subset.add(array.get(j));
-			}
-
-			int newComboSize = combinationSize - 1;
-
-			ArrayList<ArrayList<Player>> subsetCombinations = 
-					generateCombinationsWithRepetition(
-						subset, newComboSize);
-
-			// Haven't had any NPEs from above, so I assume
-			// this loop never enters if the subsetCombinations is null
-			for (ArrayList<Player> subsetCombo : subsetCombinations) {
-				ArrayList<Player> combo = new ArrayList<Player>();
-				combo.add(array.get(i));
-				combo.addAll(subsetCombo);
-				combinations.add(combo);
-			}
-		}
-
-		return combinations;
-	}
-
 
 	private static int choosePlayerSet()
    {
