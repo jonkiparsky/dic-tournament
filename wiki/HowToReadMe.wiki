@@ -1,12 +1,22 @@
-#How to Use the API to Write Game and Player Implementations
-
-= Introduction =
+= How to Use the API to Write Game and Player Implementations =
 This article is intended to give someone not familiar with our code a basic idea on how that person may write a Game or Player class that can conform with the API.
 
 = Writing a Game Implementation =
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+== Getting Familiar With How Game Works ==
+If you would like to write a Game for our API, the first thing you should do is become familiar with the Game class by consulting the javadoc. Once you are familiar with some of the methods and fields, you may start to see some patterns in how Game is set up. If not, I will explain them briefly here.
+
+Game provides "hook" methods which it calls at certain stages of it's play method. The first such method is `init`. This method allows an implementation of Game to override it, and perform any setup code that it needs to do before the game loop is started. Once the game loop is started, the game will call various methods in a loop. The order is as follows:
+
+  # *prePoll* - this method is called at the beginning of each iteration.
+  # *poll* - this method is called next. Games should demand moves from the players here.
+  # *process* - this method is called to process the moves retrieved from the players
+  # *updateEachPlayer* - this method is called to give the game a chance to update the players
+  # *postPoll* - this method is called after updateEachPlayer to give Game the chance to do anything it needs to before record is called.
+  # *record* - this method is called so the Game can record what happened for this iteration.
+
+One thing to remember is that the Player interface provides an update() method to keep the Player's state updated. Our API specifies that each Player must maintain its own state of the Game. This makes cheating or trying to alter the Game's state impossible. It also ensures that the Player must have some knowledge about the rules of the Game, so it is more likely they can provide a legal move. However, this puts the added responsibility on the Game to update each Player with Moves, even if it is the Move they just submitted. Game's should also maintain their own version of the state. Players who fall out of sync will start to submit invalid moves and will be dealt with by Game's security measures.
+
+== Beginning to Write Your Game ==
+i have to go , some idea points: find any pre-written base implementations for your type of Game. Justify whether you need to write one. You may override play if you need to. Game is just where the progress of your rules happens, and you may write as many other classes you want to help you; put them in the same package. Name your package after your game.
 
 = Writing a Player Implementation =
