@@ -11,7 +11,6 @@ import tourney.loader.IsMachinePlayerFilter;
 
 public class Tournament {
 	static Scanner scanner = new Scanner(System.in); // For end of tourney input
-	
 	private static Loader loader;	
 	private Game game;
 	private ArrayList<Player> competitors;
@@ -23,6 +22,7 @@ public class Tournament {
 		this.game = game;
 		this.competitors = competitors;
 		this.gameIterations = gameIterations;
+		
 	}
 	
 	public TournamentResult runTournament() {
@@ -212,4 +212,56 @@ public class Tournament {
 
 		return game;
 	}
+
+
+	/** 
+	*	Asks the Tournament to pose a question to the user, and returns the
+	*	answer as a String. I find it hard to imagine a circumstance where we'll
+	*	need this, but implementing anyway. 
+	*	Rudimentary implementation, enough to give Tournament the necessary calls,
+	*	so this functionality will be in 0.1 but this is not how it will remain
+	* 	Definitely will not remain static, but refactor needed to do it right. 
+	*	@param question The question to be posed, as a String
+	*	@psram responseToken Signifies the type of the expected response. 
+	*/
+	public static String query (String question)
+	{
+		String prompt = ">>";
+		String response = "";
+		System.out.println(question );
+		System.out.println(prompt);
+		response = scanner.nextLine();
+		return response;
+	}
+
+	/** 
+	*	Asks the Tournament to pose a question to the user, and returns the
+	*	answer as an int.
+	*	Rudimentary implementation, enough to give Tournament the necessary calls,
+	*	so this functionality will be in 0.1 but this is not how it will remain
+	* 	Definitely will not remain static, but refactor needed to do it right. 
+	*	@param question The question to be posed, as a String
+	*	@psram responseToken Signifies the type of the expected response. 
+	*/
+	public static int query (String question, int responseToken)
+	{
+		boolean askAgain; 	
+		String prompt = ">> ";
+		int response = 0;
+		do {
+			askAgain = false;
+			System.out.println(question );
+			try{
+				System.out.print(prompt);
+				response = scanner.nextInt();
+			}
+			catch (NumberFormatException nfe)
+			{
+				askAgain = true;
+				System.out.println("Expecting an int");
+			}
+		} while (askAgain);
+		return response;
+	}
+
 }

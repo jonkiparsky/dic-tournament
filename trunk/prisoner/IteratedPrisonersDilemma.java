@@ -4,6 +4,7 @@ package prisoner;
 import tourney.NullDataReader;
 import tourney.SimultaneousGame;
 import tourney.Move;
+import tourney.Tournament;
 import tourney.Player;
 import tourney.TournamentResult;
 import tourney.DataReader;
@@ -34,7 +35,8 @@ public class IteratedPrisonersDilemma extends SimultaneousGame
 
 	protected void init() 
 	{
-		iterations = 10;
+		iterations = Tournament.query(
+				"How many iterations would you like to play", 1);
 		gameResult = new IPD_GameResult(activePlayers);
 	}
 
