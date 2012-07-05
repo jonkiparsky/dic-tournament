@@ -135,7 +135,14 @@ public abstract class Game
 
 	/**
 	 * A hook method that is designed to tell all players what happened for this
-	 * iteration.
+	 * iteration. The API specifies that each <code>Player</code> must maintain
+	 * its own state of the Game, and that all ways of updating that state must
+	 * be through the <code>update(Move)</code> method in <code>Player</code>.
+	 * The API also specifies that only the game should call the
+	 * <code>update(Move)</code> method, and that the player should not try to
+	 * call <code>update</code> with his own <code>Move</code>. This means that
+	 * <code>Game</code> must update each player with every <code>Move</code> in
+	 * this method, even if it is their own.
 	 * 
 	 * @param players
 	 *            A list of players that must be updated.
