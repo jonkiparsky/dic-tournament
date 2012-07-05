@@ -4,7 +4,7 @@ package tourney.loader;
 import tourney.HumanPlayer;
 	
 /**
-*	A filter to recognize HumanPlayers
+*	Accepts HumanPlayers only.
 */
 
 public class IsHumanPlayerFilter extends ClassFilter

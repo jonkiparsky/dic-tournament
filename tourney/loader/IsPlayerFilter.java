@@ -4,7 +4,7 @@ package tourney.loader;
 import tourney.Player;
 	
 /**
-*	A filter to recognize Players
+*	Accepts any instance of Player
 */
 
 public class IsPlayerFilter extends ClassFilter
