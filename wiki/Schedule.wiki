@@ -8,18 +8,21 @@ A rough list of things that need to be done. This should become an ordered list 
 = Release 0.1 =
 *Expected functionality:*  
   * Functional Tournament/Match/Game/Player interaction
-  * 
+  * Minimal results returns - enough to know that we're getting signal
+
+* Coding standards/style:*
+  * All exceptions handled  
+  * Tidy code. 80 column wrap, 4-space tabs, generally pretty
 
 *Non-functional*
   * API stable through some set of changes *Decision point:* we have to decide how far out we want to lock down the API. I suggest until we've added logging, JUnit, and game data. (we can make an exception for adding calls to handle game data)
-  * complete and correct javadoc for all tourney classes
-  *
+  * complete and correct javadoc for all tourney classes. For hints, see http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html
+  * Games able to inform tournament class if they need decisions made by the tournament runner. (ie, score weightings in an IPD tournament, or ?? rankings and handicaps in chess ??
 
-
-== to do, to complete 0.1 ==
 
 
 == Future releases ==
+  * split Tournament UI off to separate class, to allow for CLI or GUI interaction. Write this to allow HumanPlayers to piggyback off of this. 
   * user-facing documentation (ie, how to write games, how to write players)
   * statistics  (rough framework)
   * presentable statistics report
@@ -55,4 +58,3 @@ Every N revisions:
 
 = Milestones =
   # (1.0 ?) Be able to run Tournament and receive a screen report() from the Game's DataReader. (This implies we have a working Tournament where are parts are functional and doing their job, though at a very basic level.)
-  # Games able to inform tournament class if they need decisions made by the tournament runner. (ie, score weightings in an IPD tournament, or ?? rankings and handicaps in chess ??
