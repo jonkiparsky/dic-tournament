@@ -4,7 +4,7 @@ package tourney.loader;
 import tourney.Game;
 	
 /**
-*	A filter to recognize Games
+*	Class filter, accepts instances of Game. 
 */
 
 public class IsGameFilter extends ClassFilter
