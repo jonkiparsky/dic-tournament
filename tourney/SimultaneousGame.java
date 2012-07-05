@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A Simultaneous Game is a game in which all players enter their moves without
- * seeing previous moves. Examples include Prisoner's Dilemma and Rock, Paper,
- * Scissors.
+ * A Simultaneous Game is a game format in which all players submit their moves
+ * on the same round, without knowing what the other players will do.
+ * <p>
+ * Examples include Prisoner's Dilemma and Rock, Paper, Scissors.
+ * 
+ * @since 0.1
  */
 public abstract class SimultaneousGame extends Game
 {
@@ -16,7 +19,7 @@ public abstract class SimultaneousGame extends Game
 	
 	protected void init()
 	{
-		gameResult = new SimultaneousGameResult(activePlayers); // Default, should be overridden
+		gameResult = new SimultaneousGameResult(activePlayers);
 	}
 
 	protected void poll() throws IllegalMoveException

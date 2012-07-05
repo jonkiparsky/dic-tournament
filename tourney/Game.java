@@ -12,8 +12,6 @@ import java.util.List;
  * Although it is possible to design human implementations, there are no
  * provisions within this class to make such implementations user-friendly.
  * 
- * @author JPK
- * @author RFS
  * @since 0.1
  */
 public abstract class Game
