@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A class that encapsulates everything that you would need to know about a
- * Game. It is responsible for informing you about all the data it can possibly
- * extract from the List of Moves, so that classes dealing with GameResult need
- * not be concerned with extracting data directly from the Moves.
- * 
+ * GameResult encapsulates everything that you would need to know about a
+ * particular playing of a particular Game, saved as a record of Moves, Note
+ * that in some Games, such as Prisoner's Dilemma or Rock Paper Scissors, 
+ * players move simultaneously and moves are unordered within "rounds". In order
+ * to accomodate this, there is a SimultaneousGameResult class which provides
+ * functionality for handling rounds as opposed to individual moves.
+ * Ideally, GameResult should perform as much analysis as possible as data is
+ * gathered, customizing this class for the needs of the Game at hand.   
  * This will also allow for certain attributes to be set from within the Game
- * implementation itself, such as the Winner of the game. That will prevent the
- * need to replay the Game to find the winner and other statistics.
+ * implementation itself, such as the Winner of the game, which will avoid the
+ * need to effectively replay the Game to find the winner and other statistics.
  */
 public class GameResult extends AbstractResult<Move> {
 	/** The winners of this game. */
