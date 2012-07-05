@@ -16,6 +16,12 @@ public class Loader
 {
 	HashMap<Class, ArrayList<Class>> gamesToPlayersMap;
 
+
+	/**
+	*	returns a list of Class objects representing the available Games in this
+	*	instance of the Tournament. Games are discovered by reflection, so they do
+	*	not need to be registered. If they are visible, they will be loaded. 
+	*/
 	public Class[] listGames() throws TourneyException
 	{
 			gamesToPlayersMap = new HashMap<Class, ArrayList<Class>>();
@@ -60,7 +66,10 @@ public class Loader
 		return gamesToPlayersMap.keySet().toArray(new Class[1]);
 	}
 	
-
+	/**
+	* 	File filter to detect relevant files to load.
+	* 	Improve this for 0.1
+	*/ 
 	private class FFilter implements FileFilter
 	{	
 		public boolean accept(File f)
@@ -72,6 +81,11 @@ public class Loader
 		}
 	}
 
+	/**
+	*	Given a class extending Game, create and return an instance of the Game
+	*	object. 
+	* 	@throws TourneyException
+	*/ 
 	public Game loadGame(Class c) throws TourneyException
 	{
 		IsGameFilter isGame = new IsGameFilter();
@@ -86,7 +100,7 @@ public class Loader
 			o = c.newInstance();
 		}
 		catch(Exception e)
-		{	
+		{			// fix this for 0.1
 			e.printStackTrace();
 			System.exit(1);
 		}
@@ -99,18 +113,14 @@ public class Loader
 
 	}
 
-
-	public ArrayList<Player> loadPlayers (Class chosenGame)
-		throws TourneyException
-
-	{
-		
-		return loadPlayers(chosenGame, new IsPlayerFilter());
-	}
-
 	
-	
-
+	/**
+	*	Load the chosen set of Player objects for the selected game. Player
+	*	objects are selected by choosing an appropriate ClassFilter, from the list
+	*	of Players mapped to this Game when listGames() is run. 
+	*	@param chosenGame the Class for the game we wish to play
+	*	@param filter the ClassFilter passing only the classes we need to load
+	*/
 	public ArrayList<Player> loadPlayers (Class chosenGame, ClassFilter filter)
 				throws TourneyException
 	{
@@ -131,7 +141,8 @@ public class Loader
 
 					System.exit(1);	// break the game for now, 
 											// but this should be demoted to continue
-											// after debugging
+											// after debugging. When logging is implented,
+											// this should be logged. 
 				}
 				catch (InstantiationException ie)
 				{	
@@ -150,12 +161,18 @@ public class Loader
 
 	}
 
+
+	/**
+	*	Clone a Player object. It would be reasonable to just make Player
+	*	cloneable, I suppose. This would be an internal change, can be made
+	*	whenever. 
+	*/
 	public Player getNewInstance(Player p)
 	{
 		Player newPlayer = null;
 		try{	
 			 newPlayer =  p.getClass().newInstance();
-		}
+		}   // fix these Exceptions for 0.1
 		catch (Exception e)
 		{
 			e.printStackTrace();
