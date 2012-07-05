@@ -5,19 +5,25 @@
 
 A rough list of things that need to be done. This should become an ordered list of tasks. It would be nice to have two views on this: one showing dependencies, one showing a sort of "release timetable" (by features, not by calendar)
 
-= To do list =
-  * redefine the contract for the player interface
-  * annotateMove() method
-  * updateEachPlayer() method
-  * Game communication to Player
+= Release 0.1 =
+*Expected functionality:*  
+  * Functional Tournament/Match/Game/Player interaction
+  * 
+
+*Non-functional*
+  * API stable through some set of changes *Decision point:* we have to decide how far out we want to lock down the API. I suggest until we've added logging, JUnit, and game data. (we can make an exception for adding calls to handle game data)
+  * complete and correct javadoc for all tourney classes
+  *
+
+
+== to do, to complete 0.1 ==
+
+
+== Future releases ==
+  * user-facing documentation (ie, how to write games, how to write players)
   * statistics  (rough framework)
   * presentable statistics report
   * statistics: architecture
-  * administrivia: loading Players - needs revision
-  * administrivia: user interface for Tournament - needs revision
-  * generating/naming player IDs
-  * game mechanics need work
-  * security of moves
   * logging - should we plan on wiring in some logging?
   * unit testing for submitted Game and Player classes/packages
   * Allow for the game to limit the amount of time an implementation has to give a Move. (For example, in Chess maybe you have 30 seconds to determine your next Move)
