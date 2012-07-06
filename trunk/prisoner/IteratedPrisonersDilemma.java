@@ -1,7 +1,6 @@
 package prisoner;
 
 
-import tourney.NullDataReader;
 import tourney.SimultaneousGame;
 import tourney.Move;
 import tourney.Tournament;
@@ -82,6 +81,6 @@ public class IteratedPrisonersDilemma extends SimultaneousGame
 
 	public DataReader getDataReader(TournamentResult result)
 	{
-		return new NullDataReader();
+		return new IPD_DataReader(result);
 	}
 }
