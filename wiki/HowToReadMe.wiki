@@ -35,4 +35,17 @@ The API specifies that each Game should have two default Player implementations.
 If you would like to write a Player implementation for a Game, you first need to be familiar with the interface. Have a look at the javadoc for the Player class. Once you are familiar with the interface, you need to see if the Game you are writing this for has any base Player implementations that you can extend to make your life easier. If it does, then you are in luck. Otherwise, you'll have to write the necessary code yourself.
 
 == The Player interface ==
-The Player interface is simple. You need to provide a legal Move object for the Game you are playing whenever getMove() is called. Player objects are
+The Player interface is simple. You need to provide a legal Move object for the Game you are playing whenever getMove() is called. The rest of the interface stems from that.
+
+So how do you know what the proper move to make is when getMove() is called? You aren't given any information as to the state of the Game. Well, that's where the other interface method comes into play. Player objects are responsible for maintaining their own version of the Game state. The Game will be responsible for calling your `update(Move)` method to keep your state up to date. Your implementation of update() should change your state based on the move passed to it. If you are lucky, the Game you are writing your implementation for may have provided a base Player class that handles the state for you.
+
+*Note*: Do not try to change the state of your game from within the getMove() method. Only ever change it from update, and never call update yourself. Game will send you your own move through update. If you attempt to change it yourself in getMove(), your state could fall out of sync and you may start producing illegal moves and be disqualified.
+
+== Required Classes ==
+You do not need to write any other classes unless you want to write some to help with your artificial intelligence decision making. You do need to use or be familiar with a couple classes other than Player though.
+
+The obvious one is Move. Specifically, your game's implementation of Move. You will need to instantiate a new Move object with your intentions in order to send it back to Game. You should familiarize yourself with this class. Again, if you are lucky, the base Player for your game may provide a user-friendly way of generating the proper Move.
+
+The other classes you will need to be familiar with are the Game's classes that it uses to maintain the state. For example, if your writing a chess player, you may need to use the game's Board and Piece classes to help you represent the board.
+
+The rest falls onto your shoulders. That's the fun part. Once you understand all of the classes you need to know, writing the decision making is the fun part.
