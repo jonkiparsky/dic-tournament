@@ -11,12 +11,28 @@ Game provides "hook" methods which it calls at certain stages of it's play metho
   # *poll* - this method is called next. Games should demand moves from the players here.
   # *process* - this method is called to process the moves retrieved from the players
   # *updateEachPlayer* - this method is called to give the game a chance to update the players
-  # *postPoll* - this method is called after updateEachPlayer to give Game the chance to do anything it needs to before record is called.
+  # *postUpdate* - this method is called after updateEachPlayer to give Game the chance to do anything it needs to before record is called.
   # *record* - this method is called so the Game can record what happened for this iteration.
 
 One thing to remember is that the Player interface provides an update() method to keep the Player's state updated. Our API specifies that each Player must maintain its own state of the Game. This makes cheating or trying to alter the Game's state impossible. It also ensures that the Player must have some knowledge about the rules of the Game, so it is more likely they can provide a legal move. However, this puts the added responsibility on the Game to update each Player with Moves, even if it is the Move they just submitted. Game's should also maintain their own version of the state. Players who fall out of sync will start to submit invalid moves and will be dealt with by Game's security measures.
 
 == Beginning to Write Your Game ==
-i have to go , some idea points: find any pre-written base implementations for your type of Game. Justify whether you need to write one. You may override play if you need to. Game is just where the progress of your rules happens, and you may write as many other classes you want to help you; put them in the same package. Name your package after your game.
+The first thing you should do when writing your Game is to determine the game format and find any pre-written classes that further refine the rules of Game to the specific format. The API provides a couple pre-written common formats. If you find one that suits your game, this means less work for you.
+
+The Game class is just a place where the actual game progresses. There is no restriction on how many classes you can use. You can write as many helper classes as you want to aid you. In fact it is recommended that you do so. Just place all the files in the same package. With that in mind, if you wrote a game program, but didn't write it for this implementation, you should be able to re-use many of the classes, and only have to fiddle with fitting it into our Game class.
+
+== The Required Classes ==
+There are a few API classes you will need extend though in order to have a functional game.
+
+  * *Move* - You must extend Move if you want the Player to be able to tell you anything. Your subclass should provide all the necessary methods to hold the data needed for a move in your Game. Player implementations of you Game will be using this, so try to make it user-friendly.
+  * *GameResult* - You must extend GameResult if you want to record any useful statistics. Since different Games will have very specific statistics, it is up to you to design a result class that will be able to aggregate the necessary statistics. Fortunately, you will be the one interacting with the statistics (see the next item).
+  * *DataReader* - The API has no knowledge of what type of statistics you keep track of in your Game. Therefore, it is up to you to design a DataReader for your Game that will be able to handle the Results from your GameResult class and give a coherent report.
+  * *Player* - Although creating Player implementations for your game is not required, we recommend that you do. If you create a partial implementation that has all of the necessities needed to play your Game, then you will make it easier for people writing Player implementations for your Game.
+
+The API specifies that each Game should have two default Player implementations. One should be an artificial intelligence that generates legal moves, and the other should be an interactive implementations so that humans can play. While our API is not designed for human play, you can imagine how useful it will be to have one for testing purposes. You will probably need to write these to test your Game anyway.
 
 = Writing a Player Implementation =
+If you would like to write a Player implementation for a Game, you first need to be familiar with the interface. Have a look at the javadoc for the Player class. Once you are familiar with the interface, you need to see if the Game you are writing this for has any base Player implementations that you can extend to make your life easier. If it does, then you are in luck. Otherwise, you'll have to write the necessary code yourself.
+
+== The Player interface ==
+The Player interface is simple. You need to provide a legal Move object for the Game you are playing whenever getMove() is called. Player objects are
