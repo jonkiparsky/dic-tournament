@@ -11,30 +11,105 @@ import tourney.loader.IsMachinePlayerFilter;
 
 public class Tournament {
 	static Scanner scanner = new Scanner(System.in); // For end of tourney input
-	private static Loader loader;	
+	private Loader loader;	
 	private Game game;
-	private ArrayList<Player> competitors;
-	private int gameIterations;
+	private ArrayList<Player> players;
+	private int gameIterations = 5;
 	private TournamentResult tourneyResult;
-	
+
 	public Tournament(Game game, ArrayList<Player> competitors, 
 			int gameIterations) {
 		this.game = game;
-		this.competitors = competitors;
+		this.players = players;
 		this.gameIterations = gameIterations;
 		
 	}
+
+	public Tournament()
+	{
+	 	// simply create the object
+	}
+
+	public static void main(String[] args) {
+		Tournament tourney = new Tournament();
+		tourney.setupAndRun();
+	}
+	
+	/**
+	*	Sets up the game, with input from the tournament runner	
+	*/
+	protected void setupAndRun()
+	{
+		Game game= null;
+		Class[] gamesArray = null;
+		loader = new Loader();
+		
+		try {  
+			gamesArray = loader.listGames();
+		} catch (TourneyException te) {
+			te.printStackTrace(); 
+		}
+
+		Class chosenGame = chooseGame(gamesArray);
+		int matchType = chooseMatchType();	
+		this.players = loadChosenPlayerSet(matchType, chosenGame);
+		this.game = loadChosenGame(chosenGame);
+	
+		
+	// dispatch code should be in a method
+
+
+		if (matchType == 1) {
+		
+			TournamentResult result = runTournament();
+			DataReader data = game.getDataReader(result);
+			System.out.println( data.report() );
+			// Do more or whatever you want to here.
+		}
+		
+		if (matchType == 2) {
+			MatchResult m = playHumanPlayers(game, players);
+		}	
+
+		System.out.println("Tournament reached end of main.");
+	}
+	
+	/**
+	*	Presents the tournament runner with the list of available games, and
+	*	returns their choice. 
+	*
+	*	@return the chosen game, as a Class	
+	*/
+	private Class chooseGame (Class[] gamesArray){
+		System.out.println("Games available: ");
+
+		for (int i = 1; i <= gamesArray.length; i++) {
+			System.out.println(i + ") " + gamesArray[i - 1].getName());
+		}
+
+		System.out.print("Enter the number of your preferred game: ");
+		Class chosenGame =  gamesArray[scanner.nextInt() - 1];
+		System.out.println("chosen game = " + chosenGame.getName());
+		return chosenGame;
+	}
+
+	/**
+	*	Runs the tournament that has been configured by <code>setup</code>
+	*	@return a TournamentResult containing a complete record of the tournament.
+	*	Reading the TournamentResult is the responsibility of the GameReader
+	*	prepared for this Game. 
+	*/
 	
 	public TournamentResult runTournament() {
 		List<List<Player>> combinations = Combinations.generateCombinations(
-				competitors, game.playersPerGame(), true);
-		tourneyResult = new TournamentResult(competitors);
+				players, game.playersPerGame(), true);
+		tourneyResult = new TournamentResult(players);
 		
 		for(List<Player> combination : combinations) {
 			// check for disqualified players
 			boolean disqualifiedPlayer = false;
 			for(Player player : combination) {
-				if(!competitors.contains(player)) {
+				if(!players.contains(player)) {
 					disqualifiedPlayer = true;
 				}
 			}
@@ -66,10 +141,11 @@ public class Tournament {
 	 */
 	private void disqualify(Player player)
 	{
-		competitors.remove(player);
+		players.remove(player);
 		
 		// Can remove if necessary.
-		List<MatchResult> badMatches = tourneyResult.getAllMatchesWithPlayer(player);
+		List<MatchResult> badMatches = 
+				tourneyResult.getAllMatchesWithPlayer(player);
 		List<MatchResult> allMatches = tourneyResult.getResults();
 		
 		for(MatchResult result : badMatches) {
@@ -77,49 +153,7 @@ public class Tournament {
 		}
 	}
 
-	public static void main(String[] args) {
-		Game game= null;
-		Class[] gamesArray = null;
-		loader = new Loader();
-		try {
-			gamesArray = loader.listGames();
-		} catch (TourneyException te) {
-			te.printStackTrace();
-		}
-		System.out.println("Games available: ");
-
-		for (int i = 1; i <= gamesArray.length; i++) {
-			System.out.println(i + ") " + gamesArray[i - 1].getName());
-		}
-
-		System.out.print("Enter the number of your preferred game: ");
-		Class chosenGame = gamesArray[scanner.nextInt() - 1];
-
-		int matchType = choosePlayerSet();	
-		ArrayList<Player> players = loadChosenPlayerSet(matchType, chosenGame);
-		game = loadChosenGame(chosenGame);
-
-		
-	// dispatch code should be in a method, but we don't refactor until we have
-	// working code
-
-		if (matchType == 1) {
-		
-			Tournament tourney = new Tournament(game, players, 10);
-			TournamentResult result = tourney.runTournament();
-			DataReader data = game.getDataReader(result);
-			System.out.println( data.report() );
-			// Do more or whatever you want to here.
-		}
-		
-		if (matchType == 2) {
-			MatchResult m = playHumanPlayers(game, players);
-		}	
-
-		System.out.println("Tournament reached end of main.");
-	}
-
-	private static MatchResult playHumanPlayers(Game game, 
+	private MatchResult playHumanPlayers(Game game, 
 				ArrayList <Player> players)
 	{
 		if (players.size() == 0)
@@ -160,7 +194,12 @@ public class Tournament {
 		}
 	}
 
-	private static int choosePlayerSet()
+	/**
+	*	Presents the user with options for playing different combinations of
+	*	Human or Machine players. Returns the player's choice as an int. 
+	*	NOTE: there's plenty of room for refactoring here. 
+	*/
+	private  int chooseMatchType()
    {
       System.out.println("Do you want to: ");
       System.out.println(" 1) load and run a tournament of machine players?");
@@ -171,9 +210,13 @@ public class Tournament {
       System.out.println(" 4) observe one game played by machines? ");
 		int matchType = scanner.nextInt();
 		return matchType;
-
 	}
-	private static ArrayList<Player> loadChosenPlayerSet(int matchType,
+
+	/**
+	* Loads the necessary <code>Player</code> objects for the chosen match type.
+	* Again, this is all ripe for refactoring in a future iteration. 
+	*/
+	private  ArrayList<Player> loadChosenPlayerSet(int matchType,
 			Class chosenGame)
 	{
 		ClassFilter playerFilter = null;
@@ -198,7 +241,7 @@ public class Tournament {
 		return players;
 	}
 
-	private static Game loadChosenGame(Class chosenGame)
+	private  Game loadChosenGame(Class chosenGame)
 	{
 
 		Game game = null;

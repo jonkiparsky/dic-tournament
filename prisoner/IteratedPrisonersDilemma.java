@@ -35,8 +35,6 @@ public class IteratedPrisonersDilemma extends SimultaneousGame
 
 	protected void init() 
 	{
-		iterations = Tournament.query(
-				"How many iterations would you like to play", 1);
 		gameResult = new IPD_GameResult(activePlayers);
 	}
 
