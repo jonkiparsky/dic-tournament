@@ -15,7 +15,11 @@ public  class Match
 
 
 		System.out.println("Match - # of players = "+players.size());
-
+		System.out.print("Players = ");
+		for (Player p : players)
+		{
+			System.out.print(p + "  ");
+		}
 		this.numberOfGames= numberOfGames;
 		this.game = game;
 		results = new MatchResult(players);
