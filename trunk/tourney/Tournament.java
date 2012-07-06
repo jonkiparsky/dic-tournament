@@ -17,14 +17,6 @@ public class Tournament {
 	private int gameIterations = 5;
 	private TournamentResult tourneyResult;
 
-	public Tournament(Game game, ArrayList<Player> competitors, 
-			int gameIterations) {
-		this.game = game;
-		this.players = players;
-		this.gameIterations = gameIterations;
-		
-	}
-
 	public Tournament()
 	{
 	 	// simply create the object
@@ -103,8 +95,11 @@ public class Tournament {
 	public TournamentResult runTournament() {
 		List<List<Player>> combinations = Combinations.generateCombinations(
 				players, game.playersPerGame(), true);
-		tourneyResult = new TournamentResult(players);
 		
+		tourneyResult = new TournamentResult(players);
+		if (players.size() <2) 
+			retrun tourneyResult;
+
 		for(List<Player> combination : combinations) {
 			// check for disqualified players
 			boolean disqualifiedPlayer = false;
