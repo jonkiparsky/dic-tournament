@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A class that encapsulates everything that you would need to know about a
- * Game. It is responsible for informing you about all the data it can possibly
- * extract from the List of Moves, so that classes dealing with GameResult need
- * not be concerned with extracting data directly from the Moves.
- * 
- * This will also allow for certain attributes to be set from within the Game
- * implementation itself, such as the Winner of the game. That will prevent the
- * need to replay the Game to find the winner and other statistics.
- */
+*	A class representing the results of one playing of a game in which players
+*	move simultaneously rather than in turns, for example Prisoner's Dilemma.
+*	Moves are added and retrieved as rounds, where a round is an ArrayList of
+*	Move. There is no provision for retrieving individual Moves, as these would
+*	be meaningless. 
+*/
 public class SimultaneousGameResult extends GameResult {
 
 	/**
@@ -20,6 +17,7 @@ public class SimultaneousGameResult extends GameResult {
 	 * starting index of the first round and so on...
 	 */
 	private ArrayList<Integer> offsets;
+	
 
 	public SimultaneousGameResult(List<Player> players) {
 		super(players);

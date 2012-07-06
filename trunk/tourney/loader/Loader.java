@@ -101,6 +101,7 @@ public class Loader
 		}
 		catch(Exception e)
 		{			// fix this for 0.1
+			System.out.println("Error in loader.loadGame()");
 			e.printStackTrace();
 			System.exit(1);
 		}
