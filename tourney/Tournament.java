@@ -32,7 +32,7 @@ public class Tournament {
 	*/
 	protected void setupAndRun()
 	{
-		Game game= null;
+		game= null;
 		Class[] gamesArray = null;
 		loader = new Loader();
 		
@@ -44,9 +44,10 @@ public class Tournament {
 
 		Class chosenGame = chooseGame(gamesArray);
 		int matchType = chooseMatchType();	
-		this.players = loadChosenPlayerSet(matchType, chosenGame);
-		this.game = loadChosenGame(chosenGame);
-	
+		players = loadChosenPlayerSet(matchType, chosenGame);
+		game = loadChosenGame(chosenGame);
+
+
 		
 	// dispatch code should be in a method
 
@@ -60,6 +61,7 @@ public class Tournament {
 		}
 		
 		if (matchType == 2) {
+			
 			MatchResult m = playHumanPlayers(game, players);
 		}	
 
@@ -238,6 +240,12 @@ public class Tournament {
 		return players;
 	}
 
+	/**
+	*	Instantiates and returns an object of the submitted Class. which must be a
+	*	Game. 
+	*	
+	*/
+
 	private  Game loadChosenGame(Class chosenGame)
 	{
 
@@ -246,10 +254,10 @@ public class Tournament {
 			game = loader.loadGame(chosenGame);
 
 		} catch (TourneyException te) {
+			
 			te.printStackTrace();
 			System.exit(1);
 		}
-
 		return game;
 	}
 
