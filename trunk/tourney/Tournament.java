@@ -93,12 +93,14 @@ public class Tournament {
 	*/
 	
 	public TournamentResult runTournament() {
+		tourneyResult = new TournamentResult(players);
+		if (players.size() <2) {
+			System.out.println("can't play a tournament with only one player!");
+			return tourneyResult;
+		}
 		List<List<Player>> combinations = Combinations.generateCombinations(
 				players, game.playersPerGame(), true);
 		
-		tourneyResult = new TournamentResult(players);
-		if (players.size() <2) 
-			retrun tourneyResult;
 
 		for(List<Player> combination : combinations) {
 			// check for disqualified players
