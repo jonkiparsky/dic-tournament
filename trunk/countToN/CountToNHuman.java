@@ -10,19 +10,17 @@ import tourney.Player;
  * Recommended human implementation for the Count to N game.
  */
 public class CountToNHuman 
-			implements Player, HumanPlayer 
+			extends Player
+			implements HumanPlayer 
 {		
 	static Scanner input = new Scanner(System.in);
 
-	private String id = "C2N_Human_Player";
 
 	private int count = 0;
 
-	private static int instanceCounter = 0;
 
 	public CountToNHuman() {
-		instanceCounter++;
-		id += ("_" + instanceCounter);
+		super("C2N Human ");
 	}
 
 	@Override
@@ -35,9 +33,6 @@ public class CountToNHuman
 		return move;
 	}
 
-	public String getID() {
-		return id;
-	}
 
 	@Override
 	public void update(Move move) {

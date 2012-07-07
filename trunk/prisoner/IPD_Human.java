@@ -11,15 +11,10 @@ public class IPD_Human
 		extends IPD_Player 
 		implements HumanPlayer
 {
-	private String id = "IPD_Human";
-	private static int instanceCounter = 0;
-	private Random random = null;
 	private Scanner scan = null;
 	public IPD_Human()
 	{
-		random = new Random();
-		instanceCounter++;
-		id +=instanceCounter;
+		super("IPD_Human");
 		scan = new Scanner(System.in);
 
 	}
@@ -52,11 +47,6 @@ public class IPD_Human
 		return new IPD_Move(choice);
 	}
 	
-	public String getID()
-	{
-		return id;
-	}	
-
 	public void update(Move move)
 	{
 		previousMove = (IPD_Move)move;

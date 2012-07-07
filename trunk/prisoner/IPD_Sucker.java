@@ -11,14 +11,12 @@ public class IPD_Sucker
 		extends IPD_Player
 		implements MachinePlayer
 {
-	private String id = "IPD_Sucker";
-	private static int instanceCounter = 0;
 
 	
 	public IPD_Sucker()
 	{
-		instanceCounter++;
-		id +=instanceCounter;
+		super("IPD Sucker");
+
 	}
 
 
@@ -27,11 +25,6 @@ public class IPD_Sucker
 		return new IPD_Move(previousMove, true);
 	}
 	
-	public String getID()
-	{
-		return id;
-	}	
-
 	public void update(Move move)
 	{
 		previousMove = (IPD_Move)move;

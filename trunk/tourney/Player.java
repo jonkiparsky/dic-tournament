@@ -16,7 +16,29 @@ package tourney;
  * 
  * @see Move
  */
-public interface Player {
+public abstract class Player {
+
+	String id;
+	private static int instanceCounter = 0;
+
+	public Player()
+	{
+		this("Player Of Some Game # ");
+	}
+
+	public Player(String name)
+	{
+		id = createInstanceID(name + " # ");
+	}
+	
+	protected String createInstanceID(String name)
+	{
+		instanceCounter ++;		
+		id = name + instanceCounter;
+		return id;
+	}
+
+
 	/**
 	 * Demands a move from this player. This player must evaluate the game
 	 * situation that it has been keeping, and return a legal <code>Move</code>
@@ -25,7 +47,7 @@ public interface Player {
 	 * @return The actions this player wishes to perform, encapsulated in a Move
 	 *         object.
 	 */
-	Move getMove();
+	public abstract Move getMove();
 
 	/**
 	 * Gets this player's identifier. A Player must have a unique identifier so
@@ -45,7 +67,10 @@ public interface Player {
 	 * 
 	 * @return This player's unique identifier.
 	 */
-	String getID();
+	public String getID()
+	{
+		return id;
+	}
 
 	/**
 	 * Sends an update to the player in the form of the necessary
@@ -59,5 +84,5 @@ public interface Player {
 	 *            An encapsulation of the actions to take in order to change the
 	 *            state of the game appropriately.
 	 */
-	void update(Move move);
+	public abstract void update(Move move);
 }

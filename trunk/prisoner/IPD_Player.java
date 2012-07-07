@@ -4,17 +4,18 @@ package prisoner;
 import tourney.Player;
 import tourney.Move;
 
-public abstract class  IPD_Player implements Player
+public abstract class  IPD_Player extends Player
 {
 
 	protected int score;
 	
 	protected IPD_Move previousMove;
 
-	public abstract Move getMove();
+	public IPD_Player(String name)
+	{
+		super(name);
+	}		
 
-	public abstract String getID();
-		
 	public abstract void update(Move move);
 
 
