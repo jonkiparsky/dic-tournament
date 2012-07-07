@@ -115,7 +115,9 @@ public class Tournament {
 			if(disqualifiedPlayer) {
 				continue;
 			}
-			
+			combination = makeUniqueInstances(combination);
+	
+
 			Match match = new Match(game, combination, gameIterations);
 			MatchResult matchResult = null;
 			try {
@@ -132,6 +134,30 @@ public class Tournament {
 		
 		return tourneyResult;
 	}
+
+	private List<Player> makeUniqueInstances(
+			List<Player> combination)
+	{
+		for (int i = 0; i <combination.size(); i ++)
+		{
+			for (int j = i+1; j < combination.size(); j ++)
+			if (combination.get(i) == combination.get(j))
+			{
+				
+				Player replacement = loader.getNewInstance(combination.get(j));
+				combination.remove(j);
+				combination.add(j, replacement);
+				
+			}
+
+		}
+
+			
+		
+		return combination;
+	}	
+
+
 	
 	/**
 	 * Disqualify a player from the tournament. For now we just kick him out and
