@@ -6,6 +6,7 @@ import tourney.TournamentResult;
 import tourney.GameResult;
 import tourney.MatchResult;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class IPD_DataReader 
@@ -29,8 +30,6 @@ public class IPD_DataReader
 	}
 	public String report()	
 	{
-		//filling this class in for the compiler
-
 		String s = "";
 		for (Player p:result.getPlayers())
 		{
@@ -42,6 +41,25 @@ public class IPD_DataReader
 					s+= match.getPlayers().get(1);
 					s+= ("\n");
 					
+					int timeServedPlayer0 = 0;
+					int timeServedPlayer1 = 0;
+					
+					List<GameResult> games = match.getResults();
+					for(GameResult game : games) {
+						IPD_GameResult ipd_game = (IPD_GameResult)game;
+						timeServedPlayer0 += ipd_game.getTotalTimeServed(match.getPlayers().get(0));
+						timeServedPlayer1 += ipd_game.getTotalTimeServed(match.getPlayers().get(1));
+					}
+					
+					s+= match.getPlayers().get(0);
+					s+= (" served ");
+					s+= Integer.toString(timeServedPlayer0);
+					s+= (" total months in prison based on his decisions in the match.\n");
+					
+					s+= match.getPlayers().get(1);
+					s+= (" served ");
+					s+= Integer.toString(timeServedPlayer1);
+					s+= (" total months in prison based on his decisions in the match.\n\n");
 			}
 
 		}

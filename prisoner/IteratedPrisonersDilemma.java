@@ -18,6 +18,10 @@ import java.util.HashMap;
 
 public class IteratedPrisonersDilemma extends SimultaneousGame
 {
+	public static final int BOTH_COOP = 1;
+	public static final int BOTH_DEFECT = 6;
+	public static final int ONE_COOP = 12;
+	public static final int ONE_DEFECT = 0;
 	/**
 	"	iterations" is the number of encounters played in one 'Game'
 	*/
@@ -34,6 +38,7 @@ public class IteratedPrisonersDilemma extends SimultaneousGame
 
 	protected void init() 
 	{
+		iterations = 10;
 		gameResult = new IPD_GameResult(activePlayers);
 	}
 
