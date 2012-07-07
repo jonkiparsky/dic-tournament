@@ -29,5 +29,7 @@ public abstract class  IPD_Player implements Player
 		return score;
 	}
 
-	
+	public String toString() {
+		return getID();
+	}
 }
