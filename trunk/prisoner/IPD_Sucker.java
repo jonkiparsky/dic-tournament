@@ -11,7 +11,7 @@ public class IPD_Sucker
 		extends IPD_Player
 		implements MachinePlayer
 {
-	private String id = "IPD_Random";
+	private String id = "IPD_Sucker";
 	private static int instanceCounter = 0;
 
 	
