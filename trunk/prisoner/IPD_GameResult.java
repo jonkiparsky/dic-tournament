@@ -1,5 +1,6 @@
 package prisoner;
 
+import tourney.Move;
 import tourney.Player;
 import tourney.SimultaneousGameResult;
 
@@ -11,4 +12,6 @@ public class  IPD_GameResult extends SimultaneousGameResult
 	{
 		super(players);
 	}
+
+
 }

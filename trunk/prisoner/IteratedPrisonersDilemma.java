@@ -79,6 +79,7 @@ public class IteratedPrisonersDilemma extends SimultaneousGame
 	}
 
 
+
 	public DataReader getDataReader(TournamentResult result)
 	{
 		return new IPD_DataReader(result);
