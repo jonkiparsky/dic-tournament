@@ -11,14 +11,10 @@ public class IPD_Bastard
 		extends IPD_Player
 		implements MachinePlayer
 {
-	private String id = "IPD_Bastard";
-	private static int instanceCounter = 0;
 
-	
 	public IPD_Bastard()
 	{
-		instanceCounter++;
-		id +=instanceCounter;
+		super("IPD Bastard" );
 	}
 
 
@@ -27,11 +23,6 @@ public class IPD_Bastard
 		return new IPD_Move(false);
 	}
 	
-	public String getID()
-	{
-		return id;
-	}	
-
 	public void update(Move move)
 	{
 		previousMove = (IPD_Move)move;

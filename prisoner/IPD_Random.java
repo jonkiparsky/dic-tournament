@@ -10,16 +10,13 @@ public class IPD_Random
 		extends IPD_Player
 		implements MachinePlayer
 {
-	private String id = "IPD_Random";
-	private static int instanceCounter = 0;
 
 	private Random random = null;
 	
 	public IPD_Random()
 	{
+		super("IPD Random");
 		random = new Random();
-		instanceCounter++;
-		id +=instanceCounter;
 	}
 
 
@@ -27,11 +24,6 @@ public class IPD_Random
 	{
 		return new IPD_Move(random.nextBoolean());
 	}
-	
-	public String getID()
-	{
-		return id;
-	}	
 
 	public void update(Move move)
 	{

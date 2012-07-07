@@ -8,17 +8,16 @@ import tourney.MachinePlayer;
  * Default AI player for CountToN. He plays the game flawlessly.
  */
 public class CountToNPlayer 
-			implements Player, MachinePlayer 
+			extends Player
+			implements MachinePlayer 
 {
 
-	private String id = "C2N_Default";
-	private static int instanceCounter = 0;
+	 String PLAYER_NAME = "C2N_Default #";
 
 	private int count = 0;
 	public CountToNPlayer()
 	{
-		instanceCounter++;
-		id += ("_" + instanceCounter);
+		super("C2N_Default");
 	}
 
 	@Override
@@ -28,11 +27,6 @@ public class CountToNPlayer
 		return myMove;
 	}
 
-	public String getID()
-	{
-		return id;
-	}
-	
 	public String toString() {
 		return getID();
 	}
