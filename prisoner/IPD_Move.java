@@ -13,11 +13,21 @@ public class IPD_Move extends Move
 			};
 	
 
+	
+
+
 	/**
 	*	The reward assigned to this move for the round. 
 	*	This will be assigned when this round is passed to the game record.
 	*/
 	private int score;  
+
+
+	/**
+	* Is this an aggressive move? "Aggressive" moves are first-move defections
+	*/
+	private boolean aggressive;
+
 
 	/**
 	*	The does the player cooperate?
@@ -78,7 +88,13 @@ public class IPD_Move extends Move
 		if (other.getPlay()) score +=2;
 
 		score = rewardMatrix[score];
-		
+	
+		if (! cooperate && this.wasFirstMove())
+		{	
+			aggressive = true;
+		}	
+
+				
 
 		((IPD_Player)this.getPlayer()).updateScore(score);	
 		return score;
@@ -88,5 +104,6 @@ public class IPD_Move extends Move
 	{
 		return score;
 	}
+
 
 }
