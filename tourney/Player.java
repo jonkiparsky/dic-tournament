@@ -21,6 +21,8 @@ public abstract class Player {
 	String id;
 	private static int instanceCounter = 0;
 
+
+
 	public Player()
 	{
 		this("Player Of Some Game # ");
@@ -38,6 +40,10 @@ public abstract class Player {
 		return id;
 	}
 
+	public void init()
+	{
+			// do nothing
+	}	
 
 	/**
 	 * Demands a move from this player. This player must evaluate the game
