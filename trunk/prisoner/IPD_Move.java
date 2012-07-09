@@ -4,6 +4,21 @@ import tourney.Move;
 
 public class IPD_Move extends Move
 {
+	private static final int[] rewardMatrix = 
+			{
+				IteratedPrisonersDilemma.BOTH_DEFECT,
+				IteratedPrisonersDilemma.ONE_COOP,
+				IteratedPrisonersDilemma.ONE_DEFECT,
+				IteratedPrisonersDilemma.BOTH_COOP
+			};
+	
+
+	/**
+	*	The reward assigned to this move for the round. 
+	*	This will be assigned when this round is passed to the game record.
+	*/
+	private int score;  
+
 	/**
 	*	The does the player cooperate?
 	*/
@@ -56,5 +71,22 @@ public class IPD_Move extends Move
 		return previousMove == null;
 	}	
 
+	public int scoreMove(IPD_Move other)
+	{	
+		score = 0;
+		if	(this.getPlay()) score +=1;
+		if (other.getPlay()) score +=2;
+
+		score = rewardMatrix[score];
+		
+
+		((IPD_Player)this.getPlayer()).updateScore(score);	
+		return score;
+	}		
+	
+	public int getScore()
+	{
+		return score;
+	}
 
 }
