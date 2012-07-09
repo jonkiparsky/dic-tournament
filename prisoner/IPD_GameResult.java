@@ -10,63 +10,31 @@ import java.util.List;
 
 public class IPD_GameResult extends SimultaneousGameResult
 {
-	private HashMap<Player, ArrayList<Integer>> timeServed;
 	
+	private ArrayList<Round> rounds;
+	private ArrayList<IPD_Player> myPlayers;
+
 	public IPD_GameResult(List<Player> players)
 	{
 		super(players);
-		timeServed = new HashMap<Player, ArrayList<Integer>>();
-		for(Player p : players) {
-			timeServed.put(p, new ArrayList<Integer>());
-		}
+		rounds = new ArrayList<Round>();
+		myPlayers = new ArrayList<IPD_Player>();
+
+		for (Player p: players)
+			myPlayers.add((IPD_Player) p);
+
 	}
 	
 	public void addRound(ArrayList<Move> round)
 	{
-		super.addRound(round);
+		super.addRound(round); // for politeness, we won't use this for anything
+		Round newRound = new Round(round);	
+
+		rounds.add(newRound);
 		
-		HashMap<Player, Boolean> plays = new HashMap<Player, Boolean>();
-		
-		for(Move move : round)
-		{
-			IPD_Move ipd_move = (IPD_Move)move;
-			boolean play = ipd_move.getPlay();
-			Player player = ipd_move.getPlayer();
-			
-			plays.put(player, play);
-		}
-		
-		List<Player> players = getPlayers();
-		
-		boolean player1 = plays.get(players.get(0));
-		boolean player2 = plays.get(players.get(1));
-		
-		if(player1)
-		{
-			if(player2)
-			{
-				timeServed.get(players.get(0)).add(IteratedPrisonersDilemma.BOTH_COOP);
-				timeServed.get(players.get(1)).add(IteratedPrisonersDilemma.BOTH_COOP);
-			}
-			else
-			{
-				timeServed.get(players.get(0)).add(IteratedPrisonersDilemma.ONE_COOP);
-				timeServed.get(players.get(1)).add(IteratedPrisonersDilemma.ONE_DEFECT);
-			}
-		}
-		else if (player2)
-		{
-			// we know player 1 defected
-			timeServed.get(players.get(0)).add(IteratedPrisonersDilemma.ONE_DEFECT);
-			timeServed.get(players.get(1)).add(IteratedPrisonersDilemma.ONE_COOP);
-		}
-		else
-		{
-			timeServed.get(players.get(0)).add(IteratedPrisonersDilemma.BOTH_DEFECT);
-			timeServed.get(players.get(1)).add(IteratedPrisonersDilemma.BOTH_DEFECT);
-		}
 	}
 	
+
 	/**
 	 * Gets the total time served by a player in this game.
 	 * 
@@ -76,13 +44,7 @@ public class IPD_GameResult extends SimultaneousGameResult
 	 */
 	public int getTotalTimeServed(Player p)
 	{
-		ArrayList<Integer> rounds = timeServed.get(p);
-		int sum = 0;
-		for(Integer x : rounds)
-		{
-			sum+=x;
-		}
-		return sum;
+		return ((IPD_Player)p).getScore();
 	}
 	
 	/**
@@ -96,8 +58,41 @@ public class IPD_GameResult extends SimultaneousGameResult
 	 * @return The amount of time served by <code>p</code> in the specified
 	 *         round.
 	 */
-	public int getTimeServed(Player p, int round)
+	public int getTimeServed(IPD_Player p, int round)
 	{
-		return timeServed.get(p).get(round);
+		return rounds.get(round).scoreForPlayer(p);	
+	}
+
+	
+	// Convert this list of generic Moves to something we can use
+	private class Round 
+	{
+		private HashMap<IPD_Player, IPD_Move> movesByPlayer;
+		
+		public Round(ArrayList<Move> moves)
+		{
+			movesByPlayer = new HashMap<IPD_Player, IPD_Move>();
+			for (Move m :moves)
+			{
+				movesByPlayer.put((IPD_Player)m.getPlayer(), (IPD_Move) m);
+				
+			}
+
+			scoreRound(movesByPlayer);
+			
+		}	
+	
+		private void scoreRound(HashMap<IPD_Player, IPD_Move> moveList)
+		{
+			
+			IPD_Move [] arr = moveList.values().toArray(new IPD_Move[0]);
+			((IPD_Player)arr[0].getPlayer()).updateScore(arr[0].scoreMove(arr[1]));
+			((IPD_Player)arr[1].getPlayer()).updateScore(arr[1].scoreMove(arr[0]));
+		}	
+
+		public int scoreForPlayer(IPD_Player p)
+		{
+			return movesByPlayer.get(p).getScore();
+		}
 	}
 }

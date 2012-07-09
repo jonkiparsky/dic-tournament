@@ -16,6 +16,12 @@ public abstract class  IPD_Player extends Player
 		super(name);
 	}		
 
+	public void init()
+	{
+		this.score = 0;
+	}
+
+
 	public abstract void update(Move move);
 
 
@@ -25,6 +31,11 @@ public abstract class  IPD_Player extends Player
 		this.score = score;
 	}
 
+	public void updateScore(int deltaScore)
+	{
+		this.score += deltaScore;
+	}
+	
 	public int getScore ()
 	{
 		return score;

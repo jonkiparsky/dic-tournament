@@ -40,6 +40,10 @@ public class IteratedPrisonersDilemma extends SimultaneousGame
 	{
 		iterations = 10;
 		gameResult = new IPD_GameResult(activePlayers);
+		for (Player p : activePlayers)
+		{
+			p.init();
+		}
 	}
 
 
@@ -74,7 +78,8 @@ public class IteratedPrisonersDilemma extends SimultaneousGame
 
 	public Player getHumanPlayer()
 	{
-		return null;
+		return new IPD_Human();
+
 	}
 	
 	
