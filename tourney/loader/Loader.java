@@ -65,21 +65,6 @@ public class Loader
 		}	
 		return gamesToPlayersMap.keySet().toArray(new Class[1]);
 	}
-	
-	/**
-	* 	File filter to detect relevant files to load.
-	* 	Improve this for 0.1
-	*/ 
-	private class FFilter implements FileFilter
-	{	
-		public boolean accept(File f)
-		{
-			if (f.getName().contains("tourney")) return false;
-			if (f.getName().contains("svn")) return false;
-			return true;
-		
-		}
-	}
 
 	/**
 	*	Given a class extending Game, create and return an instance of the Game
@@ -182,6 +167,22 @@ public class Loader
 	}
 
 
+	
+	/**
+	* 	File filter to detect relevant files to load.
+	* 	Improve this for 0.1
+	*/ 
+	private class FFilter implements FileFilter
+	{	
+		public boolean accept(File f)
+		{
+			String fName = f.getName();
+			if (fName.charAt(0) == '.') return false;
+			if (indexOf(".java") <0) return false;
+			return true;
+		
+		}
+	}
 	
 
 }
