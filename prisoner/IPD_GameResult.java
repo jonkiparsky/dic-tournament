@@ -67,16 +67,19 @@ public class IPD_GameResult extends SimultaneousGameResult
 	public String details()
 	{
 			StringBuffer sb = new StringBuffer();
+		int i = 0;
 		for (Round round: rounds)
-		{
+		{	
+			System.out.println("Round "+i++ +round.toString()+ "\n\t");
 			for (IPD_Player p: round.getMoves().keySet())
 			{
 				sb.append(p.getID());
 				sb.append(": ");
 				sb.append(round.getMoves().get(p)
-						.getPlay()? "cooperate":"defect");
+						.getPlay()? "cooperate\t":"defect\t");
 	
 			}
+			sb.append("\n");
 		}
 		return sb.toString();
 	}	
