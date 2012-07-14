@@ -27,7 +27,8 @@ public class IPD_DataReader
 	}
 	public void run()	
 	{
-		//filling this class in for the compiler
+		System.out.println("1) Show match moves in detail");
+		showMatchDetail(1);
 	}
 	public String report()	
 	{
@@ -67,4 +68,18 @@ public class IPD_DataReader
 		return s;
 	}
 
+
+	private void showMatchDetail(int matchNumber)
+	{
+		MatchResult matchResult =  result.getResults().get(matchNumber);
+		for  (GameResult gameUncast: matchResult.getResults())
+		{		
+			IPD_GameResult game = (IPD_GameResult) gameUncast;
+			System.out.println(game.details());
+		
+			
+		}
+				
+		
+	}
 }

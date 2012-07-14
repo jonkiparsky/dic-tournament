@@ -63,7 +63,24 @@ public class IPD_GameResult extends SimultaneousGameResult
 		return rounds.get(round).scoreForPlayer(p);	
 	}
 
+
+	public String details()
+	{
+			StringBuffer sb = new StringBuffer();
+		for (Round round: rounds)
+		{
+			for (IPD_Player p: round.getMoves().keySet())
+			{
+				sb.append(p.getID());
+				sb.append(": ");
+				sb.append(round.getMoves().get(p)
+						.getPlay()? "cooperate":"defect");
 	
+			}
+		}
+		return sb.toString();
+	}	
+
 	// Convert this list of generic Moves to something we can use
 	private class Round 
 	{
@@ -93,6 +110,11 @@ public class IPD_GameResult extends SimultaneousGameResult
 		public int scoreForPlayer(IPD_Player p)
 		{
 			return movesByPlayer.get(p).getScore();
+		}
+		
+		public HashMap<IPD_Player, IPD_Move> getMoves()
+		{
+			return movesByPlayer;
 		}
 	}
 }

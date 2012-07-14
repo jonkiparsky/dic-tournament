@@ -57,6 +57,7 @@ public class Tournament {
 			TournamentResult result = runTournament();
 			DataReader data = game.getDataReader(result);
 			System.out.println( data.report() );
+			data.run();
 			// Do more or whatever you want to here.
 		}
 		
