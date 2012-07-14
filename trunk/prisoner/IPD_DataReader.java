@@ -22,7 +22,8 @@ public class IPD_DataReader
 
 	public void write()	
 	{
-		//filling this class in for the compiler
+		
+
 	}
 	public void run()	
 	{

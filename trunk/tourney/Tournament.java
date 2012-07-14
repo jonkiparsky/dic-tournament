@@ -296,7 +296,7 @@ public class Tournament {
 	*	so this functionality will be in 0.1 but this is not how it will remain
 	* 	Definitely will not remain static, but refactor needed to do it right. 
 	*	@param question The question to be posed, as a String
-	*	@psram responseToken Signifies the type of the expected response. 
+	*	@param responseToken Signifies the type of the expected response. 
 	*/
 	public static String query (String question)
 	{
@@ -315,7 +315,7 @@ public class Tournament {
 	*	so this functionality will be in 0.1 but this is not how it will remain
 	* 	Definitely will not remain static, but refactor needed to do it right. 
 	*	@param question The question to be posed, as a String
-	*	@psram responseToken Signifies the type of the expected response. 
+	*	@param responseToken Signifies the type of the expected response. 
 	*/
 	public static int query (String question, int responseToken)
 	{

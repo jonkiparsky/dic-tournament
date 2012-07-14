@@ -24,10 +24,12 @@ public class Loader
 	*/
 	public Class[] listGames() throws TourneyException
 	{
+		
 			gamesToPlayersMap = new HashMap<Class, ArrayList<Class>>();
 		File root = new File("./src");
 		for (File f: root.listFiles(new FFilter()))
 		{
+			
 			ArrayList<Class> games = new ArrayList<Class>();
 			ArrayList<Class> players = new ArrayList<Class>();
 			for (File classFile : f.listFiles(new FFilter()))
@@ -176,11 +178,9 @@ public class Loader
 	{	
 		public boolean accept(File f)
 		{
-			String fName = f.getName();
-			if (fName.charAt(0) == '.') return false;
-			if (indexOf(".java") <0) return false;
-			return true;
-		
+				if (f.getName().contains("tourney")) return false;
+ 				if (f.getName().contains("svn")) return false;
+ 				return true;
 		}
 	}
 	
