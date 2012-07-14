@@ -72,6 +72,7 @@ public class IPD_DataReader
 	private void showMatchDetail(int matchNumber)
 	{
 		MatchResult matchResult =  result.getResults().get(matchNumber);
+		System.out.println("Results for match #" +matchNumber);
 		for  (GameResult gameUncast: matchResult.getResults())
 		{		
 			IPD_GameResult game = (IPD_GameResult) gameUncast;
