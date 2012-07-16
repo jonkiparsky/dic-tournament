@@ -3,6 +3,7 @@ package prisoner;
 import tourney.Player;
 import tourney.DataReader;
 import tourney.TournamentResult;
+import tourney.Tournament;
 import tourney.GameResult;
 import tourney.MatchResult;
 import java.util.ArrayList;
@@ -26,9 +27,16 @@ public class IPD_DataReader
 
 	}
 	public void run()	
-	{
-		System.out.println("1) Show match moves in detail");
-		showMatchDetail(1);
+	{	
+		boolean cont = true;
+		while (cont){
+			System.out.println("1) Show match moves in detail");
+
+			int response = Tournament.query("Enter the number of the match ", 1);
+				
+			showMatchDetail(response);
+			if (response == 0) cont = false;
+		}
 	}
 	public String report()	
 	{
