@@ -9,7 +9,9 @@ import tourney.MatchResult;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+*	Partially-completed DataReader. Data reporting is still being worked out. 
+*/
 public class IPD_DataReader 
 		implements DataReader
 {
@@ -31,11 +33,20 @@ public class IPD_DataReader
 		boolean cont = true;
 		while (cont){
 			System.out.println("1) Show match moves in detail");
+			System.out.println("2) Show summary of matches");
+			int response = Tournament.query("Enter your choice ", 1);
+			
+			switch (response)
+			{
+				case 1:	
+							Tournament.query("Enter match #: ", 1);
+							showMatchDetail(response);
+							break;
+				case 2:
+							summarizeMatches();
 
-			int response = Tournament.query("Enter the number of the match ", 1);
-				
-			showMatchDetail(response);
 			if (response == 0) cont = false;
+			}
 		}
 	}
 	public String report()	
@@ -76,6 +87,13 @@ public class IPD_DataReader
 		return s;
 	}
 
+
+	private void summarizeMatches()
+	{
+
+		for (Player p : result.getPlayers())
+			System.out.println(p.getID());
+	}
 
 	private void showMatchDetail(int matchNumber)
 	{
