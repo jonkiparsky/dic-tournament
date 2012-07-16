@@ -1,20 +1,62 @@
 = How to Use the API to Write Game and Player Implementations =
-This article is intended to give someone not familiar with our code a basic idea on how that person may write a Game or Player class that can conform with the API.
+
+Tournament is a framework for defining Games which can be played by machine players, and for independently defining Players for those Games, and placing those Players into competition with each other. 
+
+= Overview of Tournament =
+
+There are two entities which can be called a "game". One is a sequence of moves committed by a set of Players, conforming to agreed-upon rules, leading to a final result. The other is the set of rules under which those rules are made, broadly taken to include the definition of the playing surface and materials, sequence of turns, etc. 
+
+The Game class, along with associated classes (Tourney, Move, Player) are the means by which Games in the latter sense (sets of rules) are specified under Tournament, and the overall Tournament mechanism is the means by which games in the former sense (sets of moves) are executed. 
+
+The Tournament class allows a user to select a Game and create a Tournament of various available Players. Those Players are organized (largely automatically) into suitable Matches, where a Match is a sequence of Games played by one set of Players. Sufficient Games should be played in a Match to eliminate the vagaries of chance, where chance is an element in a game. 
+
+The result of running a Game, Match, or Tournament is a Result object, which collects and collates the results of the Games played, and ideally, organizes the data thus created to reveal the interesting facts about the games played. What facts are considered "interesting" depends upon the designer's whim. 
+
+
 
 = Writing a Game Implementation =
-== Getting Familiar With How Game Works ==
-If you would like to write a Game for our API, the first thing you should do is become familiar with the Game class by consulting the javadoc. Once you are familiar with some of the methods and fields, you may start to see some patterns in how Game is set up. If not, I will explain them briefly here.
 
-Game provides "hook" methods which it calls at certain stages of it's play method. The first such method is `init`. This method allows an implementation of Game to override it, and perform any setup code that it needs to do before the game loop is started. Once the game loop is started, the game will call various methods in a loop. The order is as follows:
+Implementation of a Game within Tournament should be a simple matter, although not everything about implementing a game will be immediately intuitive. 
 
-  # *prePoll* - this method is called at the beginning of each iteration.
-  # *poll* - this method is called next. Games should demand moves from the players here.
-  # *process* - this method is called to process the moves retrieved from the players
-  # *updateEachPlayer* - this method is called to give the game a chance to update the players
-  # *postUpdate* - this method is called after updateEachPlayer to give Game the chance to do anything it needs to before record is called.
-  # *record* - this method is called so the Game can record what happened for this iteration.
+An implementation consists of, at minimum, a Game, a Move, a Player. a GameResult, and a DataReader. 
 
+
+* Game defines the sequence of play and what moves are allowable at any given point. 
+* Move encapsulates a Player's turn at play. Moves are also used to convey the current status of play to other Players, and also to record the sequence of play. Move can and should be decorated by the Game class with information about the game situation. 
+* Player, from the perpective of the Game designer, is a superclass for Players of this particular game. The Player for a particular Game should have abstract methods for any queries which will be directed at a Player by the Game or by the data analysis package after the game. 
+* GameResult is at minimum a collection of Moves committed in the game. Ideally initial analysis will be performed at this level, but game analysis is still at a minimal state, so no more will be said about this now. 
+* A DataReader is a game-specific class for analysis of a Tournament after it has been played out. 
+
+==Game==
+
+Sequence of play is defined within the lifecycle of a Game by means of a set of hook methods. For most games, filling in the appropriate methods with some simple code will suffice to correctly progress through the Players provided and evaluate their moves. Games with straightforward turn-taking or simultaneous moves will be transparently executed correctly. Games in which play passes irregularly from player to player will require more ingenuity from the designer or further development of the Tournament framework. 
+Scoring and victory can be largely decided by the Results classes. Unless a game's score affects play - for example, if score is part of the termination conditions - the Game class can be completely ignorant of the score. 
+
+
+The life cycle of a Game proceeds as follows:
+
+*init()* is called once per Game, at the start of the play() method. It should be used for any setup required. If a game requires an initial configuration unique to each instance (ie, dealing a deck of cards, random draw of Scrabble tiles, etc) this should be performed in init(). 
+
+  # *prePoll* is called at the start of each iteration of the game loop. 
+  # *poll* - solicits moves from players. Poll should not require modification. 
+  # *process* - This method will almost certainly need to be modified. Any work required after a turn (one player of a turn-based game or all players of a simultaneous game) must be performed here, or in methods called from this method. The two important tasks here are decorating the submitted Move(s) for distribution to other Players and storage in the GameResult, and updating the Game's conception of the state of play. For example, a Chess implementation would need to take note of whether a move played has affected the Player's ability to castle in future, and a Battleship implementation would need to keep track of hits scored in order to know when the game ends. 
+  # *updateEachPlayer* by default passes the recently submitted Move (or Moves, in a simultaneous game) to each other player, with the submitting Player's ID appended to it. It may be necessary to modify this, but the designer should consider overriding the moveForPlayer method to provide a dispatch table to direct customized Moves at each Player rather than overriding updateEachPlayer. 
+  # *postUpdate* If any action is required after the updates are provided to the Players, it can be written in this method. 
+  # *record* commits the Move or Moves gathered in this turn to the GameResult object for this Game. This method should not require modification by the game designer. Instead, the Move or Moves submitted in this turn should be prepared to be entered in the game record. 
+
+
+These are the moethods in the main life cycle. There are some other methods that the designer should be aware of. These are called by lifecycle methods, but are not directly part of the life cycle. 
+
+  * *isLegal* is perhaps the most important method in the game. If this method judges that a Move is an illegal one at the current state of play, the current Match is aborted and the Player who commits it is ejected from the Tournament. It is obviously important to execute this correctly, as an illegal Move can corrupt the game state in ways that cannot be dependably detected in post-game analysis. 
+ * *keepGoing* should be set to false when the game reaches a terminal state - win, lose, or draw. 
+ * *abort* exits the game irregularly. Should not be needed. Please inform the framework maintainers if you feel the need to use this, as it likely indicates a failure on our part. 
+
+Correct implementation of the lifecycle and keepGoing and isLegal methods should ensure that Games are played correctly from start to finish. Note that we do not care at this point whether any Player has scored points or defeated its opponent. We are only interested in knowing that a sequence of legal moves has been committed which leads from a legal initial configuration to a legal termination. Evaluation of the results is handled elsewhere. Our only attention to those considerations at this stage is to ensure that any information needed for future analysis is attached to the Moves submitted. 
+
+
+=== A Note on Game State ===
 One thing to remember is that the Player interface provides an update() method to keep the Player's state updated. Our API specifies that each Player must maintain its own state of the Game. This makes cheating or trying to alter the Game's state impossible. It also ensures that the Player must have some knowledge about the rules of the Game, so it is more likely they can provide a legal move. However, this puts the added responsibility on the Game to update each Player with Moves, even if it is the Move they just submitted. Game's should also maintain their own version of the state. Players who fall out of sync will start to submit invalid moves and will be dealt with by Game's security measures.
+
 
 == Beginning to Write Your Game ==
 The first thing you should do when writing your Game is to determine the game format and find any pre-written classes that further refine the rules of Game to the specific format. The API provides a couple pre-written common formats. If you find one that suits your game, this means less work for you.
