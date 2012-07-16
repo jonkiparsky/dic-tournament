@@ -16,13 +16,12 @@ The result of running a Game, Match, or Tournament is a Result object, which col
 
 = Writing a Game Implementation =
 
-Implementation of a Game within Tournament should be a simple matter, although not everything about implementing a game will be immediately intuitive. 
+The Tournament framework is designed facilitate designing a Game (in the sense of a set of rules) by addressing as far as possible all of the ordinary mechanics of running a game, leaving only the elements specific to individual games to be written by a game designer. This may cause some confusion at first, since much of what we expect to have to write is in fact taken care of for you. Review the Game life cycle below, and the javadoc for the TurnBasedGame and SimultaneousGame classes, and any confusion should be assuaged. 
 
-An implementation consists of, at minimum, a Game, a Move, a Player. a GameResult, and a DataReader. 
-
+An implementation of a complete game consists of, at minimum, a Game, a Move, a Player. a GameResult, and a DataReader. Each of these plays a specific role in the Tournament framework. 
 
  * Game defines the sequence of play and what moves are allowable at any given point. 
- * Move encapsulates a Player's turn at play. Moves are also used to convey the current status of play to other Players, and also to record the sequence of play. Move can and should be decorated by the Game class with information about the game situation. 
+ * Move encapsulates a Player's turn at play. Moves are also used to convey the current status of play to other Players, and to record the sequence of play. Move can and should be decorated by the Game class with information about the game situation appropriate for each of these destinations. 
  * Player, from the perpective of the Game designer, is a superclass for Players of this particular game. The Player for a particular Game should have abstract methods for any queries which will be directed at a Player by the Game or by the data analysis package after the game. 
  * GameResult is at minimum a collection of Moves committed in the game. Ideally initial analysis will be performed at this level, but game analysis is still at a minimal state, so no more will be said about this now. 
  * A DataReader is a game-specific class for analysis of a Tournament after it has been played out. 
