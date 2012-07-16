@@ -70,7 +70,6 @@ public class IPD_GameResult extends SimultaneousGameResult
 		int i = 0;
 		for (Round round: rounds)
 		{	
-			System.out.println("Round "+i++ +round.toString()+ "\n\t");
 			for (IPD_Player p: round.getMoves().keySet())
 			{
 				sb.append(p.getID());
