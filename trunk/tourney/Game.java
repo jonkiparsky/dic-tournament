@@ -185,6 +185,11 @@ public abstract class Game
 		throw new GameExecutionException(reason);
 	}
 
+	public String toString()
+	{
+		return getName();
+	}
+
 	/**
 	 * Determines if <code>move</code> is a legal action for this Game in its
 	 * current state. Illegal can be defined as an "unforgivable mistake". There
