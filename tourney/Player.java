@@ -78,6 +78,11 @@ public abstract class Player {
 		return id;
 	}
 
+	public String toString()
+	{
+		return getID();
+	}
+
 	/**
 	 * Sends an update to the player in the form of the necessary
 	 * <code>Move</code> object. The player should update their version of the
