@@ -16,51 +16,50 @@ package tourney;
  * 
  * @see Move
  */
-public abstract class Player {
-
-	String id;
+public abstract class Player
+{
+	
 	private static int instanceCounter = 0;
 
-
+	/** The unique human-readable identifier for this player. */
+	private String id;
 
 	public Player()
 	{
-		this("Player Of Some Game # ");
+		String className = getClass().getName().replace(
+				getClass().getPackage().getName() + ".", "");
+
+		id = createInstanceID(className + " # ");
 	}
 
-	public Player(String name)
-	{
-		id = createInstanceID(name + " # ");
-	}
-	
+	/**
+	 * Appends this player's id with a unique instance number and returns the
+	 * new id. This allows the tournament to tell different instances of the
+	 * same class apart from one another.
+	 * 
+	 * @param name
+	 *            The id to which to append an instance number.
+	 * @return The new id for this player.
+	 */
 	protected String createInstanceID(String name)
 	{
-		instanceCounter ++;		
+		instanceCounter++;
 		id = name + instanceCounter;
 		return id;
 	}
 
 	public void init()
 	{
-			// do nothing
-	}	
 
-	/**
-	 * Demands a move from this player. This player must evaluate the game
-	 * situation that it has been keeping, and return a legal <code>Move</code>
-	 * object for the game.
-	 * 
-	 * @return The actions this player wishes to perform, encapsulated in a Move
-	 *         object.
-	 */
-	public abstract Move getMove();
+	}
 
 	/**
 	 * Gets this player's identifier. A Player must have a unique identifier so
 	 * its statistics can be output and referenced. This will allow
-	 * <code>DataReader</code>s to make coherent reports.
+	 * <code>DataReader</code>s to make coherent reports. The the API handles
+	 * generating IDs by using the name of the class.
 	 * <p>
-	 * Currently, IDs should take the form of:
+	 * Therefore, class names (IDs) should take the form of:
 	 * <p>
 	 * <code>GameName_UserName_SubmissionNumber</code>
 	 * <p>
@@ -68,8 +67,7 @@ public abstract class Player {
 	 * for.<br>
 	 * <b>UserName</b> - The name of the user submitting this player.<br>
 	 * <b>SubmissionNumber</b> - If the user is submitting more than one player,
-	 * append a submission number to the end of the ID. Otherwise, just use 1.
-	 * <br>
+	 * append a submission number to the end of the class name. <br>
 	 * 
 	 * @return This player's unique identifier.
 	 */
@@ -82,6 +80,16 @@ public abstract class Player {
 	{
 		return getID();
 	}
+
+	/**
+	 * Demands a move from this player. This player must evaluate the game
+	 * situation that it has been keeping, and return a legal <code>Move</code>
+	 * object for the game.
+	 * 
+	 * @return The actions this player wishes to perform, encapsulated in a Move
+	 *         object.
+	 */
+	public abstract Move getMove();
 
 	/**
 	 * Sends an update to the player in the form of the necessary

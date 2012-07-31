@@ -20,7 +20,6 @@ public class CountToNHuman
 
 
 	public CountToNHuman() {
-		super("C2N Human ");
 	}
 
 	@Override

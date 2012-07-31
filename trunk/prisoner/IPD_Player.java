@@ -11,9 +11,9 @@ public abstract class  IPD_Player extends Player
 	
 	protected IPD_Move previousMove;
 
-	public IPD_Player(String name)
+	public IPD_Player()
 	{
-		super(name);
+		
 	}		
 
 	public void init()

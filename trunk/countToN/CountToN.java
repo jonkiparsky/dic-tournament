@@ -15,6 +15,7 @@ public class CountToN extends TurnBasedGame {
 	private static String name = "Count To Ten";
 	private static String author = "R. Shepherd";
 
+	// getting instance IDs 1 & 2 when Loader accesses this class.
 	private static Player defaultAI = new CountToNPlayer();
 	private static Player human = new CountToNHuman();
 

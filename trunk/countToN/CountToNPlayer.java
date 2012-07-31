@@ -17,7 +17,6 @@ public class CountToNPlayer
 	private int count = 0;
 	public CountToNPlayer()
 	{
-		super("C2N_Default");
 	}
 
 	@Override

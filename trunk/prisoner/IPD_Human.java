@@ -14,7 +14,6 @@ public class IPD_Human
 	private Scanner scan = null;
 	public IPD_Human()
 	{
-		super("IPD_Human");
 		scan = new Scanner(System.in);
 
 	}
