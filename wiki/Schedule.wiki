@@ -30,7 +30,7 @@ A rough list of things that need to be done. This should become an ordered list 
   * logging - should we plan on wiring in some logging?
   * unit testing for submitted Game and Player classes/packages
   * Allow for the game to limit the amount of time an implementation has to give a Move. (For example, in Chess maybe you have 30 seconds to determine your next Move)
-  * Be able to derive a Player's ID using reflection on the class name. This would remove the need for a constructor (implementations would use a default constructor which would determine the className via reflection instead of forcing them to worry about their name). Unit testing can make sure class names are properly formatted and reject the ones who didn't follow directions. Any thoughts?
+  * Have our .jar file be a stand alone application that can search a directory on the user's machine for other .jar files or compiled class files which extend Game and Player. This would allow users to write their own implementations and drop them in a folder and play. I expect this is a _much_ later release.
 
 Every N revisions: 
   * review and re-finalize interfaces and bottom-level abstract classes
