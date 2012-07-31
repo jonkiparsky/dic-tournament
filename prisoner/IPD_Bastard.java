@@ -14,7 +14,6 @@ public class IPD_Bastard
 
 	public IPD_Bastard()
 	{
-		super("IPD Bastard" );
 	}
 
 

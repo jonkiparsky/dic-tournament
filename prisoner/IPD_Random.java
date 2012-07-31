@@ -15,7 +15,6 @@ public class IPD_Random
 	
 	public IPD_Random()
 	{
-		super("IPD Random");
 		random = new Random();
 	}
 

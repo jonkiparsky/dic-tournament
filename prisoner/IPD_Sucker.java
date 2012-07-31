@@ -15,7 +15,6 @@ public class IPD_Sucker
 	
 	public IPD_Sucker()
 	{
-		super("IPD Sucker");
 
 	}
 
