@@ -12,6 +12,8 @@ public class IsMachinePlayerFilter extends ClassFilter
 
 	public boolean filter(Class c)
 	{
+		if (cannotInstantiate(c))
+			return false;
 		if (MachinePlayer.class.isAssignableFrom(c))
 			return true;
 
