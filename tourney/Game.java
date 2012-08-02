@@ -63,6 +63,8 @@ public abstract class Game
 		this.activePlayers = new ArrayList<Player>(players);
 
 		init();
+		for (Player player : players)
+			player.init();		
 
 		if (gameResult == null)
 		{

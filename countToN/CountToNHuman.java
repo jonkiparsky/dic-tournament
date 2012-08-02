@@ -10,7 +10,7 @@ import tourney.Player;
  * Recommended human implementation for the Count to N game.
  */
 public class CountToNHuman 
-			extends Player
+			extends CountToNPlayer
 			implements HumanPlayer 
 {		
 	static Scanner input = new Scanner(System.in);
