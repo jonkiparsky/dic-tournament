@@ -26,6 +26,11 @@ public class Loader
 	{
 		
 			gamesToPlayersMap = new HashMap<Class, ArrayList<Class>>();
+
+		File current = new File(".");
+		for (File f: current.listFiles())
+			System.out.println(f.toString());
+
 		File root = new File("./src");
 		for (File f: root.listFiles(new FFilter()))
 		{

@@ -14,10 +14,8 @@ public class IsPlayerFilter extends ClassFilter
 
 	public boolean filter(Class c)
 	{
-		int mods = c.getModifiers();
-		if (Modifier.isAbstract(mods) || Modifier.isInterface(mods))	
+		if (cannotInstantiate(c))
 			return false;
-
 	
 		if (Player.class.isAssignableFrom(c))
 			return true;
