@@ -19,11 +19,17 @@ public class CountToNPlayer
 	{
 	}
 
+
 	@Override
 	public Move getMove() {
 		// This player assumes the submitted Move is a CountMove
 		CountMove myMove = new CountMove(count + 1);
 		return myMove;
+	}
+
+	public void init()
+	{
+		// do nothing
 	}
 
 	public String toString() {
