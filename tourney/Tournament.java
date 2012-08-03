@@ -65,10 +65,49 @@ public class Tournament {
 			
 			MatchResult m = playHumanPlayers(game, players);
 		}	
+		
+		if (matchType == 3) {
+			MatchResult m = playHumanVersusMachine(game, players);
+		}
+
 
 		System.out.println("Tournament reached end of main.");
 	}
 	
+	private MatchResult playHumanVersusMachine(Game game, 
+				ArrayList<Player> players)
+	{
+		Player mp = selectMachinePlayer(players);
+		Player hp = game.getHumanPlayer();
+		ArrayList<Player> playersList = new ArrayList<Player>();
+		playersList.add(mp);
+		playersList.add(hp);
+		Match m = new Match (game, playersList, 1);
+		try {
+			return m.playMatch();
+		}
+		catch (IllegalMoveException ime)
+		{
+			ime.printStackTrace();
+			return null;
+		}
+	
+	}
+
+	private Player selectMachinePlayer (ArrayList<Player> players)
+	{
+		System.out.println("Returning the first machine player I find");
+		for (Player p : players)
+			if (p instanceof MachinePlayer)
+				return p;
+
+		System.out.println("don't seem to have found a Machine Player (??)");
+		return null;
+	}
+
+
+
+
 	/**
 	*	Presents the tournament runner with the list of available games, and
 	*	returns their choice. 
@@ -148,13 +187,8 @@ public class Tournament {
 				Player replacement = loader.getNewInstance(combination.get(j));
 				combination.remove(j);
 				combination.add(j, replacement);
-				
 			}
-
 		}
-
-			
-		
 		return combination;
 	}	
 
@@ -287,10 +321,6 @@ public class Tournament {
 		}
 		return game;
 	}
-
-	
-
-	
 
 	/** 
 	*	Asks the Tournament to pose a question to the user, and returns the
