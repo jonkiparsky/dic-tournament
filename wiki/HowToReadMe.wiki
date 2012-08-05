@@ -82,6 +82,8 @@ So how do you know what the proper move to make is when getMove() is called? You
 
 *Note*: Do not try to change the state of your game from within the getMove() method. Only ever change it from update, and never call update yourself. Game will send you your own move through update. If you attempt to change it yourself in getMove(), your state could fall out of sync and you may start producing illegal moves and be disqualified.
 
+The last method of the interface is the init method. This method is called at the start of each new game that your artificial intelligence will play. Use this method to create a fresh game state and reinitialize the necessary variables. Game will be responsible for calling this method once before each new Game is played.
+
 == Required Classes ==
 You do not need to write any other classes unless you want to write some to help with your artificial intelligence decision making. You do need to use or be familiar with a couple classes other than Player though.
 
