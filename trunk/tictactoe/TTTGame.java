@@ -1,7 +1,5 @@
 package tictactoe;
 
-import java.util.Scanner;
-
 import tourney.DataReader;
 import tourney.Move;
 import tourney.Player;
@@ -10,8 +8,8 @@ import tourney.TurnBasedGame;
 
 /**
  * 
- * A console- and GUI-based TicTacToe game where humans can interactively play
- * against other humans or machine-based implementations.
+ * A console-based TicTacToe game where humans can interactively play against
+ * other humans or machine-based implementations.
  * 
  * @author Ryan Beckett
  */
@@ -34,10 +32,7 @@ public class TTTGame extends TurnBasedGame
     {
         super.init();
         System.out.println("\nSetting up new game...");
-        if (playGUI())
-            human = new TTTGUIPlayer();
-        else
-            human = new TTTConsolePlayer();
+        human = new TTTConsolePlayer();
         machine = new TTTMachinePlayer();
         winner = null;
         dataReader = new TTTDataReader();
@@ -46,40 +41,6 @@ public class TTTGame extends TurnBasedGame
         {
             for (int j = 0; j < grid[i].length; j++)
                 grid[i][j] = GridMark.E;
-        }
-    }
-
-    /**
-     * Ask the user if they want to play the GUI version.
-     * 
-     * @return Returns <code>true</code> for a GUI-based game, otherwise returns
-     *         <code>false</code>.
-     */
-    private boolean playGUI()
-    {
-        Scanner kbd = new Scanner(System.in);
-        String user = null;
-        int choice = -1;
-        while (true)
-        {
-            System.out
-                    .println("Would you like to play the (1) console or (2) GUI version?");
-            try
-            {
-                user = kbd.nextLine();
-                choice = Integer.parseInt(user);
-            } catch (NumberFormatException e)
-            {
-                System.out.println("Please numbers only.");
-                continue;
-            }
-
-            if (choice == 1)
-                return false;
-            else if (choice == 2)
-                return true;
-            else
-                System.out.println("Please enter a valid interface option.");
         }
     }
 
