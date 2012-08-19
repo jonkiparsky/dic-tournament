@@ -7,16 +7,16 @@ import tourney.Move;
 
 /**
  * 
- * An AI-based TicTacToe player. Currently, the AI engine simply selects random
- * moves and ensures they are legal.
+ * An implementation whose strategy is to pick any move at random with uniform
+ * probability.
  * 
  * @author Ryan Beckett
  */
-public class TTTMachinePlayer extends TTTPlayer implements MachinePlayer
+public class RandomPlayer extends TicTacToePlayer implements MachinePlayer
 {
 
     /**
-     * Select a random move and ensure its legal.
+     * Generate a random and legal move.
      * 
      * @return The player move.
      */
@@ -33,14 +33,20 @@ public class TTTMachinePlayer extends TTTPlayer implements MachinePlayer
             if (isMoveLegal(x, y))
                 break;
         }
-        return new TTTMove(playerMark, new GridLocation(x, y), this);
+        return new GridMove(playerMark, new GridLocation(x, y), this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void signalWinner(boolean isWinner)
     {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void signalDraw()
     {

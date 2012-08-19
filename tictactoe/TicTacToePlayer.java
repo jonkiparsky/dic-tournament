@@ -5,43 +5,36 @@ import tourney.Player;
 
 /**
  * 
- * A base class for a TicTacToe player.
+ * A base class for a Tic-Tac-Toe player implementation.
  * 
  * @author Ryan Beckett
  */
-public abstract class TTTPlayer extends Player
+public abstract class TicTacToePlayer extends Player
 {
 
     protected GridMark[][] grid;
     protected GridMark playerMark;
-    protected int playerId;
-    private static int playerCount;
+    protected int id;
 
     /**
-     * Construct a TicTacToe player and let the specified
-     * <code>playerMark</code> designate its grid marker (e.g. X, O).
+     * Construct a Tic-Tac-Toe player.
      */
-    protected TTTPlayer()
+    public TicTacToePlayer()
     {
-        playerId = playerCount++;
         this.grid = new GridMark[3][3];
+        clearGrid();
+    }
+
+    /**
+     * Clear this player's grid.
+     */
+    public void clearGrid()
+    {
         for (int i = 0; i < grid.length; i++)
         {
             for (int j = 0; j < grid[i].length; j++)
                 grid[i][j] = GridMark.E;
         }
-        assignMarker();
-    }
-
-    /**
-     * Assign a marker (e.g. X, O) to this player.
-     */
-    private void assignMarker()
-    {
-        if (playerId % 2 == 0)
-            playerMark = GridMark.X;
-        else
-            playerMark = GridMark.O;
     }
 
     /**
@@ -60,13 +53,13 @@ public abstract class TTTPlayer extends Player
     }
 
     /**
-     * Update the state of the grid with the new move. Note that the provided
-     * move may be its own or its opponent's.
+     * Update the state of the grid with the new move information. The move may
+     * be its own or its opponent's.
      */
     @Override
     public void update(Move move)
     {
-        GridLocation loc = ((TTTMove) move).getLocation();
+        GridLocation loc = ((GridMove) move).getLocation();
         grid[loc.getX()][loc.getY()] = Enum.valueOf(GridMark.class,
                 move.getAnnotation("mark"));
     }
@@ -75,7 +68,7 @@ public abstract class TTTPlayer extends Player
      * Return the next move for this player. This method should be overriden and
      * specialized for its extending class.
      * 
-     * @return The player move.
+     * @return The player's move.
      */
     @Override
     public abstract Move getMove();
@@ -84,21 +77,22 @@ public abstract class TTTPlayer extends Player
      * Alert the user that a winner has been determined.
      * 
      * @param isWinner
-     *            A flag that should be set to <code>true</code> if this user
-     *            won the game, otherwise it's set to <code>false</code>.
+     *            A flag that's set to <code>true</code> if this user won the
+     *            game, otherwise it's set to <code>false</code>.
      */
     public abstract void signalWinner(boolean isWinner);
 
     /**
-     * Alert the user that a draw has occurred (e.g. The grid is full).
+     * Alert the user that a draw has occurred. A draw will occur when the grid
+     * is full.
      * 
      */
     public abstract void signalDraw();
 
     /**
-     * Get the designated grid mark assigned to this player (e.g. X, O).
+     * Get this player's grid mark.
      * 
-     * @return The player's mark.
+     * @return The grid mark.
      */
     public GridMark getPlayerMark()
     {
@@ -106,13 +100,35 @@ public abstract class TTTPlayer extends Player
     }
 
     /**
-     * Get the id of this player.
+     * Assign a grid marker to this player.
      * 
-     * @return A unique id for this player.
+     * @param mark
+     *            The grid mark.
      */
-    public int getPlayerId()
+    public void setMarker(GridMark mark)
     {
-        return playerId;
+        playerMark = mark;
+    }
+
+    /**
+     * Get this player's unique id.
+     * 
+     * @return The id as an integer value.
+     */
+    public int getId()
+    {
+        return id;
+    }
+
+    /**
+     * Set this player's id. The id must be unique.
+     * 
+     * @param id
+     *            The id.
+     */
+    public void setId(int id)
+    {
+        this.id = id;
     }
 
 }

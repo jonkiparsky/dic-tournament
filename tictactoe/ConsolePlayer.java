@@ -11,7 +11,7 @@ import tourney.Move;
  * 
  * @author Ryan Beckett
  */
-public class TTTConsolePlayer extends TTTPlayer implements HumanPlayer
+public class ConsolePlayer extends TicTacToePlayer implements HumanPlayer
 {
 
     private Scanner kbd;
@@ -19,7 +19,7 @@ public class TTTConsolePlayer extends TTTPlayer implements HumanPlayer
     /**
      * Create a new console-based player.
      */
-    public TTTConsolePlayer()
+    public ConsolePlayer()
     {
         kbd = new Scanner(System.in);
     }
@@ -58,7 +58,7 @@ public class TTTConsolePlayer extends TTTPlayer implements HumanPlayer
                 break;
         }
 
-        return new TTTMove(playerMark, new GridLocation(x, y), this);
+        return new GridMove(playerMark, new GridLocation(x, y), this);
     }
 
     /**
@@ -66,10 +66,7 @@ public class TTTConsolePlayer extends TTTPlayer implements HumanPlayer
      */
     private void printGrid()
     {
-        System.out.println("\n-----------------------------");
-        System.out.println("Player " + playerId + "'s GRID (Your marker is "
-                + playerMark + ")");
-        System.out.println("-----------------------------");
+        printGridHeader();
         for (GridMark[] row : grid)
         {
             System.out.print("|");
@@ -82,12 +79,23 @@ public class TTTConsolePlayer extends TTTPlayer implements HumanPlayer
     }
 
     /**
+     * Display the grid header.
+     */
+    private void printGridHeader()
+    {
+        System.out.println("\n-----------------------------");
+        System.out.println("Player " + id + "'s turn. (Your marker is "
+                + playerMark + ")");
+        System.out.println("-----------------------------");
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void signalWinner(boolean isWinner)
     {
-        System.out.print("Player " + playerId + ": ");
+        System.out.print("Player " + id + ": ");
         if (isWinner)
             System.out.println("Congratulations. You won!");
         else
@@ -97,10 +105,9 @@ public class TTTConsolePlayer extends TTTPlayer implements HumanPlayer
     /**
      * {@inheritDoc}
      */
+    @Override
     public void signalDraw()
     {
-        System.out.println("Player " + playerId
-                + ": The game has ended in a draw.");
+        System.out.println("Player " + id + ": The game has ended in a draw.");
     }
-
 }
