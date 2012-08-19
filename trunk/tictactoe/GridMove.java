@@ -4,19 +4,20 @@ import tourney.Move;
 
 /**
  * 
- * This class represents a TicTacToe move. Each move is decorated with a grid
- * mark (e.g. X, O) and a x/y-based location (e.g. 0,0). The location is zero
- * based.
+ * This class represents a Tic-Tac-Toe move. Each move contains information on
+ * the player that made it, the grid mark (e.g. X, O), and a x/y-based location
+ * (e.g. 0,0). The location is zero based.
  * 
  * @author Ryan Beckett
  */
-public class TTTMove extends Move
+public class GridMove extends Move
 {
 
     /**
-     * Create a new TicTacToe move with the specified mark and location.
+     * Create a new Tic-Tac-Toe move with the specified player, mark, and
+     * location.
      */
-    public TTTMove(GridMark mark, GridLocation location, TTTPlayer player)
+    public GridMove(GridMark mark, GridLocation location, TicTacToePlayer player)
     {
         annotate("mark", mark.toString());
         annotate("location", location.toString());
@@ -26,8 +27,8 @@ public class TTTMove extends Move
     /**
      * Get the location of this move.
      * 
-     * @return A {@link GridLocation} containing the x/y coordinates of the mark
-     *         placed on the grid.
+     * @return The location of the mark placed on the grid as a result of this
+     *         move.
      */
     public GridLocation getLocation()
     {
@@ -36,6 +37,11 @@ public class TTTMove extends Move
         return new GridLocation(x, y);
     }
 
+    /**
+     * Returns a {@link String} object containing the information for this move.
+     * 
+     * @return A string representation of this move.
+     */
     public String toString()
     {
         return "Location = " + getAnnotation("location") + ", Mark = "

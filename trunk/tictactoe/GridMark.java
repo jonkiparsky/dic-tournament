@@ -2,12 +2,22 @@ package tictactoe;
 
 /**
  * 
- * Represents a grid marker. X and O are player symbols, and E designates the
- * empty space.
+ * Represents a grid marker.
  * 
  * @author Ryan Beckett
  */
 public enum GridMark
 {
-    X, O, E;
+    /**
+     * Represents the 1st player grid marker.
+     */
+    X,
+    /**
+     * Represents the 2nd player grid marker.
+     */
+    O,
+    /**
+     * Represents an empty space on the grid.
+     */
+    E;
 }
