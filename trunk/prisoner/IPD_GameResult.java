@@ -56,10 +56,12 @@ public class IPD_GameResult extends SimultaneousGameResult
 	 * @param round
 	 *            The round number that you want to find who got what payoff.
 	 * @return The amount of time served by <code>p</code> in the specified
-	 *         round.
+	 *         round, or -1 if round is out of range
 	 */
 	public int getTimeServed(IPD_Player p, int round)
 	{
+		if (round <0) return -1;
+		if (round >rounds.size()) return -1;
 		return rounds.get(round).scoreForPlayer(p);	
 	}
 
