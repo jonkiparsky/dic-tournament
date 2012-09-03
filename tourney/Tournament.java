@@ -96,13 +96,30 @@ public class Tournament {
 
 	private Player selectMachinePlayer (ArrayList<Player> players)
 	{
-		System.out.println("Returning the first machine player I find");
+		ArrayList<Player> potentialPlayers = new ArrayList<Player>();
+
+		System.out.println("Searching for Machine Players");
+
 		for (Player p : players)
 			if (p instanceof MachinePlayer)
-				return p;
+				potentialPlayers.add(p);
 
-		System.out.println("don't seem to have found a Machine Player (??)");
-		return null;
+
+		if (potentialPlayers.size() == 0)
+		{
+			System.out.println("don't seem to have found a Machine Player (??)");
+			return null;
+		}
+		System.out.println("Pick a player (enter the number)");
+		for (int i = 0; i <potentialPlayers.size(); i++)
+		{
+
+			System.out.println((i+1)+ ") "+potentialPlayers.get(i).getID());
+			
+		}
+		int i = scanner.nextInt();
+		return potentialPlayers.get(i-1);	
+		
 	}
 
 
