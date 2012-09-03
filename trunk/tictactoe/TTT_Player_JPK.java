@@ -28,12 +28,14 @@ public class TTT_Player_JPK extends TicTacToePlayer implements MachinePlayer
 	int[]  mustBlock;
 	int[] winningPath;
 
-	boolean firstMove = true;
 
 	public void init()
 	{
+		
 		for (GridMark g : flatGrid)
 			g = GridMark.E;
+
+		System.out.println("Completed init");
 	}		
 
 
@@ -45,13 +47,23 @@ public class TTT_Player_JPK extends TicTacToePlayer implements MachinePlayer
     @Override
     public Move getMove()
     {
-
-			if (firstMove) 
-				return new GridMove(playerMark, new GridLocation(1,1), this);
+			System.out.println("Entered getMove()");	
 			if (winningPath != null)
-				return (onlyMoveIn(winningPath));
+			{
+				int cell = onlyMoveIn(winningPath);
+				flatGrid[cell] = GridMark.X;
+			
+				return moveFor(cell);
+			}
 			if (mustBlock != null) 
-				return (onlyMoveIn(mustBlock));
+			{
+				int cell = onlyMoveIn(mustBlock);
+			flatGrid[cell] = GridMark.X;
+			
+				return moveFor(cell);
+			}
+			System.out.println("In  getMove(), past must and winning");	
+
 			
         Random rand = new Random();
         boolean legalMove = false;
@@ -63,6 +75,7 @@ public class TTT_Player_JPK extends TicTacToePlayer implements MachinePlayer
             if (isMoveLegal(x, y))
                 break;
         }
+			flatGrid[x*3+y] = GridMark.X;
         return new GridMove(playerMark, new GridLocation(x, y), this);
     }
 
@@ -71,13 +84,17 @@ public class TTT_Player_JPK extends TicTacToePlayer implements MachinePlayer
 	@Override
 	public void update (Move move)
 	{
+			System.out.println("Entered update()");	
 		GridLocation loc = ((GridMove) move).getLocation();
 
 		int thisRow = loc.getX();
 		int thisCol = loc.getY();
 
+		System.out.println("Rec'd move: "+thisRow +", "+thisCol);
+
 		int flatLoc = thisRow*3+thisCol;
-		flatGrid[flatLoc] = GridMark.O; 
+		if (flatGrid[flatLoc] == GridMark.E)
+			flatGrid[flatLoc] = GridMark.O; 
 		for (int[] path:paths)
 		{
 			int oCount = 0;
@@ -85,39 +102,66 @@ public class TTT_Player_JPK extends TicTacToePlayer implements MachinePlayer
 			for (int i : path)
 			{
 				if (flatGrid[i] == GridMark.O)
+				{
+					System.out.println (i+" is an O");
 					oCount ++;
+				}
 				if (flatGrid[i] == GridMark.X)
+				{
+					System.out.println (i+" is an X");
 					xCount ++;
-			
+				}
 			}
 
 			if (xCount == 2)
 			{
 				winningPath = path;
+				System.out.print("winning path found");
+				printPath(path);
 				break;
 			}
 			if (oCount == 2)
 			{
 				mustBlock = path;
+				System.out.print("must block path found:");
+				printPath(path);
 				break;
 			}
 			
 		}		
 	}
 
+private void printPath(int[] path)
+{
+				for (int j : path)
+				{	
+					System.out.print(j);
+				}
+				System.out.println();
 
+}
 
-	private GridMove onlyMoveIn(int[] path)
+	private int onlyMoveIn(int[] path)
 	{
+		System.out.println("entered onlyMoveIn()");
+		
 		for (int cell: path)
 		{
+			System.out.println("checking "+cell);
 			if (flatGrid[cell] == GridMark.E)
 			{
-				return new GridMove(playerMark, 
-						new GridLocation(cell/3, cell%3), this);
+				return cell;
 			}
 		}
-		return null;
+
+		System.out.println("failed in onlyMoveIn()");
+		return -1;
+	}
+
+
+	private GridMove moveFor(int cell)
+	{
+		return new GridMove(playerMark, new GridLocation(cell/3, cell%3), this);
 	}
 
     /**
