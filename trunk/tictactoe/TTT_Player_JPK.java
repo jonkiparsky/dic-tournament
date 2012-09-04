@@ -1,7 +1,6 @@
 package tictactoe;
 
 import java.util.Random;
-
 import tourney.MachinePlayer;
 import tourney.Move;
 
@@ -15,29 +14,31 @@ import tourney.Move;
  */
 public class TTT_Player_JPK extends TicTacToePlayer implements MachinePlayer
 {
-	GridMark [] flatGrid = new GridMark[9];
+	 GridMark [] flatGrid;
+
 
 
 		// define ways to win. We'll interate these looking for must-block moves
 		// and winning moves
 	int[] [] paths =	{	{0,1,2}, {3,4,5}, {6,7,8},
 								{0,3,6}, {1,4,7}, {2,5,8},
-								{0,4,8}, {3,4,6}
+								{0,4,8}, {2,4,6}
 							};
 
-	int[]  mustBlock;
-	int[] winningPath;
+	int[]  mustBlock;  // a row, column, or diagonal on which the enemy might win
+	int[] winningPath; // a row, column, or diagonal on which we might win
 
 
-	public void init()
+	@Override
+	public void clearGrid()
 	{
-		
-		for (GridMark g : flatGrid)
-			g = GridMark.E;
-
-		System.out.println("Completed init");
-	}		
-
+		flatGrid = new GridMark[9]; 
+	
+		for (int i = 0; i <9; i++)
+		{
+			flatGrid[i] = GridMark.E;
+		}		
+	}
 
     /**
      * Select a random move and ensure its legal.
@@ -47,36 +48,30 @@ public class TTT_Player_JPK extends TicTacToePlayer implements MachinePlayer
     @Override
     public Move getMove()
     {
-			System.out.println("Entered getMove()");	
+			int cell = -1;
 			if (winningPath != null)
 			{
-				int cell = onlyMoveIn(winningPath);
+				cell = onlyMoveIn(winningPath);
 				flatGrid[cell] = GridMark.X;
-			
+				winningPath = null;	
 				return moveFor(cell);
 			}
 			if (mustBlock != null) 
 			{
-				int cell = onlyMoveIn(mustBlock);
-			flatGrid[cell] = GridMark.X;
-			
+				cell = onlyMoveIn(mustBlock);
+				flatGrid[cell] = GridMark.X;
+				mustBlock = null;
 				return moveFor(cell);
 			}
-			System.out.println("In  getMove(), past must and winning");	
 
 			
-        Random rand = new Random();
-        boolean legalMove = false;
-        int x = -1, y = -1;
-        while (!legalMove)
-        {
-            x = rand.nextInt(grid.length);
-            y = rand.nextInt(grid.length);
-            if (isMoveLegal(x, y))
+			for (cell = 0; cell < 9; cell ++)
+			{
+            if (flatGrid[cell] == GridMark.E)
                 break;
-        }
-			flatGrid[x*3+y] = GridMark.X;
-        return new GridMove(playerMark, new GridLocation(x, y), this);
+			}
+			flatGrid[cell] = GridMark.X;
+			return new GridMove(playerMark, new GridLocation(cell/3, cell%3), this);
     }
 
 
@@ -84,17 +79,21 @@ public class TTT_Player_JPK extends TicTacToePlayer implements MachinePlayer
 	@Override
 	public void update (Move move)
 	{
-			System.out.println("Entered update()");	
 		GridLocation loc = ((GridMove) move).getLocation();
 
 		int thisRow = loc.getX();
 		int thisCol = loc.getY();
 
-		System.out.println("Rec'd move: "+thisRow +", "+thisCol);
 
 		int flatLoc = thisRow*3+thisCol;
-		if (flatGrid[flatLoc] == GridMark.E)
-			flatGrid[flatLoc] = GridMark.O; 
+		if (flatGrid[flatLoc] != GridMark.E)
+		{
+			return;	
+		}
+		flatGrid[flatLoc] = GridMark.O; 
+
+	
+		
 		for (int[] path:paths)
 		{
 			int oCount = 0;
@@ -103,51 +102,33 @@ public class TTT_Player_JPK extends TicTacToePlayer implements MachinePlayer
 			{
 				if (flatGrid[i] == GridMark.O)
 				{
-					System.out.println (i+" is an O");
 					oCount ++;
 				}
 				if (flatGrid[i] == GridMark.X)
 				{
-					System.out.println (i+" is an X");
 					xCount ++;
 				}
 			}
 
-			if (xCount == 2)
+			if (xCount == 2 && oCount == 0)
 			{
 				winningPath = path;
-				System.out.print("winning path found");
-				printPath(path);
 				break;
 			}
-			if (oCount == 2)
+			if (oCount == 2 && xCount == 0)
 			{
 				mustBlock = path;
-				System.out.print("must block path found:");
-				printPath(path);
 				break;
 			}
 			
 		}		
 	}
 
-private void printPath(int[] path)
-{
-				for (int j : path)
-				{	
-					System.out.print(j);
-				}
-				System.out.println();
-
-}
-
 	private int onlyMoveIn(int[] path)
 	{
-		System.out.println("entered onlyMoveIn()");
 		
 		for (int cell: path)
 		{
-			System.out.println("checking "+cell);
 			if (flatGrid[cell] == GridMark.E)
 			{
 				return cell;
