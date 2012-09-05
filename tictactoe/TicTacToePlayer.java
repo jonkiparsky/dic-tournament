@@ -36,6 +36,14 @@ public abstract class TicTacToePlayer extends Player
                 grid[i][j] = GridMark.E;
         }
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+	public void init() { // added to fit into the framework's specifications
+		clearGrid();
+	}
 
     /**
      * Determine whether the move occupies an empty space.
