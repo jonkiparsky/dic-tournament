@@ -127,6 +127,8 @@ public class TTT_Player_Sheph extends TicTacToePlayer implements MachinePlayer {
 			if (count == 2) {
 				for (TTTNode node : path) {
 					if (getMarkAt(node.getLocation()) == GridMark.E) {
+						//System.out.println(getID() + ": Chose node " + node
+								//+ " because its a win.");
 						return node;
 					}
 				}
@@ -142,6 +144,8 @@ public class TTT_Player_Sheph extends TicTacToePlayer implements MachinePlayer {
 			if (count == 2) {
 				for (TTTNode node : path) {
 					if (getMarkAt(node.getLocation()) == GridMark.E) {
+						//System.out.println(getID() + ": Chose node " + node
+								//+ " because it prevents loss.");
 						return node;
 					}
 				}
@@ -160,6 +164,10 @@ public class TTT_Player_Sheph extends TicTacToePlayer implements MachinePlayer {
 		max = 0;
 		for (TTTPath path : winningPaths) {
 			for (TTTNode node : path) {
+				if (getMarkAt(node.getLocation()) != GridMark.E) {
+					continue;
+				}
+
 				int remainingPaths = 0;
 				for (TTTPath rPath : node.getIntersectingPaths()) {
 					if (unblockedPaths.contains(rPath)) {
@@ -175,8 +183,23 @@ public class TTT_Player_Sheph extends TicTacToePlayer implements MachinePlayer {
 		}
 
 		if (winningNode != null) {
+			//System.out.println(getID() + ": Chose node " + winningNode
+					//+ " because it provides the most winning paths");
 			return winningNode;
 		} else {
+			// not efficient ... could use some work
+			for (TTTPath path : blockedPaths) {
+				for (TTTNode node : path) {
+					if (getMarkAt(node.getLocation()) != GridMark.E) {
+						continue;
+					} else {
+						//System.out.println(getID() + ": Chose node " + node
+								//+ " because its the only option?");
+						return node;
+					}
+				}
+			}
+
 			// Should never happen -> only to avoid NPE in getMove() above
 			System.out.println("TTT_Player_Sheph has f**ked up!");
 			return nodes[1][1];
@@ -184,8 +207,14 @@ public class TTT_Player_Sheph extends TicTacToePlayer implements MachinePlayer {
 	}
 
 	public void signalWinner(boolean isWinner) {
+		//if (isWinner) {
+		//	System.out.println(getID() + " has won!");
+		//} else {
+		//	System.out.println(getID() + " has lost!");
+		//}
 	}
 
 	public void signalDraw() {
+		//System.out.println("Draw!");
 	}
 }
