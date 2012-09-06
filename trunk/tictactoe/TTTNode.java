@@ -34,4 +34,8 @@ public class TTTNode {
 	public ArrayList<TTTPath> getIntersectingPaths() {
 		return intersectingPaths;
 	}
+	
+	public String toString() {
+		return "(" + location.getX() + ", " + location.getY() + ")";
+	}
 }
