@@ -34,7 +34,7 @@ public class TicTacToe extends TurnBasedGame
                 grid[i][j] = GridMark.E;
         }
         for (Player p : activePlayers)
-            ((TicTacToePlayer) p).clearGrid();
+            ((TicTacToePlayer) p).init();
         ((TicTacToePlayer) activePlayers.get(0)).setMarker(GridMark.X);
         ((TicTacToePlayer) activePlayers.get(0)).setId(0);
         ((TicTacToePlayer) activePlayers.get(1)).setMarker(GridMark.O);
