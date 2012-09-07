@@ -219,6 +219,7 @@ public class Tournament {
 			MatchResult matchResult = null;
 			try {
 				matchResult = match.playMatch();
+				tourneyResult.add(matchResult);
 			} catch (IllegalMoveException ime) {
 				// disqualify the player and move on
 				disqualify(ime.getCulprit());
@@ -226,7 +227,6 @@ public class Tournament {
 				gee.printStackTrace();
 			}
 			
-			tourneyResult.add(matchResult);
 		}
 		
 		return tourneyResult;
