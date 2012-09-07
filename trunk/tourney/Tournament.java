@@ -1,6 +1,7 @@
 package tourney;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import tourney.loader.Loader;
@@ -53,7 +54,7 @@ public class Tournament {
 
 
 		if (matchType == 1) {
-		
+			players = selectMachinePlayers(players);	
 			TournamentResult result = runTournament();
 			DataReader data = game.getDataReader(result);
 			System.out.println( data.report() );
@@ -124,7 +125,46 @@ public class Tournament {
 
 
 
+	/**
+	*	Sort of a rinky-dink way of selecting players to exclude from a match.
+	*	Quick, dirty, should be replaced. 
+	*/
+	private ArrayList<Player> selectMachinePlayers (ArrayList<Player> players)
+	{
 
+		for (Player p : players)
+			if (!( p instanceof MachinePlayer))
+				players.remove(p);
+
+
+		if (players.size() == 0)
+		{
+			System.out.println("don't seem to have found any Machine Players (??)");
+			return null;
+		}
+		System.out.println("Select player to exclude: ");
+		for (int i = 0; i <players.size(); i++)
+		{
+			System.out.println((i+1)+ ") "+players.get(i).getID());
+		}
+		while (true)
+		{
+			int input = scanner.nextInt();
+			if (input <0 || input > players.size())
+					break;
+			players.remove(input -1);
+			System.out.println("Select player to exclude, -1 to stop selecting: ");
+			for (int i = 0; i <players.size(); i++)
+			{
+				System.out.println((i+1)+ ") "+players.get(i).getID());
+			}
+		}
+		return players;
+	}
+
+
+
+	
 	/**
 	*	Presents the tournament runner with the list of available games, and
 	*	returns their choice. 
